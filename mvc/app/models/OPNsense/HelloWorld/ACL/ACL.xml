@@ -1,4 +1,4 @@
-#so normal users can access the plugin
+<!--so normal users can access the plugin-->
 <acl>
     <page-user-helloworld>
         <name>Lobby: Hello World!</name>
