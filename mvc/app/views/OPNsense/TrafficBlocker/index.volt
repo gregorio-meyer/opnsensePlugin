@@ -13,7 +13,7 @@
                 ajaxCall(url="/api/trafficblocker/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload
                     
-                $("#responseMsg").html("<h1>Message: </h1>"+ implode(",",data['message']));
+                $("#responseMsg").html("<h1>Message: </h1>"+ var_dump($data->message));
                 $("#responseMsg").removeClass("hidden");
                 });
             });
