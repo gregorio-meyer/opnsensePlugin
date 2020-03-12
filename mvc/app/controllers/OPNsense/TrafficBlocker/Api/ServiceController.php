@@ -24,7 +24,8 @@ class ServiceController extends ApiControllerBase
             $bckresult = trim($backend->configdRun('template reload OPNsense/TrafficBlocker'));
             if ($bckresult == "OK") {
                 //    $model = new TrafficBlocker();
-                $result['message'] = $this->request->getPost("trafficblocker");
+                $result['message'] = 'Hello';
+                // $this->request->getPost("trafficblocker");
                 // $status = "ok";
             }
         }
