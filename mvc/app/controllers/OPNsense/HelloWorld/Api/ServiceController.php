@@ -1,3 +1,4 @@
+<?php
 namespace OPNsense\HelloWorld\Api;
 
 use OPNsense\Base\ApiControllerBase;
