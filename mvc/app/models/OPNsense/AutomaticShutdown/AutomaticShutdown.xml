@@ -1,0 +1,22 @@
+<model>
+    <mount>//OPNsense/automaticshutdown</mount>
+    <description>
+        Plugin to shutdown firewall at certain hours
+    </description>
+    <items>
+        <!-- container -->
+        <general>
+            <!-- fields -->
+            <StartHour type="IntegerField">
+                <default>12:00</default>
+                <Required>Y</Required>
+                <ValidationMessage>please specify a valid start hour</ValidationMessage>
+            </StartHour>
+            <EndHour type="IntegerField">
+                <Required>24:00</Required>
+                <Required>Y</Required>
+                <ValidationMessage>please specify a valid end hour</ValidationMessage>
+            </EndHour>
+        </general>
+    </items>
+</model>

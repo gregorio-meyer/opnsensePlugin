@@ -1,0 +1,10 @@
+<!--so normal users can access the plugin-->
+<acl>
+    <page-user-trafficblocker>
+        <name>Lobby: Traffic blocker</name>
+        <patterns>
+            <pattern>ui/trafficblocker/*</pattern>
+            <pattern>api/trafficblocker/*</pattern>
+        </patterns>
+    </page-user-trafficblocker>
+</acl>

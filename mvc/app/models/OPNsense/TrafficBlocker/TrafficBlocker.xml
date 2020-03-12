@@ -1,0 +1,16 @@
+<model>
+    <mount>//OPNsense/trafficblocker</mount>
+    <description>
+       Plugin that blocks traffic if user is not connected
+    </description>
+    <items>
+        <!-- container -->
+        <general>
+            <Description type="TextField">
+                <default>John Doe</default>
+                <Required>Y</Required>
+                <ValidationMessage>please specify a valid user name</ValidationMessage>
+            </Description>
+        </general>
+    </items>
+</model>

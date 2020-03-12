@@ -1,0 +1,5 @@
+<menu>
+    <Lobby>
+        <TrafficBlocker VisibleName="Traffic blocker" cssClass="fa fa-comment-o fa-fw" url="/ui/trafficblocker"/>
+    </Lobby>
+</menu>
