@@ -5,5 +5,4 @@ use OPNsense\Base\BaseModel;
 
 class HelloWorld extends BaseModel
 {
-    //hell
 }

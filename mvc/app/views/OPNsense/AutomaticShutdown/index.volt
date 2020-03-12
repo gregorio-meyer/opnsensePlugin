@@ -9,6 +9,8 @@
         $("#saveAct").click(function () {
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
+                $("#shutdownMsg").html('<h1> Shutdown scheduled at </h1>');
+
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     // action to run after reload
                 });
@@ -17,11 +19,11 @@
 
     });
 </script>
-<!--
-<div class="alert alert-info hidden" role="alert" id="responseMsg">
+
+<div class="alert alert-info hidden" role="alert" id="shutdownMsg">
 
 </div>
--->
+
 <div class="col-md-12">
     {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
 </div>

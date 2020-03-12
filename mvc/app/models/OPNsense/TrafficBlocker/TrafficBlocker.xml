@@ -6,11 +6,11 @@
     <items>
         <!-- container -->
         <general>
-            <Description type="TextField">
+            <Name type="TextField">
                 <default>John Doe</default>
                 <Required>Y</Required>
                 <ValidationMessage>please specify a valid user name</ValidationMessage>
-            </Description>
+            </Name>
         </general>
     </items>
 </model>
