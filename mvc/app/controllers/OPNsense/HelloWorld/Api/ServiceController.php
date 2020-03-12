@@ -1,4 +1,4 @@
-namespace OPNsense\HelloWorld\Api;
+<?php namespace OPNsense\HelloWorld\Api;
 
 use OPNsense\Base\ApiControllerBase;
 use OPNsense\Core\Backend;
