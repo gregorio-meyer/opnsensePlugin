@@ -11,7 +11,7 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url="/api/trafficblocker/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload
-                $("#responseMsg").html("<h1>Message: </h1>"+ data['message']);
+                $("#responseMsg").html("<h1>Message: </h1>"+ data['status']);
                 $("#responseMsg").removeClass("hidden");
                 });
             });
