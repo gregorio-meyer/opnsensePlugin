@@ -9,11 +9,10 @@
         $("#saveAct").click(function(){
             saveFormToEndpoint(url="/api/trafficblocker/settings/set",formid='frm_GeneralSettings',callback_ok=function(){
                 // action to run after successful save, for example reconfigure service.
-                $("#responseMsg").html("<h1>Message: <h1>"+ data['message']);
-                $("#responseMsg").removeClass("hidden");
-
                 ajaxCall(url="/api/trafficblocker/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload
+                $("#responseMsg").html("<h1>Message: </h1>"+ data['message']);
+                $("#responseMsg").removeClass("hidden");
                 });
             });
         });
