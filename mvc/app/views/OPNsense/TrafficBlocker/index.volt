@@ -9,6 +9,9 @@
         $("#saveAct").click(function(){
             saveFormToEndpoint(url="/api/trafficblocker/settings/set",formid='frm_GeneralSettings',callback_ok=function(){
                 // action to run after successful save, for example reconfigure service.
+                $("#responseMsg").html('<h1>Message: <h1>'+ data[message']);
+                $("#responseMsg").removeClass("hidden");
+
                 ajaxCall(url="/api/trafficblocker/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload
                 });
@@ -17,7 +20,9 @@
 
     });
 </script>
+<div class="alert alert-info hidden" role="alert" id="responseMsg">
 
+</div>
 <div  class="col-md-12">
     {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
 </div>
