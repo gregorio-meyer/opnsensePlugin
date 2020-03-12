@@ -8,6 +8,7 @@
         // link save button to API set action
         $("#saveAct").click(function(){
             saveFormToEndpoint(url="/api/trafficblocker/settings/set",formid='frm_GeneralSettings',callback_ok=function(){
+                
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url="/api/trafficblocker/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload

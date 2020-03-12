@@ -1,7 +1,11 @@
-<?php namespace OPNsense\TrafficBlocker\Api;
+<?php
+
+namespace OPNsense\TrafficBlocker\Api;
 
 use OPNsense\Base\ApiControllerBase;
 use OPNsense\Core\Backend;
+use OPNsense\HelloWorld\HelloWorld;
+use OPNsense\TrafficBlocker\TrafficBlocker;
 
 /**
  * Class ServiceController
@@ -19,9 +23,12 @@ class ServiceController extends ApiControllerBase
             $backend = new Backend();
             $bckresult = trim($backend->configdRun('template reload OPNsense/TrafficBlocker'));
             if ($bckresult == "OK") {
-                $status = "ok";
+                //    $model = new TrafficBlocker();
+                $result['message'] = $this->request->getPost("trafficblocker");
+                // $status = "ok";
             }
         }
-        return array("status" => $status);
+        //return array("message" => $status);
+        return $result;
     }
 }
