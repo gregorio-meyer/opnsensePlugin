@@ -19,7 +19,7 @@
             $("#responseMsg").removeClass("hidden");
             ajaxCall(url="/api/helloworld/service/test", sendData={},callback=function(data,status) {
                 // action to run after reload
-                $("#responseMsg").html(data['message'][0]);
+                $("#responseMsg").html(implode(",",data['message']));
             });
         });
 
