@@ -11,9 +11,6 @@
                 <Required>Y</Required>
                 <ValidationMessage>please specify a valid user name</ValidationMessage>
             </Name>
-            <Description type="TextField">
-                <Required>Y</Required>
-            </Description>
         </general>
     </items>
 </model>

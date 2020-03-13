@@ -1,9 +1,10 @@
 <form>
     <field>
-        <id>helloworld.general.Name</id>
+        <id>automaticshutdown.general.Name</id>
         <label>Name</label>
         <type>text</type>
         <help>Name that should always be connected</help>
         <hint>If this person isn't connected to wifi the firewall will block the connection</hint>
     </field>
+    
  </form>
