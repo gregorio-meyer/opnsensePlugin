@@ -14,7 +14,7 @@
                     // action to run after reload
 
                     $("#responseMsg").html("<h1>Message: </h1>" + JSON.stringify(data));;
-                    $("#responseMsg").append("<h1>Message2: </h1>" + data['message']);;
+                    $("#responseMsg").append("<h1>Message2: </h1>" + JSON.stringify(data['message']));;
                     $("#responseMsg").removeClass("hidden");
                 });
             });
