@@ -2,9 +2,9 @@
 
 namespace OPNsense\AutomaticShutdown\Api;
 
+use OPNsense\AutomaticShutdown\AutomaticShutdown;
 use OPNsense\Base\ApiControllerBase;
 use OPNsense\Core\Backend;
-use \OPNsense\TrafficBlocker\TrafficBlocker;
 
 class ServiceController extends ApiControllerBase
 {
@@ -15,7 +15,7 @@ class ServiceController extends ApiControllerBase
             $backend = new Backend();
             $bckresult = trim($backend->configdRun('template reload OPNsense/AutomaticShutdown'));
             if ($bckresult == "OK") {
-                $mdl = new TrafficBlocker();
+                $mdl = new AutomaticShutdown();
                 $result['message'] = $mdl->getNodes();
                 return $result;
                 //$status = "ok";
