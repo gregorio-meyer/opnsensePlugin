@@ -13,8 +13,8 @@
                 ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function (data, status) {
                     // action to run after reload
 
-                    $("#responseMsg").html("<h1>Message: </h1>" + JSON.stringify(data));;
-                    $("#responseMsg").append("<h1>Message2: </h1>" + data['message']['general']['Name']);
+               //     $("#responseMsg").html("<h1>Message: </h1>" + JSON.stringify(data));;
+                    $("#responseMsg").append("<h3>The system will block connection if " + data['message']['general']['Name']+' is not connected.</h3>');
                     $("#responseMsg").removeClass("hidden");
                 });
             });
