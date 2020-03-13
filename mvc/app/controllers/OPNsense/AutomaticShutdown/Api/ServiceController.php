@@ -4,6 +4,7 @@ namespace OPNsense\AutomaticShutdown\Api;
 
 use OPNsense\Base\ApiControllerBase;
 use OPNsense\Core\Backend;
+use \OPNsense\TrafficBlocker\TrafficBlocker;
 
 class ServiceController extends ApiControllerBase
 {
