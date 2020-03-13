@@ -12,7 +12,7 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     // action to run after reload
                     $("#shutdownMsg").html('<h1> Shutdown scheduled at </h1>');
-                    $("#responseMsg").append("<h1>Message: </h1>" + JSON.stringify(data));;
+                    $("#shutdownMsg").append("<h1>Message: </h1>" + JSON.stringify(data));;
                     $("#shutdownMsg").removeClass("hidden");
 
                 });
