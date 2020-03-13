@@ -11,11 +11,8 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     // action to run after reload
-                    $("#shutdownMsg").html('<h1> Shutdown scheduled at </h1>');
-                    $("#shutdownMsg").append("<h1>Message: </h1>" + JSON.stringify(data));
-                    $("#shutdownMsg").append("<h1>Message: </h1>" + JSON.stringify(status));;
+                    $("#shutdownMsg").html('<h3> Shutdown scheduled between' + data['message']['general']['StartHour']+' and '+data['message']['general']['EndHour']+'</h3>');
                     $("#shutdownMsg").removeClass("hidden");
-
                 });
             });
         });
