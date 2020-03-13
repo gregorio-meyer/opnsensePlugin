@@ -14,7 +14,10 @@ class ServiceController extends ApiControllerBase
             $backend = new Backend();
             $bckresult = trim($backend->configdRun('template reload OPNsense/AutomaticShutdown'));
             if ($bckresult == "OK") {
-                $status = "ok";
+                $mdl = new TrafficBlocker();
+                $result['message'] = $mdl->getNodes();
+                return $result;
+                //$status = "ok";
             }
         }
         return array("status" => $status);
