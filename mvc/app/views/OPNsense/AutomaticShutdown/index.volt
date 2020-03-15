@@ -11,7 +11,7 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
-                    ajaxCall(url = "/api/cron/settings/addJob", sendData = {uuid='Issue a reboot'}, callback = function (data, status) {
+                    ajaxCall(url = "/api/cron/settings/addJob", sendData = {uuid:'Issue a reboot'}, callback = function (data, status) {
                         console.log(status);
                     });
                     // action to run after reload
