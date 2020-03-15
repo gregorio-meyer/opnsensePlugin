@@ -4,7 +4,7 @@
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
-
+    
         // link save button to API set action
         $("#saveAct").click(function () {
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
@@ -19,9 +19,9 @@
                         console.log(status);
                     });
                     await new Promise(r => setTimeout(r, 2000));
-                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "system reboot", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                        console.log(data);
-                        console.log(status);
+                                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "system reboot", "parameters": "", "description": "Start Firewall" } }, callback = function (data2, status2) {
+                        console.log(data2);
+                        console.log(status2);
                     });
                     //plan firewall start
 
