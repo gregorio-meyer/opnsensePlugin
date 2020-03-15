@@ -10,8 +10,12 @@
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                    //add cron job
+                    addCronJob(url = "/api/cron/settings/addJob", jobid = 'Issue a reboot', callback = function (data, status) {
+                        console.log(status);
+                    });
                     // action to run after reload
-                    $("#shutdownMsg").html('<p> Shutdown scheduled between ' + data['message']['general']['StartHour']+' and '+data['message']['general']['EndHour']+'</p>');
+                    $("#shutdownMsg").html('<p> Shutdown scheduled between ' + data['message']['general']['StartHour'] + ' and ' + data['message']['general']['EndHour'] + '</p>');
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
