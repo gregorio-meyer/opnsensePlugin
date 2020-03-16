@@ -19,6 +19,7 @@ r = requests.get(
 )
 
 if r.status_code == 200:
+    print("Request succesful")
     response = json.loads(r.text)
     if len(response['rows']) == 0:
         # create a new rule, identified by rule_description allowing traffic from
@@ -40,5 +41,6 @@ if r.status_code == 200:
             print("error : %s" % r.text)
 
     else:
+        print("Request failed")
         for row in response['rows']:
             print ("found uuid %s" % row['uuid'])
