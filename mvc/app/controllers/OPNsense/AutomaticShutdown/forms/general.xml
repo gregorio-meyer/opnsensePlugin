@@ -13,6 +13,5 @@
         <type>text</type>
         <help>Hour in which the shutdown should end</help>
         <hint>choose a valid hour</hint>
-    </field>
-    
+    </field>  
 </form>
