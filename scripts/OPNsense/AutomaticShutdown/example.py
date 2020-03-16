@@ -17,8 +17,8 @@ r = requests.get(
     ),
     auth=(api_key, api_secret), verify=False
 )
-
-if r.status_code == 200:
+print("Done")
+""" if r.status_code == 200:
     print("Request succesful")
     response = json.loads(r.text)
     if len(response['rows']) == 0:
@@ -46,4 +46,4 @@ if r.status_code == 200:
             print ("found uuid %s" % row['uuid'])
 else:
     print("Request failed!")
-    exit(0)
+    exit(0) """
