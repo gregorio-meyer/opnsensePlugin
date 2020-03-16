@@ -8,7 +8,7 @@ api_secret = 't7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0
 
 # define the basics, hostname to use and description used to identify our test rule
 rule_description='OPNsense_fw_api_testrule_1'
-remote_uri="https://10.0.0.5"
+remote_uri="http://10.0.0.5"
 
 # search for rule
 r = requests.get(
