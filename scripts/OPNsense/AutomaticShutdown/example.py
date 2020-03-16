@@ -40,7 +40,6 @@ if r.status_code == 200:
             print("error : %s" % r.text)
 
     else:
-        print("Request failed")
         for row in response['rows']:
             print ("found uuid %s" % row['uuid'])
 else:
