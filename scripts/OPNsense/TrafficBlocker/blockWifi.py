@@ -1,0 +1,107 @@
+#!/usr/bin/env python3.7
+import requests
+import json
+import os
+import re
+api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
+api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
+firewall_ip = "10.0.0.5"
+url = "http://"+firewall_ip+"/"
+name = "Max"
+monitored_intf = "lan"
+network = "10.0.0.0/24"
+aliasName = "LAN"
+
+
+def isConnected():
+    connected = False
+    # Search for host in the network
+    response = os.popen("nmap -sn "+firewall_ip+"/24").read()
+    if name in response:
+        # get lines with hostname in it
+        matched_lines = [line for line in response.split('\n') if name in line]
+        for m in matched_lines:
+            print("Name: %s" % name)
+            # parse ip address from line with hostname
+            ip = re.findall(r'[0-9]+(?:\.[0-9]+){3}', m)[0]
+            print("Ip: %s" % ip)
+        if len(matched_lines) > 0 and len(ip) > 0:
+            r = requests.get(url+"api/diagnostics/interface/getArp",
+                             auth=(api_key, api_secret), verify=False)
+            if r.status_code == 200:
+                response = json.loads(r.text)
+                # check if there is a client with that name on the monitored interface
+                for host in response:
+                    if host["ip"] == ip:
+                        interface = host["intf_description"]
+                        print("Host is connected on %s" % interface)
+                        if interface == monitored_intf:
+                            print("Correct interface")
+                            connected = True
+            else:
+                print("Request failed with error code %s" % r.status_code)
+    return connected
+
+
+def addAlias():
+    data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
+                      "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
+    r = requests.post(url+"api/firewall/alias/addItem",
+                          auth=(api_key, api_secret), verify=False, json=data)
+    if r.status_code == 200:
+        print("Added alias %s" % aliasName)
+    else:
+        print("Adding alias failed with status code %s" % r.status_code)
+
+def reconfigureAlias():
+    print("Reconfiguring aliases...")
+    r = requests.post(url+"api/firewall/alias/reconfigure",
+                          auth=(api_key, api_secret), verify=False, json={})
+    if not r.status_code == 200:
+        print("Reconfigure failed, status code: %s" % r.status_code)
+
+
+def setAlias(uuid, data):
+    r = requests.post(url+"api/firewall/alias/setItem/"+uuid,
+                      auth=(api_key, api_secret), verify=False, json=data)
+    #reconfigure alias to use it in firewall rules
+    if r.status_code == 200:
+        reconfigureAlias()
+    else:
+        print("Set alias failed with status code %s" % r.status_code)
+
+
+def getUUID():
+    r = requests.get(url+"api/firewall/alias/getAliasUUID/" +
+                     aliasName, auth=(api_key, api_secret), verify=False)
+    resp = json.loads(r.text)
+    # Add alias since it's not present
+    if len(resp) == 0:
+        return None
+    else:
+        return resp["uuid"]
+
+
+def blockTraffic(lock):
+    if lock:    
+        print("Host is not connected, blocking traffic towards the network")
+        data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
+                          "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
+    else:
+        print("Host is connected, unlocking traffic towards the network")
+        data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
+                          "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
+    uuid = getUUID()
+    # Add alias since it's not present
+    if uuid is None:
+        addAlias()
+    # modify existing alias
+    else:
+        setAlias(uuid, data)
+
+
+if not isConnected():
+    blockTraffic(True)
+else:
+    blockTraffic(False)
+    print("Unlocking traffic...")
