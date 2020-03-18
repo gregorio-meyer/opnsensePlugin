@@ -3,11 +3,13 @@ import requests
 import json
 import os
 import re
+import sys
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
-name = "Max"
+name = str(sys.argv[1])
+
 monitored_intf = "lan"
 network = "10.0.0.0/24"
 aliasName = "LAN"
@@ -84,11 +86,11 @@ def getUUID():
 
 def blockTraffic(lock):
     if lock:    
-        print("Host is not connected, blocking traffic towards the network")
+        print(name+" is not connected, blocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
                           "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
     else:
-        print("Host is connected, unlocking traffic towards the network")
+        print(name+" is connected, unlocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
