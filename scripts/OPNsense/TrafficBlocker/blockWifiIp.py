@@ -29,8 +29,8 @@ def isConnected():
                 if interface == monitored_intf:
                     print("Correct interface")
                     connected = True
-            else:
-                print("Request failed with error code %s" % r.status_code)
+    else:
+        print("Request failed with error code %s" % r.status_code)
     return connected
 
 

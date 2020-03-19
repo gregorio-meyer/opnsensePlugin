@@ -14,7 +14,7 @@
                     // action to run after reload
 
                //     $("#responseMsg").html("<h1>Message: </h1>" + JSON.stringify(data));;
-                    $("#responseMsg").append("<h3>The system will block connection if " + data['message']['general']['Name']+' is not connected.</h3>');
+                    $("#responseMsg").append("<h3>The system will block connection if " + data['message']['general']['Ip']+' is not connected.</h3>');
                     $("#responseMsg").removeClass("hidden");
                 });
             });
