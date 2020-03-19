@@ -1,10 +1,9 @@
 <form>
     <field>
-        <id>trafficblocker.general.Name</id>
-        <label>Name</label>
+        <id>trafficblocker.general.Ip</id>
+        <label>Ip</label>
         <type>text</type>
-        <help>Name that should always be connected</help>
-        <hint>If this person isn't connected to wifi the firewall will block the connection</hint>
+        <help>Ip that should always be connected</help>
+        <hint>If this host isn't connected to wifi the firewall will block the connection</hint>
     </field>
-    
  </form>

@@ -8,7 +8,7 @@ api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+K
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
-name = str(sys.argv[1])
+ip = sys.argv[1]
 
 monitored_intf = "lan"
 network = "10.0.0.0/24"
@@ -17,31 +17,18 @@ aliasName = "LAN"
 
 def isConnected():
     connected = False
-    # Search for host in the network
-   # response = os.popen("nmap -sn "+firewall_ip+"/24").read()
-    response = requests.get(url+"api/diagnostics/dns/reverse_lookup/"+name,  auth=(api_key, api_secret), verify=False)
-
-    if name in response.text:
-        # get lines with hostname in it
-        matched_lines = [line for line in response.split('\n') if name in line]
-        for m in matched_lines:
-            print("Name: %s" % name)
-            # parse ip address from line with hostname
-            ip = re.findall(r'[0-9]+(?:\.[0-9]+){3}', m)[0]
-            print("Ip: %s" % ip)
-        if len(matched_lines) > 0 and len(ip) > 0:
-            r = requests.get(url+"api/diagnostics/interface/getArp",
-                             auth=(api_key, api_secret), verify=False)
-            if r.status_code == 200:
-                response = json.loads(r.text)
-                # check if there is a client with that name on the monitored interface
-                for host in response:
-                    if host["ip"] == ip:
-                        interface = host["intf_description"]
-                        print("Host is connected on %s" % interface)
-                        if interface == monitored_intf:
-                            print("Correct interface")
-                            connected = True
+    r = requests.get(url+"api/diagnostics/interface/getArp",
+                     auth=(api_key, api_secret), verify=False)
+    if r.status_code == 200:
+        response = json.loads(r.text)
+        # check if there is a client with that ip on the monitored interface
+        for host in response:
+            if host["ip"] == ip:
+                interface = host["intf_description"]
+                print("Host is connected on %s" % interface)
+                if interface == monitored_intf:
+                    print("Correct interface")
+                    connected = True
             else:
                 print("Request failed with error code %s" % r.status_code)
     return connected
@@ -57,6 +44,7 @@ def addAlias():
     else:
         print("Adding alias failed with status code %s" % r.status_code)
 
+
 def reconfigureAlias():
     print("Reconfiguring aliases...")
     r = requests.post(url+"api/firewall/alias/reconfigure",
@@ -68,7 +56,7 @@ def reconfigureAlias():
 def setAlias(uuid, data):
     r = requests.post(url+"api/firewall/alias/setItem/"+uuid,
                       auth=(api_key, api_secret), verify=False, json=data)
-    #reconfigure alias to use it in firewall rules
+    # reconfigure alias to use it in firewall rules
     if r.status_code == 200:
         reconfigureAlias()
     else:
@@ -87,12 +75,12 @@ def getUUID():
 
 
 def blockTraffic(lock):
-    if lock:    
-        print(name+" is not connected, blocking traffic towards the network")
+    if lock:
+        print(ip+" is not connected, blocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
                           "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
     else:
-        print(name+" is connected, unlocking traffic towards the network")
+        print(ip+" is connected, unlocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()

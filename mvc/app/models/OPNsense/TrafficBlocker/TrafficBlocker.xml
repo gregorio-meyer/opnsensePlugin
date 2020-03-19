@@ -1,15 +1,14 @@
 <model>
     <mount>//OPNsense/trafficblocker</mount>
     <description>
-       Plugin that blocks traffic if user is not connected
+       Plugin that blocks traffic if host is not connected
     </description>
     <items>
-        <!-- container -->
         <general>
-            <Name type="TextField">
-                <default>John Doe</default>
+            <Name type="NetworkField">
+                <default>192.168.1.1</default>
                 <Required>Y</Required>
-                <ValidationMessage>please specify a valid user name</ValidationMessage>
+                <ValidationMessage>please specify a valid ip</ValidationMessage>
             </Name>
         </general>
     </items>
