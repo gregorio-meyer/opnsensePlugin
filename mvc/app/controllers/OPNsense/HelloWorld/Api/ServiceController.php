@@ -9,6 +9,15 @@ use OPNsense\Core\Backend;
  */
 class ServiceController extends ApiControllerBase
 {
+    protected static $internalServiceClass = '\OPNsense\HelloWorld\HelloWorld';
+    protected static $internalServiceTemplate = 'OPNsense/HelloWorld';
+    protected static $internalServiceEnabled = 'general.enabled';
+    protected static $internalServiceName = 'helloworld';
+
+    protected function reconfigureForceRestart()
+    {
+        return 0;
+    }
     /**
      * reconfigure HelloWorld
      */
