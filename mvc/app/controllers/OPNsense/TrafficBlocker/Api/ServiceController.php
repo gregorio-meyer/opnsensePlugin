@@ -39,4 +39,15 @@ class ServiceController extends ApiControllerBase
         //return array("message" => $status);
         return $result;
     }
+    public function statusAction()
+    {
+        if ($this->request->isGet()) {
+            $backend = new Backend();
+            $bckresult = trim($backend->configdRun("helloworld status"));
+            if ($bckresult !== null) {
+                return $bckresult;
+            }
+        }
+        return array("message" => "unable to run config action");
+    }
 }
