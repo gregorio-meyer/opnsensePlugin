@@ -43,7 +43,7 @@ class ServiceController extends ApiControllerBase
     {
         if ($this->request->isGet()) {
             $backend = new Backend();
-            $bckresult = trim($backend->configdRun("helloworld status"));
+            $bckresult = trim($backend->configdRun("trafficblocker status"));
             if ($bckresult !== null) {
                 return $bckresult;
             }
