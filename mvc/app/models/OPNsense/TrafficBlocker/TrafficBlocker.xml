@@ -5,6 +5,10 @@
     </description>
     <items>
         <general>
+            <Enabled type="BooleanField">
+                <default>1</default>
+                <Required>Y</Required>
+            </Enabled>
             <Ip type="NetworkField">
                 <default>192.168.1.1</default>
                 <Required>Y</Required>

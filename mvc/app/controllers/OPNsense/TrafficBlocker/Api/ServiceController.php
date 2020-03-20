@@ -12,6 +12,15 @@ use OPNsense\TrafficBlocker\TrafficBlocker;
  */
 class ServiceController extends ApiControllerBase
 {
+    protected static $internalServiceClass = '\OPNsense\TrafficBlocker\TrafficBlocker';
+    protected static $internalServiceTemplate = 'OPNsense/TrafficBlocker';
+    protected static $internalServiceEnabled = 'general.enabled';
+    protected static $internalServiceName = 'trafficblocker';
+    // The reconfigureForceRestart overwrite tells the controller if it should always stop the service before trying a start,
+    protected function reconfigureForceRestart()
+    {
+        return 0;
+    }
     /**
      * reconfigure HelloWorld
      */
