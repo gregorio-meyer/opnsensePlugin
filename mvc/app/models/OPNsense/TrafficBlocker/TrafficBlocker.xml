@@ -5,11 +5,11 @@
     </description>
     <items>
         <general>
-            <Name type="NetworkField">
+            <Ip type="NetworkField">
                 <default>192.168.1.1</default>
                 <Required>Y</Required>
                 <ValidationMessage>please specify a valid ip</ValidationMessage>
-            </Name>
+            </Ip>
         </general>
     </items>
 </model>
