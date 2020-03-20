@@ -53,7 +53,7 @@ class ServiceController extends ApiControllerBase
     {
         if ($this->request->isGet()) {
             $backend = new Backend();
-            $bckresult = json_decode(trim($backend->configdRun("echo helloworld status")), true);
+            $bckresult = trim($backend->configdRun("helloworld restart"));
             if ($bckresult !== null) {
                 // only return valid json type responses
                 return $bckresult;
