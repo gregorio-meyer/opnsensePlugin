@@ -22,23 +22,23 @@ class ServiceController extends ApiControllerBase
         return 0;
     }
     /**
-     * reconfigure HelloWorld
+     * reconfigure TrafficBlocker
      */
     public function reloadAction()
     {
    //     $status = "failed";
-        if ($this->request->isPost()) {
+/*         if ($this->request->isPost()) {
             $backend = new Backend();
             $bckresult = trim($backend->configdRun('template reload OPNsense/TrafficBlocker'));
             if ($bckresult == "OK") {
                 $mdl = new TrafficBlocker();
-                $result['message'] = $mdl->getNodes();
+             //   $result['message'] = $mdl->getNodes();
                 $ip = strval($result['message']['general']['Ip']);
                 $backend->configdRun('trafficblocker start '.$ip);
                 $status = "ok";
             }
         }
-        return array("message" => $status);
+        return array("message" => $status); */
        // return $result;
     }
     public function statusAction()
