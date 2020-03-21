@@ -27,7 +27,7 @@
             });
         });
 
-    });
+    });});
 </script>
 <div class="alert alert-info hidden" role="alert" id="responseMsg">
 
