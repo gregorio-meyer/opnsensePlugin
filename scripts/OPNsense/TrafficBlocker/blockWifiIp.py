@@ -91,9 +91,9 @@ def blockTraffic(lock):
     else:
         setAlias(uuid, data)
 
-
-if not isConnected():
-    blockTraffic(True)
-else:
-    blockTraffic(False)
-    print("Unlocking traffic...")
+while True:
+    if not isConnected():
+        blockTraffic(True)
+    else:
+        blockTraffic(False)
+        print("Unlocking traffic...")
