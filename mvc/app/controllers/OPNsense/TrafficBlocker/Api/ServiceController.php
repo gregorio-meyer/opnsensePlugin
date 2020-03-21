@@ -15,6 +15,7 @@ class ServiceController extends ApiControllerBase
     protected static $internalServiceClass = '\OPNsense\TrafficBlocker\TrafficBlocker';
     protected static $internalServiceTemplate = 'OPNsense/TrafficBlocker';
     protected static $internalServiceEnabled = 'general.enabled';
+    protected static $internalServiceIp = 'general.ip';
     protected static $internalServiceName = 'trafficblocker';
     // The reconfigureForceRestart overwrite tells the controller if it should always stop the service before trying a start,
     protected function reconfigureForceRestart()
@@ -33,6 +34,7 @@ class ServiceController extends ApiControllerBase
             if ($bckresult == "OK") {
                 $mdl = new TrafficBlocker();
                 $result['message'] = $mdl->getNodes();
+                $backend->configdRun('trafficblocker start '+$internalServiceIp)
                 // $status = "ok";
             }
         }
