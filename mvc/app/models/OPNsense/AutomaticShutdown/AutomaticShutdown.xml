@@ -7,6 +7,10 @@
         <!-- container -->
         <general>
             <!-- fields -->
+            <Enabled type="BooleanField">
+                <default>1</default>
+                <Required>Y</Required>
+            </Enabled>
             <StartHour type="IntegerField">
                 <default>12:00</default>
                 <Required>Y</Required>

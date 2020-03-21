@@ -8,15 +8,9 @@
         // link save button to API set action
         $("#saveAct").click(function () {
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
-
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function (data, status) {
-                    // action to run after reload
-
-               //     $("#responseMsg").html("<h1>Message: </h1>" + JSON.stringify(data));;
                     $("#responseMsg").append("<h3>The system will block connection if " + data['message']['general']['Ip']+' is not connected.</h3>');
-                    
-                    $("#responseMsg").append("<h3>The system will block connection if " + JSON.stringify(data)+' is not connected.</h3>');
                     $("#responseMsg").removeClass("hidden");
                 });
             });
