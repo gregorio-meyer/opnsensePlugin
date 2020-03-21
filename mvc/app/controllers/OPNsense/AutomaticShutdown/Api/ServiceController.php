@@ -18,10 +18,19 @@ class ServiceController extends ApiControllerBase
                 $mdl = new AutomaticShutdown();
                 $result['message'] = $mdl->getNodes();
                 return $result;
-                //$status = "ok";
             }
         }
-        //    return array("status" => $status);
         return $result;
+    }
+    public function statusAction()
+    {
+        if ($this->request->isGet()) {
+            $backend = new Backend();
+            $bckresult = trim($backend->configdRun("automaticshutdown status"));
+            if ($bckresult !== null) {
+                return $bckresult;
+            }
+        }
+        return array("message" => "unable to run config action");
     }
 }
