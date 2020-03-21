@@ -33,14 +33,13 @@ class ServiceController extends ApiControllerBase
             if ($bckresult == "OK") {
                 $mdl = new TrafficBlocker();
                 $result['message'] = $mdl->getNodes();
-                $internalServiceIp = 'general.ip';
-                echo $internalServiceIp;
-                $backend->configdRun('trafficblocker start '+$internalServiceIp);
-                // $status = "ok";
+                $ip = $result['message']['general']['Ip'];
+                $backend->configdRun('trafficblocker start '+$ip);
+                $status = "ok";
             }
         }
-        //return array("message" => $status);
-        return $result;
+        return array("message" => $status);
+       // return $result;
     }
     public function statusAction()
     {
