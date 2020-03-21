@@ -24,22 +24,38 @@ class ServiceController extends ApiControllerBase
     /**
      * reconfigure TrafficBlocker
      */
+    public function startAction()
+    {
+        if ($this->request->isPost()) {
+            $backend = new Backend();
+            $mdl = new TrafficBlocker();
+            $result['message'] = $mdl->getNodes();
+            $ip = strval($result['message']['general']['Ip']);
+            $bckresult = trim($backend->configdRun('trafficblocker start ' . $ip));
+            if ($bckresult !== null) {
+                return $bckresult;
+            } else {
+                $status = "Start error";
+            }
+        }
+        return array("message" => $status);
+    }
     public function reloadAction()
     {
-   //     $status = "failed";
-/*         if ($this->request->isPost()) {
+        //     $status = "failed";
+        if ($this->request->isPost()) {
             $backend = new Backend();
             $bckresult = trim($backend->configdRun('template reload OPNsense/TrafficBlocker'));
             if ($bckresult == "OK") {
                 $mdl = new TrafficBlocker();
-             //   $result['message'] = $mdl->getNodes();
+                $result['message'] = $mdl->getNodes();
                 $ip = strval($result['message']['general']['Ip']);
-                $backend->configdRun('trafficblocker start '.$ip);
+                $backend->configdRun('trafficblocker start ' . $ip);
                 $status = "ok";
             }
         }
-        return array("message" => $status); */
-       // return $result;
+        return array("message" => $status);
+        // return $result;
     }
     public function statusAction()
     {
