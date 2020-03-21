@@ -34,11 +34,8 @@ class ServiceController extends ApiControllerBase
             $bckresult = trim($backend->configdRun('trafficblocker start ' . $ip));
             if ($bckresult !== null) {
                 return $bckresult;
-            } else {
-                $status = "Start error";
-            }
+            } 
         }
-        return array("message" => $status);
     }
     public function reloadAction()
     {
