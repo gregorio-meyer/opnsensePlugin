@@ -34,7 +34,7 @@ class ServiceController extends ApiControllerBase
             if ($bckresult == "OK") {
                 $mdl = new TrafficBlocker();
                 $result['message'] = $mdl->getNodes();
-                $backend->configdRun('trafficblocker start '+$internalServiceIp)
+                $backend->configdRun('trafficblocker start '+$internalServiceIp);
                 // $status = "ok";
             }
         }
