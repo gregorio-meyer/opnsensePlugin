@@ -9,10 +9,10 @@
         $("#saveAct").click(function () {
             ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function (data, status) {
             console.log("OK");
-            if(data['message']['general']['status']==="ok"){
+            if(data['message']['status']==="ok"){
                     $("#responseMsg").append("<h3>Connection blocked</h3>");
                     }else{
-                        $("#responseMsg").append("<h3>Error "+data['message']['general']['status']+"</h3>");
+                        $("#responseMsg").append("<h3>Error "+data['message']['status']+"</h3>");
                     }
                     $("#responseMsg").removeClass("hidden"); 
             
