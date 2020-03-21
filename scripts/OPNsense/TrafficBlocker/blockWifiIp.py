@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import time
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
@@ -17,6 +18,9 @@ aliasName = "LAN"
 
 def isConnected():
     connected = False
+    r = requests.post(url+"api/diagnostics/interface/flushArp",
+                     auth=(api_key, api_secret), verify=False)
+    time.sleep(3)
     r = requests.get(url+"api/diagnostics/interface/getArp",
                      auth=(api_key, api_secret), verify=False)
     if r.status_code == 200:
@@ -26,6 +30,7 @@ def isConnected():
             if host["ip"] == ip:
                 interface = host["intf_description"]
                 print("Host is connected on %s" % interface)
+                print(host)
                 if interface == monitored_intf:
                     print("Correct interface")
                     connected = True
