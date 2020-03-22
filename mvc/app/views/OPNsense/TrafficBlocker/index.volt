@@ -7,6 +7,7 @@
         ajaxCall(url = "/api/trafficblocker/service/status", sendData = {}, callback = function (data, status) {
                     console.log("Status "+JSON.stringify(data));
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
+                    $("#responseMsg").removeClass("hidden"); 
                 });
         // link save button to API set action
         $("#saveAct").click(function () {
@@ -16,7 +17,6 @@
                     }else{
                         $("#responseMsg").append("<h3>Error "+data['message']['status']+"</h3>");
                     }
-                    $("#responseMsg").removeClass("hidden"); 
             
                 }); */
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
