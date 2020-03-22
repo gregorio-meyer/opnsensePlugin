@@ -58,7 +58,9 @@ class ServiceController extends ApiControllerBase
     {
         if ($this->request->isGet()) {
             $backend = new Backend();
-            $bckresult = trim($backend->configdRun("trafficblocker status"));
+            $result['message'] = $mdl->getNodes();
+            $enabled = strval($result['message']['general']['Enabled']);
+            $bckresult = trim($backend->configdRun("trafficblocker status ".$enabled));
             if ($bckresult !== null) {
                 return $bckresult;
             }
