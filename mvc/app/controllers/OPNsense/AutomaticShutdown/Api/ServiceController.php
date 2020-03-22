@@ -30,7 +30,8 @@ class ServiceController extends ApiControllerBase
             $mdl = new AutomaticShutdown();
             $result['message'] = $mdl->getNodes();
             $startHour = strval($result['message']['general']['StartHour']);
-            $bckresult = trim($backend->configdRun("automaticshutdown status ".$startHour));
+            $endHour = strval($result['message']['general']['EndHour']);
+            $bckresult = trim($backend->configdRun("automaticshutdown status ".$startHour." ".$endHour));
             if ($bckresult !== null) {
                 return $bckresult;
             }
