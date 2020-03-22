@@ -4,8 +4,8 @@
         Plugin to shutdown firewall at certain hours
     </description>
     <items>
-        <addresses>
-            <address type="ArrayField">
+        <hours>
+            <hour type="ArrayField">
                 <enabled type="BooleanField">
                     <default>1</default>
                     <Required>Y</Required>
@@ -16,11 +16,11 @@
                     <ValidationMessage>please specify a valid start hour</ValidationMessage>
                 </StartHour>
                 <EndHour type="IntegerField">
-                    <Required>24:00</Required>
+                    <default>24:00</default>
                     <Required>Y</Required>
                     <ValidationMessage>please specify a valid end hour</ValidationMessage>
                 </EndHour>
-            </address>
-        </addresses>
+            </hour>
+        </hours>
     </items>
 </model>
