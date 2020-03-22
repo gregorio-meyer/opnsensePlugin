@@ -1,20 +1,20 @@
 <!--TODO Comments-->
 <form>
   <field>
-        <id>automaticshutdown.general.Enabled</id>
+        <id>address.enabled</id>
         <label>enabled</label>
         <type>checkbox</type>
         <help>Enable this feature</help>
     </field>
     <field>
-        <id>automaticshutdown.general.StartHour</id>
+        <id>address.StartHour</id>
         <label>Start hour</label>
         <type>text</type>
         <help>Hour in which the shutdown should start</help>
         <hint>choose a valid hour</hint>
     </field>
     <field>
-        <id>automaticshutdown.general.EndHour</id>
+        <id>address.EndHour</id>
         <label>End hour</label>
         <type>text</type>
         <help>Hour in which the shutdown should end</help>
