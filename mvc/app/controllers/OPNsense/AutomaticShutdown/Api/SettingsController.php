@@ -8,31 +8,31 @@ class SettingsController extends ApiMutableModelControllerBase
     protected static $internalModelClass = 'OPNsense\AutomaticShutdown\AutomaticShutdown';
     public function searchItemAction()
     {
-        return $this->searchBase("addresses.address", array('enabled', 'startHour'), "startHour");
+        return $this->searchBase("hours.hour", array('enabled', 'startHour'), "startHour");
     }
 
     public function setItemAction($uuid)
     {
-        return $this->setBase("address", "addresses.address", $uuid);
+        return $this->setBase("hour", "hours.hour", $uuid);
     }
 
     public function addItemAction()
     {
-        return $this->addBase("address", "addresses.address");
+        return $this->addBase("hour", "hours.hour");
     }
 
     public function getItemAction($uuid = null)
     {
-        return $this->getBase("address", "addresses.address", $uuid);
+        return $this->getBase("hour", "hours.hour", $uuid);
     }
 
     public function delItemAction($uuid)
     {
-        return $this->delBase("addresses.address", $uuid);
+        return $this->delBase("hours.hour", $uuid);
     }
 
     public function toggleItemAction($uuid, $enabled = null)
     {
-        return $this->toggleBase("addresses.address", $uuid, $enabled);
+        return $this->toggleBase("hours.hour", $uuid, $enabled);
     }
 }
