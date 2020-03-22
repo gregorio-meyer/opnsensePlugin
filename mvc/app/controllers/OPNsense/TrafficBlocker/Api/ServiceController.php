@@ -57,17 +57,17 @@ class ServiceController extends ApiControllerBase
     }
     public function statusAction()
     {
-        if ($this->request->isGet()) {
             $backend = new Backend();
             $mdl = new TrafficBlocker();
             $result['message'] = $mdl->getNodes();
+        if ($this->request->isGet()) {
             $enabled = strval($result['message']['general']['Enabled']);
             $bckresult = trim($backend->configdRun("trafficblocker status " . $enabled));
             if ($bckresult !== null) {
                 return $bckresult;
             }
-            return array("message" => "Status:unable to run config action ".$enabled);
+            
         }
-        return array("message" => "Status:unable to run config action ");
+        return array("message" => "Status: unable to run config action ".$result['message']);
     }
 }
