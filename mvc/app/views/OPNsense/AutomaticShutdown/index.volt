@@ -25,7 +25,7 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
             });
         //add
-        $("#grid-addresses").on("appended.rs.jquery.bootgrid", function (e) {
+        $("#grid-addresses").bootgrid().on("appended.rs.jquery.bootgrid", function (e) {
             console.log("Appended")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
@@ -50,7 +50,7 @@
             });
         });
         // delete
-        $("#grid-addresses").on("removed.rs.jquery.bootgrid", function (e) {
+        $("#grid-addresses").bootgrid().on("removed.rs.jquery.bootgrid", function (e) {
             console.log("Removed")
             $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
             $("#shutdownMsg").removeClass("hidden");
