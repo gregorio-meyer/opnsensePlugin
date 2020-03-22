@@ -4,6 +4,8 @@ import json
 import os
 import re
 import sys
+import time
+import subprocess
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
@@ -13,21 +15,27 @@ ip = sys.argv[1]
 monitored_intf = "lan"
 network = "10.0.0.0/24"
 aliasName = "LAN"
-
+locked = False
 
 def isConnected():
     connected = False
+    r = requests.post(url+"api/diagnostics/interface/flushArp",
+                   auth=(api_key, api_secret), verify=False)
+    time.sleep(1)
+    #os.system('ping -t2 -c 4 '+ip)
     r = requests.get(url+"api/diagnostics/interface/getArp",
                      auth=(api_key, api_secret), verify=False)
+
     if r.status_code == 200:
         response = json.loads(r.text)
+       # print(response)
         # check if there is a client with that ip on the monitored interface
         for host in response:
             if host["ip"] == ip:
                 interface = host["intf_description"]
-                print("Host is connected on %s" % interface)
+                #print(host)
                 if interface == monitored_intf:
-                    print("Correct interface")
+                   # print("Host is connected on %s" % interface)
                     connected = True
     else:
         print("Request failed with error code %s" % r.status_code)
@@ -90,10 +98,30 @@ def blockTraffic(lock):
     # modify existing alias
     else:
         setAlias(uuid, data)
-
+i=0
+notConnected=0
 while True:
     if not isConnected():
-        blockTraffic(True)
+       # print(i)
+        notConnected+=1
+        print(notConnected)
+        if notConnected >= 20 :
+            if not locked:
+                print("Not locked, lock")
+                blockTraffic(True)
+                locked = True
+            print("Already locked")
+            notConnected=0
+
+      # 
     else:
-        blockTraffic(False)
-        print("Unlocking traffic...")
+        #if the connection is already unlocked continue
+        if locked:
+            print("Locked, unlock")
+            blockTraffic(False)
+            locked = False
+        print("Already unlocked")
+        notConnected=0
+       # print("Unlocking traffic...")
+      #  exit(-1)
+    i+=1
