@@ -103,17 +103,24 @@ notConnected=0
 while True:
     if not isConnected():
        # print(i)
-        locked = True
         notConnected+=1
         print(notConnected)
-        if notConnected > 20 :
-            blockTraffic(True)
+        if notConnected >= 20 :
+            if not locked:
+                print("Not locked, lock")
+                blockTraffic(True)
+                locked = True
+            print("Already locked")
+            notConnected=0
+
       # 
     else:
-        print("Not locked")
         #if the connection is already unlocked continue
-        #if not locked: continue;
-        blockTraffic(False)
+        if locked:
+            print("Locked, unlock")
+            blockTraffic(False)
+            locked = False
+        print("Already unlocked")
         notConnected=0
        # print("Unlocking traffic...")
       #  exit(-1)
