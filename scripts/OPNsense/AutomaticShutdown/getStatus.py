@@ -15,7 +15,8 @@ url = "http://10.0.0.5/api/automaticshutdown/settings/get"
 r = requests.get(url, auth=(api_key, api_secret),
                   verify=False)
 if r.status_code == 200:
-    print("Request succesful %s"%r.text)
+    response = json.loads(r.text)
+    print("Shutdown planned between %s and %s" % (response['general']['StartHour'], response['general']['EndHour']))
 else:
     print("Request failed with status code %s" % r.status_code)
 print("Response: %s" % r.text)
