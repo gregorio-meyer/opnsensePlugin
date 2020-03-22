@@ -4,9 +4,10 @@
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
-        ajaxCall(url = "/api/trafficblocker/service/status", sendData = {}, callback = function (data, status) {
+        $.get(url = "/api/trafficblocker/service/status", callback = function (data, status) {
                     console.log("Status "+JSON.stringify(data));
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
+                    $("#responseMsg").append("<h3> Status: " + JSON.stringify(status) + "</h3>");
                     $("#responseMsg").removeClass("hidden"); 
                 });
         // link save button to API set action

@@ -57,18 +57,19 @@ class ServiceController extends ApiControllerBase
     }
     public function statusAction()
     {
+          
+
+        if ($this->request->isGet()) {
             $backend = new Backend();
             $mdl = new TrafficBlocker();
             $result['message'] = $mdl->getNodes();
             $enabled = strval($result['message']['general']['Enabled']);
             $bckresult = trim($backend->configdRun("trafficblocker status " . $enabled));
-
-        if ($this->request->isPost()) {
             if ($bckresult !== null) {
                 return $bckresult;
             }
             
         }
-        return array("message" => "Result: ".$bckresult." enabled:".$enabled);
+        return array("message" => "Error while running configd action");
     }
 }
