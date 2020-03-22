@@ -1,6 +1,6 @@
 <script>
-    $(document).ready(function () {
-        var data_get_map = { 'frm_GeneralSettings': "/api/automaticshutdown/settings/get" };
+     $(document).ready(function () {
+ /*       var data_get_map = { 'frm_GeneralSettings': "/api/automaticshutdown/settings/get" };
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
@@ -32,9 +32,19 @@
             });
         });
 
+    }); */
+    $("#grid-addresses").UIBootgrid(
+            {   search:'/api/automaticshutdown/settings/searchItem/',
+                get:'/api/automaticshutdown/settings/getItem/',
+                set:'/api/automaticshutdown/settings/setItem/',
+                add:'/api/automaticshutdown/settings/addItem/',
+                del:'/api/automaticshutdown/settings/delItem/',
+                toggle:'/api/automaticshutdown/settings/toggleItem/'
+            }
+        );
     });
 </script>
-
+<!-- 
 <div class="alert alert-info hidden" role="alert" id="shutdownMsg">
 
 </div>
@@ -45,4 +55,28 @@
 
 <div class="col-md-12">
     <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
-</div>
+</div> -->
+<table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
+    <thead>
+        <tr>
+            <th data-column-id="uuid" data-type="string" data-identifier="true"  data-visible="false">{{ lang._('ID') }}</th>
+            <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">{{ lang._('Enabled') }}</th>
+            <th data-column-id="email" data-type="string">{{ lang._('Email') }}</th>
+            <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">{{ lang._('Commands') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td>
+                <button data-action="add" type="button" class="btn btn-xs btn-default"><span class="fa fa-plus"></span></button>
+                <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+{{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit address')])}}

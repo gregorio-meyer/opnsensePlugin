@@ -6,6 +6,7 @@ class IndexController extends \OPNsense\Base\IndexController
     {
         // pick the template to serve to our users.
         $this->view->pick('OPNsense/AutomaticShutdown/index');
-        $this->view->generalForm = $this->getForm("general");
+        $this->view->formDialogAddress = $this->getForm("dialogAddress");
+        //$this->view->generalForm = $this->getForm("general");
     }
 }
