@@ -1,6 +1,4 @@
-<script>
-     $(document).ready(function () {
- /*       var data_get_map = { 'frm_GeneralSettings': "/api/automaticshutdown/settings/get" };
+  <!--     var data_get_map = { 'frm_GeneralSettings': "/api/automaticshutdown/settings/get" };
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
@@ -32,7 +30,22 @@
             });
         });
 
-    }); */
+    }); -->
+    <!-- 
+<div class="alert alert-info hidden" role="alert" id="shutdownMsg">
+
+</div>
+
+<div class="col-md-12">
+    {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
+</div>
+
+<div class="col-md-12">
+    <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
+</div> -->
+<script>
+     $(document).ready(function () {
+ 
     $("#grid-addresses").UIBootgrid(
             {   search:'/api/automaticshutdown/settings/searchItem/',
                 get:'/api/automaticshutdown/settings/getItem/',
@@ -47,18 +60,7 @@
         $("#shutdownMsg").removeClass("hidden");
     });
 </script>
-<!-- 
-<div class="alert alert-info hidden" role="alert" id="shutdownMsg">
 
-</div>
-
-<div class="col-md-12">
-    {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
-</div>
-
-<div class="col-md-12">
-    <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
-</div> -->
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
     <thead>
         <tr>
@@ -81,6 +83,4 @@
         </tr>
     </tfoot>
 </table>
-
-
-{{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit address')])}}
+{{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit hour')])}}
