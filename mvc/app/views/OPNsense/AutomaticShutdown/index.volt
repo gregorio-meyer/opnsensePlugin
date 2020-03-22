@@ -53,13 +53,6 @@
 
 </div>
 
-<div class="col-md-12">
-    {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
-</div>
-
-<div class="col-md-12">
-    <button class="btn btn-primary"  type="button"><b>{{ lang._('Save') }}</b></button>
-</div> -->
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
     <thead>
         <tr>
