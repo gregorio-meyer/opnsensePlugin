@@ -11,12 +11,12 @@
                     <Required>Y</Required>
                 </enabled>
                 <StartHour type="IntegerField">
-                    <default>12:00</default>
+                    <default>12</default>
                     <Required>Y</Required>
                     <ValidationMessage>please specify a valid start hour</ValidationMessage>
                 </StartHour>
                 <EndHour type="IntegerField">
-                    <default>24:00</default>
+                    <default>13</default>
                     <Required>Y</Required>
                     <ValidationMessage>please specify a valid end hour</ValidationMessage>
                 </EndHour>
