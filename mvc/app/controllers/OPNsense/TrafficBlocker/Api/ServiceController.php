@@ -68,6 +68,7 @@ class ServiceController extends ApiControllerBase
             }
             
         }
-        return array("message" => "Status: unable to run config action ".strval($result['message']));
+        $value = strval($result['message']);
+        return array("message" => "Status: unable to run config action ".$value);
     }
 }
