@@ -16,6 +16,9 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
+        $("#btn_DialogAddress_save").click(), function (data, status) {
+            console.log("Saved")
+        }
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -26,31 +29,30 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
             });
         //add
-        $("#grid-addresses").bootgrid()
-            .on("appended.rs.jquery.bootgrid", function (e) {
-                console.log("Appended")
-                saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-                    // action to run after successful save, for example reconfigure service.
-                    ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                        //add cron job
-                        var startHour = data['message']['general']['StartHour'];
-                        var endHour = data['message']['general']['EndHour'];
-                        //plan firewall stop
-                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+        $("#grid-addresses").bootgrid().on("appended.rs.jquery.bootgrid", function (e) {
+            console.log("Appended")
+            saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+                // action to run after successful save, for example reconfigure service.
+                ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                    //add cron job
+                    var startHour = data['message']['general']['StartHour'];
+                    var endHour = data['message']['general']['EndHour'];
+                    //plan firewall stop
+                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                        console.log(data);
+                        console.log(status);
+                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
-                            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                                console.log(data);
-                                console.log(status);
-                            });
                         });
-                        //$.get("/api/automaticshutdown/service/status"){ }
-                        // action to run after reload
-                        $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-                        $("#shutdownMsg").removeClass("hidden");
                     });
+                    //$.get("/api/automaticshutdown/service/status"){ }
+                    // action to run after reload
+                    $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                    $("#shutdownMsg").removeClass("hidden");
                 });
             });
+        });
         // delete
         $("#grid-addresses").bootgrid()
             .on("removed.rs.jquery.bootgrid", function (e) {
