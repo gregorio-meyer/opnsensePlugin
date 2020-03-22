@@ -14,10 +14,10 @@
                     var startHour = data['message']['general']['StartHour'];
                     var endHour = data['message']['general']['EndHour'];
                     //plan firewall stop
-                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "Shutdown firewall", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                         console.log(data);
                         console.log(status);
-                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "Reboot firewall", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
                         console.log(data);
                         console.log(status);
                          
