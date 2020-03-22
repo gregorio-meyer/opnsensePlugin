@@ -1,5 +1,20 @@
 <script>
     $(document).ready(function () {
+        /*       var data_get_map = { 'frm_GeneralSettings': "/api/automaticshutdown/settings/get" };
+               mapDataToFormUI(data_get_map).done(function (data) {
+                   // place actions to run after load, for example update form styles.
+               });
+           
+               // link save button to API set action
+                           $.get("/api/automaticshutdown/service/status"){}                   
+                           // action to run after reload
+                           $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                           $("#shutdownMsg").removeClass("hidden");
+                       });
+                   });
+               });
+       
+           }); */
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -24,6 +39,8 @@
                         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
+
+
                         });
                     });
                     $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
@@ -32,11 +49,17 @@
             });
         });
 </script>
-
 <div class="alert alert-info hidden" role="alert" id="shutdownMsg">
 
 </div>
 
+<div class="col-md-12">
+    {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
+</div>
+
+<div class="col-md-12">
+    <button class="btn btn-primary"  type="button"><b>{{ lang._('Save') }}</b></button>
+</div> -->
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
     <thead>
         <tr>
@@ -56,7 +79,7 @@
         <tr>
             <td></td>
             <td>
-                <button data-action="add" id="saveAct" type="button" class="btn btn-xs btn-default"><span
+                <button data-action="add" type="button" class="btn btn-xs btn-default"><span
                         class="fa fa-plus"></span></button>
                 <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span
                         class="fa fa-trash-o"></span></button>
