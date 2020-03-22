@@ -15,6 +15,7 @@
 </div> -->
 <script>
     $(document).ready(function () {
+        console.log("Ready")
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
