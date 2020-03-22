@@ -57,8 +57,6 @@ class ServiceController extends ApiControllerBase
     }
     public function statusAction()
     {
-          
-
         if ($this->request->isGet()) {
             $backend = new Backend();
             $mdl = new TrafficBlocker();

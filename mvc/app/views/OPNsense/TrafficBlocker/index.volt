@@ -17,8 +17,10 @@
                 }); */
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
+                console.log("save")
                 $.get(url = "/api/trafficblocker/service/status", callback = function (data, status) {
-                    console.log("Status "+JSON.stringify(data));
+                    console.log("get")
+                    console.log("Data " + data +" status "+status );
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
                     $("#responseMsg").append("<h3> Status: " + JSON.stringify(status) + "</h3>");
                     $("#responseMsg").removeClass("hidden"); 
