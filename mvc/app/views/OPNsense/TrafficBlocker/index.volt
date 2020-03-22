@@ -18,7 +18,7 @@
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 console.log("save")
-                $.get(url = "/api/trafficblocker/service/status", callback = function (data, status) {
+                $.get("/api/trafficblocker/service/status", callback = function (data, status) {
                     console.log("get")
                     console.log("Data " + data +" status "+status );
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
