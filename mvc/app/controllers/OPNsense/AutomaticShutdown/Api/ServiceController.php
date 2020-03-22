@@ -26,6 +26,7 @@ class ServiceController extends ApiControllerBase
     {
         if ($this->request->isGet()) {
             $backend = new Backend();
+            //add current parameters
             $bckresult = trim($backend->configdRun("automaticshutdown status"));
             if ($bckresult !== null) {
                 return $bckresult;

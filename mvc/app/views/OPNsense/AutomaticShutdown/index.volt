@@ -18,8 +18,8 @@
                         console.log(data);
                         console.log(status);
                         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "Reboot firewall", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                        console.log(data2);
-                        console.log(status2);
+                        console.log(data);
+                        console.log(status);
                          
 
                     });
