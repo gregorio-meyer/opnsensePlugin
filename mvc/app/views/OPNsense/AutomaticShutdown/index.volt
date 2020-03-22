@@ -17,7 +17,7 @@
     $(document).ready(function () {
         //add
         $("#grid-addresses").on("appended.rs.jquery.bootgrid", function (e) {
-                saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+            saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
@@ -41,11 +41,10 @@
         });
         // delete
         $("#grid-addresses").on("removed.rs.jquery.bootgrid", function (e) {
-                    $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
-                    $("#shutdownMsg").removeClass("hidden");
-                });
-            });
+            $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
+            $("#shutdownMsg").removeClass("hidden");
         });
+
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -54,9 +53,7 @@
                 add: '/api/automaticshutdown/settings/addItem/',
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
-            }
-        );
-        
+            });
     });
 </script>
 
