@@ -25,8 +25,6 @@
                     });
                     });
                                        
-                    //plan firewall start
-
                     // action to run after reload
                     $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                     $("#shutdownMsg").removeClass("hidden");
