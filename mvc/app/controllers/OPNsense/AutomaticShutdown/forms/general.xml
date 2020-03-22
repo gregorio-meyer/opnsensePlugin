@@ -1,7 +1,7 @@
 <!--TODO Comments-->
 <form>
   <field>
-        <id>trafficblocker.general.Enabled</id>
+        <id>automaticshutdown.general.Enabled</id>
         <label>enabled</label>
         <type>checkbox</type>
         <help>Enable this feature</help>

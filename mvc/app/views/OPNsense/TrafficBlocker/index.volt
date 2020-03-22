@@ -4,23 +4,18 @@
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
-
+  
         // link save button to API set action
         $("#saveAct").click(function () {
-
-            /* if(data['message']['status']==="ok"){
-                    $("#responseMsg").append("<h3>Connection blocked</h3>");
-                    }else{
-                        $("#responseMsg").append("<h3>Error "+data['message']['status']+"</h3>");
-                    }
-                    $("#responseMsg").removeClass("hidden"); 
-            
-                }); */
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
+                $.get("/api/trafficblocker/service/status", callback = function (data, status) {
+                    $("#responseMsg").append("<h3> Status: " + status + "</h3>");
+                    $("#responseMsg").removeClass("hidden"); 
+                });
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function (data, status) {
-                    console.log("OK "+JSON.stringify(data));
-                    $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
+                    console.log("Start: "+data['status']);
+                    $("#responseMsg").append("<h3> Start: " + data['status'] + "</h3>");
                 });
                 ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function (data, status) {
 

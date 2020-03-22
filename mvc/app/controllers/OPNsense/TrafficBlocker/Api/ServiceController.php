@@ -31,10 +31,11 @@ class ServiceController extends ApiControllerBase
             $mdl = new TrafficBlocker();
             $result['message'] = $mdl->getNodes();
             $ip = strval($result['message']['general']['Ip']);
+            $result['message']['general']['Enabled'] = True;
             $bckresult = trim($backend->configdRun('trafficblocker start ' . $ip));
             if ($bckresult !== null) {
                 return $bckresult;
-            } 
+            }
         }
     }
     public function reloadAction()
@@ -56,13 +57,19 @@ class ServiceController extends ApiControllerBase
     }
     public function statusAction()
     {
+          
+
         if ($this->request->isGet()) {
             $backend = new Backend();
-            $bckresult = trim($backend->configdRun("trafficblocker status"));
+            $mdl = new TrafficBlocker();
+            $result['message'] = $mdl->getNodes();
+            $enabled = strval($result['message']['general']['Enabled']);
+            $bckresult = trim($backend->configdRun("trafficblocker status " . $enabled));
             if ($bckresult !== null) {
                 return $bckresult;
             }
+            
         }
-        return array("message" => "unable to run config action");
+        return array("message" => "Error while running configd action");
     }
 }
