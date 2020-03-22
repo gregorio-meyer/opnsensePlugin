@@ -63,7 +63,7 @@ class ServiceController extends ApiControllerBase
             $enabled = strval($result['message']['general']['Enabled']);
             $bckresult = trim($backend->configdRun("trafficblocker status " . $enabled));
 
-        if ($this->request->isGet()) {
+        if ($this->request->isPost()) {
             if ($bckresult !== null) {
                 return $bckresult;
             }
