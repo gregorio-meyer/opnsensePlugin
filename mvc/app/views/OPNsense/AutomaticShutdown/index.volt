@@ -15,8 +15,18 @@
 </div> -->
 <script>
     $(document).ready(function () {
+        $("#grid-addresses").UIBootgrid(
+            {
+                search: '/api/automaticshutdown/settings/searchItem/',
+                get: '/api/automaticshutdown/settings/getItem/',
+                set: '/api/automaticshutdown/settings/setItem/',
+                add: '/api/automaticshutdown/settings/addItem/',
+                del: '/api/automaticshutdown/settings/delItem/',
+                toggle: '/api/automaticshutdown/settings/toggleItem/'
+            });
         //add
         $("#grid-addresses").on("appended.rs.jquery.bootgrid", function (e) {
+            console.log("Appended")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
@@ -41,19 +51,10 @@
         });
         // delete
         $("#grid-addresses").on("removed.rs.jquery.bootgrid", function (e) {
+            console.log("Removed")
             $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
             $("#shutdownMsg").removeClass("hidden");
         });
-
-        $("#grid-addresses").UIBootgrid(
-            {
-                search: '/api/automaticshutdown/settings/searchItem/',
-                get: '/api/automaticshutdown/settings/getItem/',
-                set: '/api/automaticshutdown/settings/setItem/',
-                add: '/api/automaticshutdown/settings/addItem/',
-                del: '/api/automaticshutdown/settings/delItem/',
-                toggle: '/api/automaticshutdown/settings/toggleItem/'
-            });
     });
 </script>
 
