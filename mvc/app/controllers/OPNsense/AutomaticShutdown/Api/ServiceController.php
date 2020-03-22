@@ -29,7 +29,7 @@ class ServiceController extends ApiControllerBase
             //add current parameters
             $mdl = new AutomaticShutdown();
             $result['message'] = $mdl->getNodes();
-            $address = $result['message']['addresses']['address'];
+            $address = $result['message']['hours']['hour'];
             if (count($address) > 0) {
                 $startHour = strval($address['StartHour']);
                 $endHour = strval($address['EndHour']);
