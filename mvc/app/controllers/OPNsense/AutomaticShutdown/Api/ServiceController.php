@@ -33,10 +33,13 @@ class ServiceController extends ApiControllerBase
             if (count($address) > 0) {
                 $startHour = strval($address['StartHour']);
                 $endHour = strval($address['EndHour']);
+                $bckresult = trim($backend->configdRun("automaticshutdown status " . $startHour . " " . $endHour));
+                if ($bckresult !== null) {
+                    return $bckresult;
+                }
             }
-            $bckresult = trim($backend->configdRun("automaticshutdown status " . $startHour . " " . $endHour));
-            if ($bckresult !== null) {
-                return $bckresult;
+            else{
+                return array("message" => "No shutdown planned");
             }
         }
         return array("message" => "unable to run config action");
