@@ -8,7 +8,7 @@ class SettingsController extends ApiMutableModelControllerBase
     protected static $internalModelClass = 'OPNsense\AutomaticShutdown\AutomaticShutdown';
     public function searchItemAction()
     {
-        return $this->searchBase("hours.hour", array('enabled', 'startHour'), "startHour");
+        return $this->searchBase("hours.hour", array('enabled', 'StartHour','EndHour'), "StartHour","EndHour");
     }
 
     public function setItemAction($uuid)
