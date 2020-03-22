@@ -16,8 +16,7 @@ r = requests.get(url, auth=(api_key, api_secret),
                   verify=False)
 if r.status_code == 200:
     response = json.loads(r.text)
-    print("Shutdown planned between %s and %s" % (response['general']['StartHour'], response['general']['EndHour']))
+    print("Shutdown planned between %s and %s" % (response['automaticshutdown']['general']['StartHour'], response['automaticshutdown']['general']['EndHour']))
 else:
     print("Request failed with status code %s" % r.status_code)
-print("Response: %s" % r.text)
     
