@@ -5,7 +5,7 @@
             // place actions to run after load, for example update form styles.
         });
         ajaxCall(url = "/api/trafficblocker/service/status", sendData = {}, callback = function (data, status) {
-                    console.log("OK "+JSON.stringify(data));
+                    console.log("Status "+JSON.stringify(data));
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
                 });
         // link save button to API set action
