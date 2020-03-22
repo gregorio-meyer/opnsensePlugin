@@ -4,12 +4,7 @@
         mapDataToFormUI(data_get_map).done(function (data) {
             // place actions to run after load, for example update form styles.
         });
-        $.get(url = "/api/trafficblocker/service/status", callback = function (data, status) {
-                    console.log("Status "+JSON.stringify(data));
-                    $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
-                    $("#responseMsg").append("<h3> Status: " + JSON.stringify(status) + "</h3>");
-                    $("#responseMsg").removeClass("hidden"); 
-                });
+  
         // link save button to API set action
         $("#saveAct").click(function () {
 
@@ -22,6 +17,12 @@
                 }); */
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
+                $.get(url = "/api/trafficblocker/service/status", callback = function (data, status) {
+                    console.log("Status "+JSON.stringify(data));
+                    $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
+                    $("#responseMsg").append("<h3> Status: " + JSON.stringify(status) + "</h3>");
+                    $("#responseMsg").removeClass("hidden"); 
+                });
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function (data, status) {
                     console.log("OK "+JSON.stringify(data));
                     $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
