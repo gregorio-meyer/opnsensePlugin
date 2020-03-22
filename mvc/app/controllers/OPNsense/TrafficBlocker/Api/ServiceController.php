@@ -69,6 +69,6 @@ class ServiceController extends ApiControllerBase
             }
             
         }
-        return array("message" => "Status: unable to run config action ".$enabled);
+        return array("message" => "Status: unable to run config action result".$bckresult." ".$enabled);
     }
 }
