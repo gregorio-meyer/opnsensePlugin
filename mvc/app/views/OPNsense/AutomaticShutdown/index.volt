@@ -47,19 +47,15 @@
             // ...
             //alert("Initilize: ");
 
-        }).on("initialized.rs.jquery.bootgrid", function (e) {
+        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
-            alert("Initilize: ");
-
+            //alert("Initialized ");
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             alert("Removed: ");
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
             save()
             alert("Appended: ");
-        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
-            // ...
-            //alert("Initialized ");
         }).on("selected.rs.jquery.bootgrid", function (e, rows) {
             alert("Select: ");
             save();
