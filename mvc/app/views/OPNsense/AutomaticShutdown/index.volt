@@ -43,7 +43,7 @@
                     return e.uuid;
                 }).indexOf(uuid);
                 if (pos == -1) {
-                    toRemove.push(x)
+                    removed.push(x)
                 }
                 console.log("Index " + pos)
             });
