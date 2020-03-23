@@ -37,14 +37,14 @@
             console.log("Original rows " + JSON.stringify(original_rows))
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
             console.log("Current rows " + JSON.stringify(current))
-            var toRemove = Array.from(original_rows)
+            var toRemove = []]
             current.forEach(x => {
                 uuid = x['uuid'];
                 var pos = original_rows.map(function (e) {
                     return e.uuid;
                 }).indexOf(uuid);
                 if (pos != -1) {
-                    toRemove.splice(pos, 1)
+                    toRemove.push(original_rows[pos])
                 }
                 console.log("Index " + pos)
                 /*   original_rows.forEach(r => {
