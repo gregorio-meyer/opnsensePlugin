@@ -45,12 +45,13 @@
                 add: '/api/automaticshutdown/settings/addItem/',
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
-                ajax: true,
-                post: save
+             
             }
         ).on("removed.rs.jquery.bootgrid", function (e, rows) {
+           // save()
             alert("Removed: ");
         }).on("appended.rs.jquery.bootgrid", function (e, rows) {
+            save()
             alert("Appended: ");
         });
 
