@@ -56,7 +56,7 @@
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                    add()
+                    add();
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
@@ -70,11 +70,15 @@
                 }
             }
         }
+        $(document).on('hide.bs.modal', '#DialogAddress', function () {
+            alert('');
+            console.log("BUTTON " + $('#btn_DialogAddress_save'));
+        })
         $("#saveAct").on('click', function () {
             //remove()
-            save()
+            save();
             //save()
-            alert("Saved")
+            alert("Saved");
         });
     });
 
