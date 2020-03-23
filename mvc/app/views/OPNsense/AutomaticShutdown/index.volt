@@ -34,6 +34,7 @@
             //alert("Initialized ");
         }).on("selected.rs.jquery.bootgrid", function (e, rows) {
             alert("Select: ");
+            save();
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 
             alert("Deselect: ");
