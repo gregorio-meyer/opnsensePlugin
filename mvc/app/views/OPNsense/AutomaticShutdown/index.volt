@@ -42,9 +42,8 @@
                 })
             });
         }
-        function addJobs(startHour, endHour) {
-            console.log("Start hour: " + startHour + " end hour: " + endHour);
-            //add cron job if enabled
+        function addStartJob(startHour) {
+            console.log("Start hour: " + startHour)
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
                     console.log("Add start hour " + JSON.stringify(data));
@@ -52,23 +51,25 @@
                     console.log(JSON.stringify(data));
                     console.log(status);
                 });
-                $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                    console.log("Add end hour " + JSON.stringify(data));
+            });
+        }
+        function addEndJob(endHour) {
+            console.log("End hour: " + endHour);
+            //add cron job if enabled
+            $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                console.log("Add end hour " + JSON.stringify(data));
+                console.log(status);
+                $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
+                    console.log(JSON.stringify(data));
                     console.log(status);
-                    $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
-                        console.log(JSON.stringify(data));
-                        console.log(status);
-                    });
                 });
             });
-            /*       ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
-                            console.log(JSON.stringify(data));
-                            console.log(status);
-                        });*/
-
-
-            $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+            //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
         }
+        /*       ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
+                        console.log(JSON.stringify(data));
+                        console.log(status);
+                    });*/
         function save() {
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
@@ -78,7 +79,9 @@
                     rows.forEach(h => {
                         //remove it should only enable/disable scheduling                    
                         if (h['enabled'] == 1) {
-                            addJobs(h['StartHour'], h['EndHour']);
+                            addStartJob(h['StartHour']);
+                            
+                            addEndJob(h['EndHour']);
                         }
                     });
                     $("#shutdownMsg").removeClass("hidden");
