@@ -90,10 +90,11 @@
         });
          $('#DialogAddress').on('hidden.bs.modal', function (e) {
             var button = $(e.relatedTarget) //Button that triggered the modal 
+            var active = $(document.activeElement) //Button that triggered the modal 
            
             // do something...
             console.log("Hidden "  + button);
-            alert("Hidden " + JSON.stringify(button));
+            alert("Hidden " + JSON.stringify(button) +' active '+JSON.stringify());
         }) 
 
         /*.bootgrid({
