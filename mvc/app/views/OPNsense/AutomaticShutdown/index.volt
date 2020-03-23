@@ -80,18 +80,19 @@
             .on("appended.rs.jquery.bootgrid", function (e, rows) {
                 alert("Appended: ");
             });
-    
-        $('#DialogAddress').on('shown.bs.modal', function (e) {
-            // do something...
-            console.log("Shown");
-            alert("Shown");
-        })
+
+        $('#DialogAddress .modal-footer button').on('click', function (e) {
+            var button = $(e.relatedTarget) //Button that triggered the modal 
+            $(this).closest('.modal').one('hidden.bs.modal', function () {
+                console.log('The button that closed the modal is: ', $button)
+            });
+        });
         $('#DialogAddress').on('hidden.bs.modal', function (e) {
             // do something...
             console.log("Hidden");
             alert("Hidden");
         })
-       
+
         /*.bootgrid({
 
        })
