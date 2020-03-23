@@ -73,7 +73,7 @@
         });
     }
     function add() {
-        var rows = $("#grid-addresses").bootgrid('getCurrentRows');
+        var rows = $("#grid-addresses").bootgrid('getSelectedRows');
         for (r of rows) {
             //remove it should only enable/disable scheduling                    
             if (r['enabled'] == 1) {
