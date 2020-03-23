@@ -62,12 +62,12 @@
 
             }
         );
-
+        $("#saveAct").on('click', function () {
+            save()
+            alert("Saved")
+        })
     });
-    $("#saveAct").on('click', function () {
-        save()
-        alert("Saved")
-    })
+
 </script>
 
 <div class="alert alert-info hidden" role="alert" id="shutdownMsg">
