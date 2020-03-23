@@ -56,6 +56,7 @@
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                    add()
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
@@ -72,7 +73,6 @@
         $("#saveAct").on('click', function () {
             //remove()
             save()
-            add()
             //save()
             alert("Saved")
         });
