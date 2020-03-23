@@ -6,7 +6,7 @@
             // ...
             //alert("Initilize: ");
         }).on("loaded.rs.jquery.bootgrid", function (e, columns, row) {
-            var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             console.log("Removed");
