@@ -5,6 +5,8 @@
             // ...
             //alert("Initilize: ");
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
+            var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log("Original rows " + JSON.stringify(original_rows));
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             console.log("Removed");
@@ -28,15 +30,15 @@
         );
         var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         function save() {
-            
+
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    console.log("rows " + original_rows)
+                    console.log("rows " + JSON.stringify(rows))
                     var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
-                    console.log("Original rows " + original_rows)
+                    console.log("Original rows " + JSON.stringify(original_rows))
                     var length = rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
