@@ -27,11 +27,7 @@
                 add: '/api/automaticshutdown/settings/addItem/',
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
-            });
-        //add
-        $("#grid-addresses").bootgrid({
-            //options
-        }).on("appended.rs.jquery.bootgrid", function (e) {
+            }).on("appended.rs.jquery.bootgrid", function (e) {
             console.log("Appended")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
@@ -54,20 +50,12 @@
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
-        });
-        // delete
-        $("#grid-addresses").bootgrid({
-            //options
-        })
-            .on("removed.rs.jquery.bootgrid", function (e, removedRows) {
+        }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
                 console.log("Removed")
                 $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
                 $("#shutdownMsg").removeClass("hidden");
             });
-        $("#grid-addresses").bootgrid({
-
-        })
-            .on("load.rs.jquery.bootgrid", function (e) {
+      /*      .on("load.rs.jquery.bootgrid", function (e) {
                 console.log("Loaded")
                 $("#shutdownMsg").html('<p>Loaded </p>');
                 $("#shutdownMsg").removeClass("hidden");
@@ -75,7 +63,7 @@
                 console.log("Initialized")
                 $("#shutdownMsg").html('<p>Initialized </p>');
                 $("#shutdownMsg").removeClass("hidden");
-            });
+            }); */
     });
 </script>
 
