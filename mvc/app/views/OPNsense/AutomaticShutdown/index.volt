@@ -1,14 +1,6 @@
 <script>
     $(document).ready(function () {
-        console.log("Ready")
-        //var original_rows = null
-        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
-        }).on("loaded.rs.jquery.bootgrid", function (e, columns, row) {
-            /* if (original_rows == null) {
-                original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            }
-            console.log("Original " + JSON.stringify(original_rows)) */
-        }).UIBootgrid(
+        $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
                 get: '/api/automaticshutdown/settings/getItem/',
@@ -19,37 +11,21 @@
 
             }
         );
+        //remove cron jobs with an AJAX call
         function remove() {
-            /*       console.log("Original rows " + JSON.stringify(original_rows))
-                  var current = $("#grid-addresses").bootgrid('getCurrentRows');
-                  console.log("Current rows " + JSON.stringify(current)) */
-            /*             var removed = []
-                        original_rows.forEach(x => {
-                            uuid = x['uuid'];
-                            var pos = current.map(function (e) {
-                                return e.uuid;
-                            }).indexOf(uuid);
-                            if (pos == -1) {
-                                removed.push(x)
-                            }
-                            console.log("Index " + pos)
-                        }); */
-            //remove cron jobs with an AJAX call
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
+                console.log(JSON.stringify(data));
+                console.log(status);
                 console.log("Stop: ")
                 data['rows'].forEach(d => {
-                    //console.log("d " + JSON.stringify(d))
                     ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
                         console.log(data);
                         console.log(status);
                     });
                 })
-                console.log(JSON.stringify(data));
-                console.log(status);
                 ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Start Firewall", sendData = {}, callback = function (data, status) {
                     console.log("Start: ")
                     data['rows'].forEach(d => {
-                        //console.log("d " + JSON.stringify(d))
                         ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
@@ -57,7 +33,6 @@
                     })
                 });
             });
-//            console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
             $("#shutdownMsg").html("")
