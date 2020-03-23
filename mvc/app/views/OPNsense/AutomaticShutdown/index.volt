@@ -86,7 +86,11 @@
             alert("Select: ");
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
             alert("Deselect: ")
-        });
+        })
+        .on("removed.rs.jquery.bootgrid", function (e, rows) {
+            alert("Removed: ")
+        })
+        ;
 
 
         /*.bootgrid({
