@@ -27,7 +27,10 @@
 
             }
         );
-        var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+
+        function remove(){
+            console.log("Removing...")
+        }
         function save() {
 
             $("#shutdownMsg").html("")
@@ -36,7 +39,6 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
                     console.log("rows " + JSON.stringify(rows))
-                    var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
                     console.log("Original rows " + JSON.stringify(original_rows))
                     var length = rows.length
                     if (length == 0) {
@@ -75,6 +77,7 @@
             });
         }
         $("#saveAct").on('click', function () {
+            remove()
             save()
             alert("Saved")
         });
