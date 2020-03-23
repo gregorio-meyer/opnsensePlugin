@@ -88,9 +88,9 @@
         alert("Add pressed");
           
     });
-    $("#DialogAdress").on('click',function(){
-        console.log("click");
-        alert("Add pressed");
+    $("#btn_DialogAddress_save").on('click',function(){
+        console.log("Saved");
+        alert("Saved");
     });
 
 
