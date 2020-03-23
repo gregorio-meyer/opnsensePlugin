@@ -69,6 +69,7 @@
 <div class="alert alert-info hidden" role="alert" id="shutdownMsg">
 
 </div>
+
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
     <thead>
         <tr>
@@ -96,4 +97,9 @@
         </tr>
     </tfoot>
 </table>
+<div class="col-md-12">
+    <br><br>
+    <button class="btn btn-primary" id="reconfigureAct" type="button"><b>Apply</b><i id="reconfigureAct_progress"
+            class=""></i> </button>
+</div>
 {{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit hour')])}}
