@@ -3,7 +3,7 @@
         console.log("Ready")
         //rows already present
         var original_rows = null;
-        function remove() {
+/*         function remove() {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                 var rows = $("#grid-addresses").bootgrid('getSelectedRows');
                 var length = rows.length
@@ -14,7 +14,7 @@
                 var removed = original_rows.filter((e) => !rows.includes(e));
                 console.log(JSON.stringify(removed) + " was removed");
             });
-        }
+        } */
         function save() {
             console.log("Original rows " + JSON.stringify(original_rows))
 
