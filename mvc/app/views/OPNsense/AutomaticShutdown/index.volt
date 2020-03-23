@@ -49,7 +49,7 @@
             //
 
         }).on("initialized.rs.jquery.bootgrid", function (e){
-            alert("Initialized: "+JSON.stringify(e));
+            alert("Initialized: ");
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             alert("Removed: ");
