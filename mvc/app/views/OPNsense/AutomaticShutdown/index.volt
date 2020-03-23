@@ -80,29 +80,18 @@
             .on("appended.rs.jquery.bootgrid", function (e, rows) {
                 alert("Appended: ");
             });
-        $(this).find("#btn_DialogAddress_save").on("click", function (e) {
-            alert("Add pressed");
-        });
-        $(this).on('click', '[data-action]', function () {
-            console.log("click");
-            alert("Add pressed");
-
-        });
-        $("#btn_DialogAddress_save").on('click', function () {
-            console.log("Saved");
-            alert("Saved");
-        });
-
-        $('#DialogAddress').on('hidden.bs.modal', function (e) {
+    
+        $('#DialogAddress').on('shown.bs.modal', function (e) {
             // do something...
             console.log("Shown");
             alert("Shown");
         })
-        $('#DialogAddress').on('shown.bs.modal', function (e) {
+        $('#DialogAddress').on('hidden.bs.modal', function (e) {
             // do something...
             console.log("Hidden");
             alert("Hidden");
         })
+       
         /*.bootgrid({
 
        })
