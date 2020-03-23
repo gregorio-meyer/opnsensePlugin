@@ -4,12 +4,12 @@
 
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
- /*            formatTokenizersUI();
-            $('.selectpicker').selectpicker('refresh');
-            // request service status on load and update status box
-            ajaxCall(url = "/api/automaticshutdown/service/status", sendData = {}, callback = function (data, status) {
-                updateServiceStatusUI(data['status']);
-            }); */
+            /*            formatTokenizersUI();
+                       $('.selectpicker').selectpicker('refresh');
+                       // request service status on load and update status box
+                       ajaxCall(url = "/api/automaticshutdown/service/status", sendData = {}, callback = function (data, status) {
+                           updateServiceStatusUI(data['status']);
+                       }); */
         });
         $("#grid-addresses").UIBootgrid(
             {
@@ -82,16 +82,16 @@
             }
         }
 
-        $("#saveAct").on('click', function () {
+        $("#saveAct").click(function () {
             //remove()
             save();
             //save()
-           // alert("Saved");
+            // alert("Saved");
         });
     });
     $(document).on('hide.bs.modal', '#DialogAddress', function () {
-        console.log("BUTTON " + $('#btn_DialogAddress_save'));
-        $('#btn_DialogAddress_save').on('click', function (e) {
+        console.log("BUTTON " + JSON.stringify($('#btn_DialogAddress_save')));
+        $("#btn_DialogAddress_save").click(function () {
             alert("Saved");
         })
     });
