@@ -73,17 +73,16 @@
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
             alert("Deselect: ");
         })
-        $("#grid-addresses").bootgrid({})
         .on("removed.rs.jquery.bootgrid", function (e, rows) {
             alert("Removed: ");
-        })
+        });
         $("#grid-addresses").bootgrid({})
         .on("appended.rs.jquery.bootgrid", function (e, rows) {
             alert("Appended: ");
         });
         $(this).find("#btn_DialogAddress_save").on("click", function(e){
             alert("Add pressed");
-        })
+        });
 
 
 
