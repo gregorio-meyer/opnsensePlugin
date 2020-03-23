@@ -72,18 +72,15 @@
             alert("Select: ");
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
             alert("Deselect: ");
-        })
-            .on("removed.rs.jquery.bootgrid", function (e, rows) {
-                alert("Removed: ");
-            });
-        $("#grid-addresses").bootgrid({ ajax: true}).on("initialize.rs.jquery.bootgrid", function (e) {
+        }).on("removed.rs.jquery.bootgrid", function (e, rows) {
+            alert("Removed: ");
+        }).on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             alert("Initilize: ");
 
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
             alert("Initialized ");
-
         });
 
         $('#DialogAddress .modal-footer button').on('click', function (e) {
