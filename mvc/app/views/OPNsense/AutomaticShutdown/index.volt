@@ -51,13 +51,14 @@
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
+            console.log("Removed");
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
-            save()
-        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+            console.log("Append");  
             save();
+        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+        //    save();
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-
-            alert("Deselect: ");
+            //alert("Deselect: ");
         }).UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
