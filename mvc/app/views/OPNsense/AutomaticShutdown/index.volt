@@ -50,7 +50,7 @@
             //remove cron jobs with an AJAX call
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log("Stop: ")
-                data.forEach(d=>{
+                data['rows'].forEach(d=>{
                     console.log("d "+d)
                 })
                 console.log(JSON.stringify(data));
