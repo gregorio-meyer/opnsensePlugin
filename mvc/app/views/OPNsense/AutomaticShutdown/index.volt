@@ -17,6 +17,8 @@
                     var endHour = data['message']['hours']['hour']['EndHour'];
                     console.log("Start hour: "+startHour)
                     console.log("End hour: "+endHour)
+                    console.log("Data: "+data)
+                    console.log("Status: "+status)
                     console.log("hour: "+JSON.stringify(hour))
                     console.log("hour0: "+JSON.stringify(hour[0]))
                     //plan firewall stop
