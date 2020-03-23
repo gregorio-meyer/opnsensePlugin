@@ -1,7 +1,6 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        //add
         function save() {
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
@@ -47,6 +46,10 @@
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             //alert("Initilize: ");
+
+        }).on("initialized.rs.jquery.bootgrid", function (e) {
+            // ...
+            alert("Initilize: ");
 
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
