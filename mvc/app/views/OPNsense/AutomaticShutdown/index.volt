@@ -39,24 +39,17 @@
                 })
             });
         }
-        function addStartJob(startHour, endHour) {
-            $.post(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
-
-            });
-            $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+        function addJobs(startHour, endHour) {
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 console.log("Add start hour " + startHour);
+                //add cron job if enabled
+                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                    console.log("Add end hour " + endHour);
+                });
             });
-            addEndJob(endHour);
         }
-        function addEndJob(endHour) {
-            $.post(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
-            });
-            //add cron job if enabled
-            $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                console.log("Add end hour " + endHour);
-            });
-            //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-        }
+        //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+
         /*       */
         function save() {
             $("#shutdownMsg").html("")
@@ -67,19 +60,19 @@
                 });
             });
         }
-        function addJobs() {
+        function add() {
             var rows = $("#grid-addresses").bootgrid('getCurrentRows');
             for (r of rows) {
                 //remove it should only enable/disable scheduling                    
                 if (r['enabled'] == 1) {
-                    addStartJob(r['StartHour'], r['EndHour']);
+                    addJobs(r['StartHour'], r['EndHour']);
                 }
             }
         }
         $("#saveAct").on('click', function () {
             //remove()
             save()
-            addJobs()
+            add()
             //save()
             alert("Saved")
         });
