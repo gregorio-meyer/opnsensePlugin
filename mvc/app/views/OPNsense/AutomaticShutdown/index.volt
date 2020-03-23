@@ -85,13 +85,16 @@
             var button = $(e.relatedTarget) //Button that triggered the modal 
             $(this).closest('.modal').one('hidden.bs.modal', function () {
                 console.log('The button that closed the modal is: ', $button)
+                alert('The button that closed the modal is: ', $button)
             });
         });
-        $('#DialogAddress').on('hidden.bs.modal', function (e) {
+         $('#DialogAddress').on('hidden.bs.modal', function (e) {
+            var button = $(e.relatedTarget) //Button that triggered the modal 
+           
             // do something...
-            console.log("Hidden");
-            alert("Hidden");
-        })
+            console.log("Hidden", $button);
+            alert("Hidden ", $button);
+        }) 
 
         /*.bootgrid({
 
