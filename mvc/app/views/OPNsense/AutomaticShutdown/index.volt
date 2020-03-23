@@ -76,7 +76,7 @@
             .on("removed.rs.jquery.bootgrid", function (e, rows) {
                 alert("Removed: ");
             });
-        $("#grid-addresses").bootgrid({}).on("initialize.rs.jquery.bootgrid", function (e) {
+        $("#grid-addresses").bootgrid({ ajax: true}).on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             alert("Initilize: ");
 
