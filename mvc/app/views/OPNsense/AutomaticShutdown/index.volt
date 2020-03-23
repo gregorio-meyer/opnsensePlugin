@@ -63,6 +63,10 @@
         $("#saveAct").on('click', function () {
             save()
             alert("Saved")
+        });
+        $("#btn_DialogAddress_save").unbind('click').click(function () {
+            save()
+            alert("Saved")
         })
     });
 
