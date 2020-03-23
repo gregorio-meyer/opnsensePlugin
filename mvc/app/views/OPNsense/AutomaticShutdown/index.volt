@@ -32,6 +32,12 @@
                         });
                     })
                 });
+                ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
+                    console.log("Result: ")
+                    data['rows'].forEach(d => {
+                        console.log(JSON.stringify(d));
+                    });
+                })
             });
         }
         function save() {
