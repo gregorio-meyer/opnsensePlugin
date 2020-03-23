@@ -11,8 +11,8 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
                     console.log("Reload")
-                    var startHour = data['message']['general']['StartHour'];
-                    var endHour = data['message']['general']['EndHour'];
+                    var startHour = data['message']['hours']['hour']['StartHour'];
+                    var endHour = data['message']['hours']['hour']['EndHour'];
                     //plan firewall stop
                     ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                         console.log(data);
@@ -48,10 +48,10 @@
                 add: '/api/automaticshutdown/settings/addItem/',
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
-             
+
             }
         ).on("removed.rs.jquery.bootgrid", function (e, rows) {
-           // save()
+            // save()
             alert("Removed: ");
         }).on("appended.rs.jquery.bootgrid", function (e, rows) {
             save()
