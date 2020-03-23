@@ -94,7 +94,7 @@
         $("#saveAct").on('click', function () {
             //remove()
             save()
-            // addJobs()
+            addJobs()
             alert("Saved")
         });
     });
