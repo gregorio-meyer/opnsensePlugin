@@ -38,9 +38,7 @@
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
             console.log("Current rows " + JSON.stringify(current))
             var removed = Array.from(original_rows)
-            removed = removed.filter(e1 => {
-                !current.includes(e1);
-            });
+            removed = removed.filter(x => !~current.indexOf(x));
             console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
