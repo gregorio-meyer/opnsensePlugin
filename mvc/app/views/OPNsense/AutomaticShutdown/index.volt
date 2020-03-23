@@ -62,16 +62,7 @@
         //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
 
         /*       */
-        function save() {
-            $("#shutdownMsg").html("")
-            saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-                // action to run after successful save, for example reconfigure service.
-                ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                    add();
-                    $("#shutdownMsg").removeClass("hidden");
-                });
-            });
-        }
+
         function add() {
             var rows = $("#grid-addresses").bootgrid('getCurrentRows');
             for (r of rows) {
@@ -90,6 +81,16 @@
         });
 
     });
+    function save() {
+        $("#shutdownMsg").html("")
+        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+            // action to run after successful save, for example reconfigure service.
+            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                add();
+                $("#shutdownMsg").removeClass("hidden");
+            });
+        });
+    }
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         alert("Hidden");
         save();
