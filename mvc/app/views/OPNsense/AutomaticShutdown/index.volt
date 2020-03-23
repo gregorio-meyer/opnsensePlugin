@@ -11,6 +11,7 @@
                     var times = Object.keys(hour);
                     var rows =$("#grid-addresses").bootgrid('getSelectedRows');
                     console.log("Rows: "+JSON.stringify(rows))
+                    $("#shutdownMsg").html("")
                     times.forEach(i => {
                         h = hour[i]
                         var startHour = h['StartHour'];
