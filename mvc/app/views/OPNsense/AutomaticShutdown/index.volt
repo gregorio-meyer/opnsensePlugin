@@ -1,7 +1,8 @@
 <script>
+    var original_rows = null;
+
     $(document).ready(function () {
         console.log("Ready")
-        var original_rows = null;
         function save() {
             console.log("Original rows " + original_rows)
             $("#shutdownMsg").html("")
