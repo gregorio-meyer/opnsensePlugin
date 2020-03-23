@@ -14,6 +14,7 @@
                     console.log(JSON.stringify(data))
                     var hour = data['message']['hours']['hour'];
                     var time = hour[Object.keys(hour)[0]]
+                    console.log("time: " + JSON.stringify(time))
                     var startHour = time['StartHour'];
                     var endHour = time['EndHour'];
                     console.log("Start hour: " + startHour)
