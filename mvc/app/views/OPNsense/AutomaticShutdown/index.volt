@@ -20,7 +20,7 @@
                     console.log("Data: "+JSON.stringify(data))
                     console.log("Status: "+status)
                     console.log("hour: "+JSON.stringify(hour))
-                    console.log("hour0: "+Object.keys(hour)[0]['StartHour'])
+                    console.log("hour0: "+Object.keys(hour)[0])
                     //plan firewall stop
                     ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                         console.log(data);
