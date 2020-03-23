@@ -9,7 +9,11 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
                     var hour = data['message']['hours']['hour'];
-                    var time = Object.keys(hour);
+                    var times = Object.keys(hour);
+                    times.forEach(element => {
+                        console.log(element)
+                        console.log(JSON.stringify(hour[element]))
+                    })
                     console.log("time: " + JSON.stringify(time));
                     var startHour = time['StartHour'];
                     var endHour = time['EndHour'];
