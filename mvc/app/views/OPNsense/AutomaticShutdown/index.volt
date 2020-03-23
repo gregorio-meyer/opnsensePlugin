@@ -1,13 +1,15 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
+        var original_rows = null;
         function save() {
+            console.log("Original rows "+original_rows)
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    var length =rows.length
+                    var length = rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
                     }
@@ -16,7 +18,7 @@
                         var h = i;
                         //if a selection was made get the selected element
                         if (length != 0) {
-                            h = data['message']['hours']['hour'][i] 
+                            h = data['message']['hours']['hour'][i]
                         }
                         var enabled = h['enabled']
                         if (enabled == 1) {
@@ -46,10 +48,10 @@
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             //alert("Initilize: ");
-
+            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
-          console.log("Initialized");
+            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
