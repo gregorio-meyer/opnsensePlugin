@@ -88,6 +88,18 @@
             //save()
             // alert("Saved");
         });
+        $("#DialogAddress").on('hide', function () {
+            console.log('hide');
+        })
+            .on('hidden', function () {
+                console.log('hidden');
+            })
+            .on('show', function () {
+                console.log('show');
+            })
+            .on('shown', function () {
+                console.log('shown')
+            });
     });
     $(document).on('hide.bs.modal', '#DialogAddress', function () {
         console.log("BUTTON " + JSON.stringify($('#btn_DialogAddress_save')));
