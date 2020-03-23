@@ -1,17 +1,14 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        //rows al
-        var original_rows = null;
+        //add
         function save() {
-            console.log("Original rows " + JSON.stringify(original_rows))
-
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    var length = rows.length
+                    var length =rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
                     }
@@ -20,7 +17,7 @@
                         var h = i;
                         //if a selection was made get the selected element
                         if (length != 0) {
-                            h = data['message']['hours']['hour'][i]
+                            h = data['message']['hours']['hour'][i] 
                         }
                         var enabled = h['enabled']
                         if (enabled == 1) {
@@ -51,10 +48,10 @@
             // ...
             //
 
-        }).on("initialized.rs.jquery.bootgrid", function (e) {
+        }).on("initialized.rs.jquery.bootgrid", function (e){
             alert("Initialized: ");
-            original_rows = $("#grid-addresses").bootgrid('getCurrentRows')
-            console.log("Original rows " + JSON.stringify(original_rows))
+           var original_rows =  $("#grid-addresses").bootgrid('getCurrentRows')
+        console.log("Original rows "+JSON.stringify(original_rows))
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             alert("Removed: ");
