@@ -1,5 +1,16 @@
 <script>
     $(document).ready(function () {
+        var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
+
+        // load initial data
+        mapDataToFormUI(data_get_map).done(function () {
+ /*            formatTokenizersUI();
+            $('.selectpicker').selectpicker('refresh');
+            // request service status on load and update status box
+            ajaxCall(url = "/api/automaticshutdown/service/status", sendData = {}, callback = function (data, status) {
+                updateServiceStatusUI(data['status']);
+            }); */
+        });
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
