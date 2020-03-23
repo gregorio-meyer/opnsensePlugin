@@ -28,6 +28,7 @@
         //add
         function save() {
             console.log("Saved")
+
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
@@ -43,6 +44,11 @@
                             console.log(status);
                         });
                     });
+<<<<<<< HEAD
+=======
+                    //$.get("/api/automaticshutdown/service/status"){ }
+                    // action to run after reload
+>>>>>>> d51747e2c8fc4ddf1463bbf1a2839cfe508341df
                     $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                     $("#shutdownMsg").removeClass("hidden");
                 });
