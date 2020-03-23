@@ -30,6 +30,8 @@
             alert("Select: ");
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
             alert("Deselect: ");
+        }).on("removed.rs.jquery.bootgrid", function (e, rows) {
+            alert("Removed: ");
         }).UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -67,44 +69,35 @@
                     });
                 }); */
         // delete
-        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
-            // ...
-            alert("Initilize: ");
-
-        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
-            // ...
-            alert("Initialized ");
-        }).on("removed.rs.jquery.bootgrid", function (e, rows) {
-            alert("Removed: ");
-        }).bootgrid({
+/*         $("#grid-addresses").bootgrid({
             ajax: true,
             post: function () {
                 /* To accumulate custom parameter with the request object */
-                return {
+   /*              return {
                     id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
                 };
             },
             url: "/api/data/basic",
             selection: true
-        });
+        }); */ 
 
-        $('#DialogAddress .modal-footer button').on('click', function (e) {
-            var button = $(e.relatedTarget) //Button that triggered the modal 
-            $(this).closest('.modal').one('hidden.bs.modal', function () {
-                console.log('The button that closed the modal is: ', $button)
-                alert('The button that closed the modal is: ', $button)
-            });
-        });
-        $('#DialogAddress').on('hidden.bs.modal', function (e) {
-            var button = $(e.relatedTarget) //Button that triggered the modal 
-            var active = $(document.activeElement) //Button that triggered the modal 
+        // $('#DialogAddress .modal-footer button').on('click', function (e) {
+        //     var button = $(e.relatedTarget) //Button that triggered the modal 
+        //     $(this).closest('.modal').one('hidden.bs.modal', function () {
+        //         console.log('The button that closed the modal is: ', $button)
+        //         alert('The button that closed the modal is: ', $button)
+        //     });
+        // });
+        // $('#DialogAddress').on('hidden.bs.modal', function (e) {
+        //     var button = $(e.relatedTarget) //Button that triggered the modal 
+        //     var active = $(document.activeElement) //Button that triggered the modal 
 
-            // do something...
-            if (active.is('[data-toggle],[data-dismiss]')) {
-                console.log("Hidden " + button);
-                alert("Hidden " + JSON.stringify(button) + ' active ' + JSON.stringify(active));
-            }
-        })
+        //     // do something...
+        //     if (active.is('[data-toggle],[data-dismiss]')) {
+        //         console.log("Hidden " + button);
+        //         alert("Hidden " + JSON.stringify(button) + ' active ' + JSON.stringify(active));
+        //     }
+        // })
 
         /*.bootgrid({
 
