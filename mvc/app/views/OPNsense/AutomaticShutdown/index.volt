@@ -13,12 +13,12 @@
                     console.log("Reload")
                     console.log(JSON.stringify(data))
                     var hour = data['message']['hours']['hour'];
-                    var time = hour[Object.keys(hour)]
-                    console.log("time: " + JSON.stringify(time))
+                    var time = hour[Object.keys(hour)];
+                    console.log("time: " + JSON.stringify(time));
                     var startHour = time['StartHour'];
                     var endHour = time['EndHour'];
-                    console.log("Start hour: " + startHour)
-                    console.log("End hour: " + endHour)
+                    console.log("Start hour: " + startHour);
+                    console.log("End hour: " + endHour);
                     //plan firewall stop
                     ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                         console.log(data);
