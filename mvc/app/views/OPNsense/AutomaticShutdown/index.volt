@@ -51,7 +51,7 @@
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log("Stop: ")
                 data['rows'].forEach(d=>{
-                    console.log("d "+d)
+                    console.log("d "+JSON.stringify(d))
                 })
                 console.log(JSON.stringify(data));
                 console.log(status);
