@@ -67,7 +67,8 @@
                                     });
                                 });
                                 $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-                            }
+                            });
+                        }
                     });
                     $("#shutdownMsg").removeClass("hidden");
                 });
