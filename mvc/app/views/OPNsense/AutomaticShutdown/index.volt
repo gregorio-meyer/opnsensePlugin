@@ -76,10 +76,15 @@
             .on("removed.rs.jquery.bootgrid", function (e, rows) {
                 alert("Removed: ");
             });
-        $("#grid-addresses").bootgrid({})
-            .on("appended.rs.jquery.bootgrid", function (e, rows) {
-                alert("Appended: ");
-            });
+        $("#grid-addresses").bootgrid({}).on("initialize.rs.jquery.bootgrid", function (e) {
+            // ...
+            alert("Initilize: ");
+
+        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
+            // ...
+            alert("Initialized ");
+
+        });
 
         $('#DialogAddress .modal-footer button').on('click', function (e) {
             var button = $(e.relatedTarget) //Button that triggered the modal 
