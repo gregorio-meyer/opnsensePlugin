@@ -88,6 +88,10 @@
         alert("Add pressed");
           
     });
+    $("#DialogAdress").on('click',function(){
+        console.log("click");
+        alert("Add pressed");
+    });
 
 
 
