@@ -40,6 +40,22 @@
                 })
             });
         }
+        function addJobs(startHour, endHour) {
+            //add cron job if enabled
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                console.log(JSON.stringify(data));
+                console.log(status);
+                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                    console.log(JSON.stringify(data));
+                    console.log(status);
+                    ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
+                        console.log(JSON.stringify(data));
+                        console.log(status);
+                    });
+                });
+                $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+            });
+        }
         function save() {
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
@@ -54,20 +70,7 @@
                             var endHour = h['EndHour'];
                             console.log("Start hour: " + startHour);
                             console.log("End hour: " + endHour);
-                            //add cron job if enabled
-                            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                                console.log(JSON.stringify(data));
-                                console.log(status);
-                                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                                    console.log(JSON.stringify(data));
-                                    console.log(status);
-                                    ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
-                                        console.log(JSON.stringify(data));
-                                        console.log(status);
-                                    });
-                                });
-                                $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-                            });
+                            addJobs(endHour, startHour);
                         }
                     });
                     $("#shutdownMsg").removeClass("hidden");
