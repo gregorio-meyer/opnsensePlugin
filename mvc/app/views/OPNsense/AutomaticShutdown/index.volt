@@ -7,6 +7,7 @@
             //alert("Initilize: ");
         }).on("loaded.rs.jquery.bootgrid", function (e, columns, row) {
             original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log("Original " + JSON.stringify(original_rows))
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             console.log("Removed");
@@ -29,11 +30,11 @@
             }
         );
 
-        function remove(){
+        function remove() {
             console.log("Removing...")
             console.log("Original rows " + JSON.stringify(original_rows))
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
-            console.log("Current rows " + JSON.stringify(current))        
+            console.log("Current rows " + JSON.stringify(current))
         }
         function save() {
 
@@ -42,12 +43,10 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    console.log("rows " + JSON.stringify(rows))
                     var length = rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
                     }
-                    console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
                         var h = i;
                         //if a selection was made get the selected element
