@@ -46,14 +46,14 @@
             console.log("Start");
             console.log("Start hour: " + startHour);
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                console.log("Add start hour " + JSON.stringify(data));
+                console.log(status);
                 $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
-                    console.log("Add start hour " + JSON.stringify(data));
-                    console.log(status);
                     console.log(JSON.stringify(data));
                     console.log(status);
                 });
             });
-         //   addEndJob(endHour);
+            //   addEndJob(endHour);
         }
         function addEndJob(endHour) {
             console.log("End hour: " + endHour);
@@ -84,6 +84,7 @@
         function addJobs() {
             var rows = $("#grid-addresses").bootgrid('getCurrentRows');
             rows.forEach(h => {
+                console.log(JSON.stringify(h))
                 //remove it should only enable/disable scheduling                    
                 if (h['enabled'] == 1) {
                     addStartJob(h['StartHour'], h['EndHour']);
