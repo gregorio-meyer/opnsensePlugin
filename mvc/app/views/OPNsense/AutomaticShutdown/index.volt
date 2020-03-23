@@ -57,7 +57,7 @@
                     })
                 });
             });
-            console.log("Removed " + JSON.stringify(removed))
+//            console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
             $("#shutdownMsg").html("")
