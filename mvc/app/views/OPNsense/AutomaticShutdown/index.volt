@@ -1,7 +1,5 @@
+
 <script>
-    function(){
-        
-    }
     $(document).ready(function () {
         console.log("Ready")
         $("#btn_DialogAddress_save").click(), function (data, status) {
