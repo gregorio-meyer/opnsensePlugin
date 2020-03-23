@@ -74,22 +74,25 @@
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
-                var rows = $("#grid-addresses").bootgrid('getCurrentRows');
-                rows.forEach(h => {
-                    //remove it should only enable/disable scheduling                    
-                    if (h['enabled'] == 1) {
-                        addStartJob(h['StartHour']);
-                        addEndJob(h['EndHour']);
-                    }
-                });
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
         }
+        function addJobs() {
+            var rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            rows.forEach(h => {
+                //remove it should only enable/disable scheduling                    
+                if (h['enabled'] == 1) {
+                    addStartJob(h['StartHour']);
+                    addEndJob(h['EndHour']);
+                }
+            });
+        }
         $("#saveAct").on('click', function () {
             //remove()
             save()
+            addJobs()
             alert("Saved")
         });
     });
