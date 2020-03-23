@@ -43,7 +43,7 @@
                 var pos = original_rows.map(function (e) {
                     return e.uuid;
                 }).indexOf(uuid);
-                if (pos != -1) {
+                if (pos == -1) {
                     toRemove.push(original_rows[pos])
                 }
                 console.log("Index " + pos)
