@@ -54,7 +54,6 @@
         function addEndJob(endHour) {
             $.post(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
             });
-            console.log("End hour: " + endHour);
             //add cron job if enabled
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
                 console.log("Add end hour " + endHour);
