@@ -94,7 +94,7 @@
            
             // do something...
             console.log("Hidden "  + button);
-            alert("Hidden " + JSON.stringify(button) +' active '+JSON.stringify());
+            alert("Hidden " + JSON.stringify(button) +' active '+JSON.stringify(active));
         }) 
 
         /*.bootgrid({
