@@ -3,32 +3,29 @@
         console.log("Ready")
         //add
         function save() {
-
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
                     var hour = data['message']['hours']['hour'];
                     var times = Object.keys(hour);
-                    times.forEach(element => {
-                        console.log(element)
-                        console.log(JSON.stringify(hour[element]))
-                    })
-                    console.log("time: " + JSON.stringify(time));
-                    var startHour = time['StartHour'];
-                    var endHour = time['EndHour'];
-                    console.log("Start hour: " + startHour);
-                    console.log("End hour: " + endHour);
-                    //plan firewall stop
-                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                        console.log(data);
-                        console.log(status);
-                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                    times.forEach(i => {
+                        h = hour[i]
+                        var startHour = h['StartHour'];
+                        var endHour = h['EndHour'];
+                        console.log("Start hour: " + startHour);
+                        console.log("End hour: " + endHour);
+                        //plan firewall stop
+                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
+                            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                                console.log(data);
+                                console.log(status);
+                            });
                         });
-                    });
-                    $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                        $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                    })
                     $("#shutdownMsg").removeClass("hidden");
                 });
             });
