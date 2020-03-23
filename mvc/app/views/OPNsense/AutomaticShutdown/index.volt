@@ -115,7 +115,7 @@
             });
         }
         $("#saveAct").on('click', function () {
-         //   remove()
+            remove()
             save()
             alert("Saved")
         });
