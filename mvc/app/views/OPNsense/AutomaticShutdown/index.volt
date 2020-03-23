@@ -10,7 +10,7 @@
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
                     if(rows.length==0){
                         rows = Object.values(data['message']['hours']['hour']);
-                        console.log("All rows: "+rows)
+                        console.log("All rows: "+ JSON.stringify(rows))
                     }
                     console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
