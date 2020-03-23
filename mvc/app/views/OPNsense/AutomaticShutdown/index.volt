@@ -1,9 +1,34 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-            
+        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
+            // ...
+            //alert("Initilize: ");
+        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
+        }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
+            // save()
+            console.log("Removed");
+        }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
+            console.log("Append");
+            save();
+        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+            //    save();
+        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
+            //alert("Deselect: ");
+        }).UIBootgrid(
+            {
+                search: '/api/automaticshutdown/settings/searchItem/',
+                get: '/api/automaticshutdown/settings/getItem/',
+                set: '/api/automaticshutdown/settings/setItem/',
+                add: '/api/automaticshutdown/settings/addItem/',
+                del: '/api/automaticshutdown/settings/delItem/',
+                toggle: '/api/automaticshutdown/settings/toggleItem/',
+
+            }
+        );
+        var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         function save() {
-            console.log("Original rowxs " + original_rows)
+            console.log("Original rows " + original_rows)
 
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
@@ -46,32 +71,6 @@
                 });
             });
         }
-        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
-            // ...
-            //alert("Initilize: ");
-        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
-        }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
-            // save()
-            console.log("Removed");
-        }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
-            console.log("Append");  
-            save();
-        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-        //    save();
-        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            //alert("Deselect: ");
-        }).UIBootgrid(
-            {
-                search: '/api/automaticshutdown/settings/searchItem/',
-                get: '/api/automaticshutdown/settings/getItem/',
-                set: '/api/automaticshutdown/settings/setItem/',
-                add: '/api/automaticshutdown/settings/addItem/',
-                del: '/api/automaticshutdown/settings/delItem/',
-                toggle: '/api/automaticshutdown/settings/toggleItem/',
-
-            }
-        );
-        var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         $("#saveAct").on('click', function () {
             save()
             alert("Saved")
