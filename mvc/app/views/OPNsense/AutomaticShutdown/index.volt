@@ -8,7 +8,9 @@
                 add: '/api/automaticshutdown/settings/addItem/',
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
-
+                responseHandler: function (response) {
+                    console.log(JSON.stringify(response));
+                }
             }
         );
         //remove cron jobs with an AJAX call
