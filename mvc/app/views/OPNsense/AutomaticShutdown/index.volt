@@ -50,24 +50,26 @@
             //remove cron jobs with an AJAX call
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log("Stop: ")
-                data['rows'].forEach(d=>{
-                    console.log("d "+JSON.stringify(d))
+                data['rows'].forEach(d => {
+                    console.log("d " + JSON.stringify(d))
+                    ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
+                        console.log(data);
+                        console.log(status);
+                    });
                 })
                 console.log(JSON.stringify(data));
                 console.log(status);
                 ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Start Firewall", sendData = {}, callback = function (data, status) {
                     console.log("Start: ")
-                    console.log(JSON.stringify(data));
-                    console.log(status);
+                    data['rows'].forEach(d => {
+                        console.log("d " + JSON.stringify(d))
+                        ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
+                            console.log(data);
+                            console.log(status);
+                        });
+                    })
                 });
             });
-
-   /*          ajaxCall(url = "/api/cron/settings/delJob/" + r['uuid'], sendData = {}, callback = function (data, status) {
-                console.log(data);
-                console.log(status);
-            }); */
-            //})
-
             console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
