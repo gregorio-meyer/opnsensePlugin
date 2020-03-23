@@ -37,16 +37,20 @@
             console.log("Original rows " + JSON.stringify(original_rows))
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
             console.log("Current rows " + JSON.stringify(current))
-            /*       var toRemove = []
-                  current.forEach(x => {
-                      uuid = x['uuid'];
-                      original_rows.forEach(r => {
-                          if (r['uuid'] != uuid) {
-                              console.log("Deleted: " + JSON.stringify(r))
-                              toRemove.push(r)
-                          }
-                      });
-                  }); */
+            var toRemove = Array.from(original_rows)
+            current.forEach(x => {
+                uuid = x['uuid'];
+                var pos = original_rows.map(function (e) {
+                    return e.uuid;
+                }).indexOf(uuid);
+                console.log("Index "+pos)
+                original_rows.forEach(r => {
+                    if (r['uuid'] == uuid) {
+                        console.log("Deleted: " + JSON.stringify(r))
+                        toRemove.push(r)
+                    }
+                });
+            }); * /
             var c = current.filter(function (item) {
                 return original_rows.indexOf(item) == -1;
             })
