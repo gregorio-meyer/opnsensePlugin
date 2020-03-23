@@ -11,6 +11,7 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
                     console.log("Reload")
+                    console.log(JSON.stringify(data))
                     var startHour = data['message']['hours']['hour']['StartHour'];
                     var endHour = data['message']['hours']['hour']['EndHour'];
                     //plan firewall stop
