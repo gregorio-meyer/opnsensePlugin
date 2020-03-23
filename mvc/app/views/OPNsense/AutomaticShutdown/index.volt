@@ -53,7 +53,7 @@
                     console.log(status);
                 });
             });
-            //   addEndJob(endHour);
+            addEndJob(endHour);
         }
         function addEndJob(endHour) {
             console.log("End hour: " + endHour);
