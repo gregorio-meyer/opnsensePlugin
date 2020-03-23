@@ -69,12 +69,12 @@
         }
         function addJobs() {
             var rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            rows.forEach(h => {
+            for (r of rows) {
                 //remove it should only enable/disable scheduling                    
-                if (h['enabled'] == 1) {
-                    addStartJob(h['StartHour'], h['EndHour']);
+                if (r['enabled'] == 1) {
+                    addStartJob(r['StartHour'], r['EndHour']);
                 }
-            });
+            }
         }
         $("#saveAct").on('click', function () {
             //remove()
