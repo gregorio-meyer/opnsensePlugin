@@ -9,7 +9,7 @@
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
                 responseHandler: function (response) {
-                    console.log(JSON.stringify(response));
+                   // console.log(JSON.stringify(response));
                 }
             }
         );
