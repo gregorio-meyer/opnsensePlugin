@@ -33,30 +33,22 @@
         );
 
         function remove() {
-            console.log("Removing...")
             console.log("Original rows " + JSON.stringify(original_rows))
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
             console.log("Current rows " + JSON.stringify(current))
-            var toRemove = []
+            var removed = []
             original_rows.forEach(x => {
                 uuid = x['uuid'];
                 var pos = current.map(function (e) {
                     return e.uuid;
                 }).indexOf(uuid);
-                console.log("pos "+pos+ " x "+JSON.stringify(x))
                 if (pos == -1) {
                     toRemove.push(x)
                 }
                 console.log("Index " + pos)
-                /*   original_rows.forEach(r => {
-                      if (r['uuid'] == uuid) {
-                          console.log("Deleted: " + JSON.stringify(r))
-                          toRemove.push(r)
-                      }
-                  }); */
             });
-            console.log("To remove "+JSON.stringify(toRemove))
             //remove cron jobs with an AJAX call
+            console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
 
