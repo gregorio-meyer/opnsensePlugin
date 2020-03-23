@@ -45,17 +45,8 @@
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                    var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    var length = rows.length
-                    if (length == 0) {
-                        rows = Object.values(data['message']['hours']['hour']);
-                    }
-                    rows.forEach(i => {
-                        var h = i;
-                        //if a selection was made get the selected element
-                        if (length != 0) {
-                            h = data['message']['hours']['hour'][i]
-                        }
+                    var rows = $("#grid-addresses").bootgrid('getCurrentRows');
+                    rows.forEach(h => {
                         //remove it should only enable/disable scheduling
                         var enabled = h['enabled']
                         if (enabled == 1) {
