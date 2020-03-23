@@ -44,9 +44,9 @@
             console.log("Start hour: " + startHour + " end hour: " + endHour);
             //add cron job if enabled
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                console.log("Add start hour " + JSON.stringify(data));
-                console.log(status);
                 $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
+                    console.log("Add start hour " + JSON.stringify(data));
+                    console.log(status);
                     console.log(JSON.stringify(data));
                     console.log(status);
                 });
