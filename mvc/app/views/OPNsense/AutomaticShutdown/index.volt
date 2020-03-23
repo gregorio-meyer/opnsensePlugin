@@ -60,6 +60,9 @@
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
             save()
         }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log("Original rows " + JSON.stringify(original_rows))
+
             save();
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 
