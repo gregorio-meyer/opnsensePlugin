@@ -50,11 +50,6 @@
             // ...
             //alert("Initilize: ");
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
-            // ...
-            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-            console.log(" rows " + JSON.stringify(rows))
-            console.log("Original rows " + JSON.stringify(original_rows))
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             console.log("Removed");
@@ -84,10 +79,6 @@
             save()
             alert("Saved")
         });
-        $("#btn_DialogAddress_save").unbind('click').click(function () {
-            save()
-            alert("Saved")
-        })
     });
 
 </script>
