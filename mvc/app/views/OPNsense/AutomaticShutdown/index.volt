@@ -3,17 +3,13 @@
         console.log("Ready")
         //add
         function save() {
-            console.log("Saved")
 
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-                console.log("Set")
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
-                    console.log("Reload")
-                    console.log(JSON.stringify(data))
                     var hour = data['message']['hours']['hour'];
-                    var time = hour[Object.keys(hour)];
+                    var time = Object.keys(hour);
                     console.log("time: " + JSON.stringify(time));
                     var startHour = time['StartHour'];
                     var endHour = time['EndHour'];
