@@ -49,13 +49,12 @@
 
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
-          //  alert("Initialized");
+          console.log("Initialized");
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
             save()
         }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Select: ");
             save();
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 
