@@ -41,6 +41,7 @@
             });
         }
         function addJobs(startHour, endHour) {
+            console.log("Start hour: " + startHour + " end hour: " + endHour);
             //add cron job if enabled
             ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 console.log(JSON.stringify(data));
@@ -57,7 +58,6 @@
                 console.log(status);
             });
             $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-
         }
         function save() {
             $("#shutdownMsg").html("")
@@ -71,8 +71,6 @@
                         if (enabled == 1) {
                             var startHour = h['StartHour'];
                             var endHour = h['EndHour'];
-                            console.log("Start hour: " + startHour);
-                            console.log("End hour: " + endHour);
                             addJobs(startHour, endHour);
                         }
                     });
