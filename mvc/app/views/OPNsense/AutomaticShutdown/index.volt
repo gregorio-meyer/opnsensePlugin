@@ -92,6 +92,7 @@
     });
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         alert("Hidden");
+        save();
         $("#btn_DialogAddress_save").click(function () {
             alert("Saved");
         })
