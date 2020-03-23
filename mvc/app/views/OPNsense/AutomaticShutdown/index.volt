@@ -88,14 +88,16 @@
                 alert('The button that closed the modal is: ', $button)
             });
         });
-         $('#DialogAddress').on('hidden.bs.modal', function (e) {
+        $('#DialogAddress').on('hidden.bs.modal', function (e) {
             var button = $(e.relatedTarget) //Button that triggered the modal 
             var active = $(document.activeElement) //Button that triggered the modal 
-           
+
             // do something...
-            console.log("Hidden "  + button);
-            alert("Hidden " + JSON.stringify(button) +' active '+JSON.stringify(active));
-        }) 
+            if (active.is('[data-toggle],[data-dismiss]')) {
+                console.log("Hidden " + button);
+                alert("Hidden " + JSON.stringify(button) + ' active ' + JSON.stringify(active));
+            }
+        })
 
         /*.bootgrid({
 
