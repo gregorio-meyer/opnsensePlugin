@@ -45,16 +45,19 @@
             ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 console.log(JSON.stringify(data));
                 console.log(status);
-                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                    console.log(JSON.stringify(data));
-                    console.log(status);
-                    ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
-                        console.log(JSON.stringify(data));
-                        console.log(status);
-                    });
-                });
-                $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+
             });
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                console.log(JSON.stringify(data));
+                console.log(status);
+
+            });
+            ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
+                console.log(JSON.stringify(data));
+                console.log(status);
+            });
+            $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+
         }
         function save() {
             $("#shutdownMsg").html("")
