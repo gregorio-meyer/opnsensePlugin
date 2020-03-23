@@ -47,8 +47,8 @@
                           }
                       });
                   }); */
-            var c = original_rows.filter(function (item) {
-                return current.indexOf(item) == -1;
+            var c = current.filter(function (item) {
+                return original_rows.indexOf(item) == -1;
             })
             console.log("To remove " + JSON.stringify(c))
             //remove cron jobs with an AJAX call
