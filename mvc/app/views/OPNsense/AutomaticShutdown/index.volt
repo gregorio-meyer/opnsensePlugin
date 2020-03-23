@@ -86,12 +86,14 @@
             //remove()
             save();
             //save()
-            alert("Saved");
+           // alert("Saved");
         });
     });
     $(document).on('hide.bs.modal', '#DialogAddress', function () {
-        alert('');
         console.log("BUTTON " + $('#btn_DialogAddress_save'));
+        $('#btn_DialogAddress_save').on('click', function (e) {
+            alert("Saved");
+        })
     });
 </script>
 
