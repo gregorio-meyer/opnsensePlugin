@@ -36,6 +36,12 @@
             // ...
             //alert("Initilize: ");
 
+        }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
+            // save()
+            alert("Removed: ");
+        }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
+            save()
+            alert("Appended: ");
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
             //alert("Initialized ");
@@ -55,14 +61,7 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
 
             }
-        ).on("removed.rs.jquery.bootgrid", function (e, rows) {
-            // save()
-            alert("Removed: ");
-        }).on("appended.rs.jquery.bootgrid", function (e, rows) {
-            save()
-            alert("Appended: ");
-        });
-
+        );
 
     });
 </script>
