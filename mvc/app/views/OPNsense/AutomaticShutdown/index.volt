@@ -1,25 +1,13 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        var original_rows = null
+        //var original_rows = null
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
-            // ...
-            //alert("Initilize: ");
         }).on("loaded.rs.jquery.bootgrid", function (e, columns, row) {
-            if (original_rows == null) {
+            /* if (original_rows == null) {
                 original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
             }
-            console.log("Original " + JSON.stringify(original_rows))
-        }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
-            // save()
-            console.log("Removed");
-        }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
-            console.log("Append");
-            save();
-        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-            //    save();
-        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            //alert("Deselect: ");
+            console.log("Original " + JSON.stringify(original_rows)) */
         }).UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -31,27 +19,26 @@
 
             }
         );
-
         function remove() {
-            console.log("Original rows " + JSON.stringify(original_rows))
-            var current = $("#grid-addresses").bootgrid('getCurrentRows');
-            console.log("Current rows " + JSON.stringify(current))
-            var removed = []
-            original_rows.forEach(x => {
-                uuid = x['uuid'];
-                var pos = current.map(function (e) {
-                    return e.uuid;
-                }).indexOf(uuid);
-                if (pos == -1) {
-                    removed.push(x)
-                }
-                console.log("Index " + pos)
-            });
+            /*       console.log("Original rows " + JSON.stringify(original_rows))
+                  var current = $("#grid-addresses").bootgrid('getCurrentRows');
+                  console.log("Current rows " + JSON.stringify(current)) */
+            /*             var removed = []
+                        original_rows.forEach(x => {
+                            uuid = x['uuid'];
+                            var pos = current.map(function (e) {
+                                return e.uuid;
+                            }).indexOf(uuid);
+                            if (pos == -1) {
+                                removed.push(x)
+                            }
+                            console.log("Index " + pos)
+                        }); */
             //remove cron jobs with an AJAX call
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log("Stop: ")
                 data['rows'].forEach(d => {
-                    console.log("d " + JSON.stringify(d))
+                    //console.log("d " + JSON.stringify(d))
                     ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
                         console.log(data);
                         console.log(status);
@@ -62,7 +49,7 @@
                 ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Start Firewall", sendData = {}, callback = function (data, status) {
                     console.log("Start: ")
                     data['rows'].forEach(d => {
-                        console.log("d " + JSON.stringify(d))
+                        //console.log("d " + JSON.stringify(d))
                         ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
@@ -73,7 +60,6 @@
             console.log("Removed " + JSON.stringify(removed))
         }
         function save() {
-
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
@@ -89,6 +75,7 @@
                         if (length != 0) {
                             h = data['message']['hours']['hour'][i]
                         }
+                        //remove it should only enable/disable scheduling
                         var enabled = h['enabled']
                         if (enabled == 1) {
                             var startHour = h['StartHour'];
@@ -106,9 +93,6 @@
                             });
                             $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                         }
-                        else {
-                            console.log("Not enabled")
-                        }
                     });
                     $("#shutdownMsg").removeClass("hidden");
                 });
@@ -119,10 +103,6 @@
             save()
             alert("Saved")
         });
-        $("#btn_DialogAddress_save").unbind('click').click(function () {
-            save()
-            alert("Saved")
-        })
     });
 
 </script>
