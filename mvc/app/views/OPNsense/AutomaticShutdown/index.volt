@@ -56,18 +56,7 @@
                     });
                 }); */
         // delete
-
-        $("#grid-addresses").bootgrid({
-            ajax: true,
-            post: function () {
-                /* To accumulate custom parameter with the request object */
-                return {
-                    id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
-                };
-            },
-            url: "/api/data/basic",
-            selection: true
-        }).on("initialize.rs.jquery.bootgrid", function (e) {
+        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             alert("Initilize: ");
 
@@ -81,6 +70,16 @@
             alert("Deselect: ");
         }).on("removed.rs.jquery.bootgrid", function (e, rows) {
             alert("Removed: ");
+        }).bootgrid({
+            ajax: true,
+            post: function () {
+                /* To accumulate custom parameter with the request object */
+                return {
+                    id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+                };
+            },
+            url: "/api/data/basic",
+            selection: true
         });
 
         $('#DialogAddress .modal-footer button').on('click', function (e) {
