@@ -22,7 +22,7 @@
             }
         );
         //remove cron jobs with an AJAX call
-        function remove() {
+        /* function remove() {
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log(JSON.stringify(data));
                 console.log(status);
@@ -48,8 +48,8 @@
                         console.log(JSON.stringify(d));
                     });
                 })
-            });
-        }
+            }); */
+        //}
 
         //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
 
@@ -95,7 +95,7 @@
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         alert("Hidden");
         save();
-        $("#btn_DialogAddress_save").click(function () {
+        $("#btn_DialogAddress_save").unbind('click').click(function () {
             alert("Saved");
         })
     });
