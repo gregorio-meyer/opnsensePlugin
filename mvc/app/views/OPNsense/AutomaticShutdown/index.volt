@@ -43,7 +43,8 @@
             });
         }
         function addStartJob(startHour, endHour) {
-            console.log("Start hour: " + startHour)
+            console.log("Start");
+            console.log("Start hour: " + startHour);
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
                     console.log("Add start hour " + JSON.stringify(data));
