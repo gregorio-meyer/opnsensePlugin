@@ -1,6 +1,7 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
+        var original_rows = null
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             //alert("Initilize: ");
@@ -30,6 +31,9 @@
 
         function remove(){
             console.log("Removing...")
+            console.log("Original rows " + JSON.stringify(original_rows))
+            var current = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log("Current rows " + JSON.stringify(current))        
         }
         function save() {
 
@@ -39,7 +43,6 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
                     console.log("rows " + JSON.stringify(rows))
-                    console.log("Original rows " + JSON.stringify(original_rows))
                     var length = rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
