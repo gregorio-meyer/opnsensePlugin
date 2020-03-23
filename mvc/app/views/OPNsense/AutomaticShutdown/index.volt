@@ -83,6 +83,11 @@
         $(this).find("#btn_DialogAddress_save").on("click", function(e){
             alert("Add pressed");
         });
+        $(this).on('click', '[data-action]',function(){
+        console.log("click");
+        alert("Add pressed");
+          
+    });
 
 
 
