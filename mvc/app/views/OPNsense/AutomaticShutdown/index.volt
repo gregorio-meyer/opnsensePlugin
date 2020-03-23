@@ -81,7 +81,7 @@
         .on("appended.rs.jquery.bootgrid", function (e, rows) {
             alert("Appended: ");
         });
-        $(this).find(".command-add").on("click", function(e){
+        $(this).find("#btn_DialogAddress_save").on("click", function(e){
             alert("Add pressed");
         })
 
