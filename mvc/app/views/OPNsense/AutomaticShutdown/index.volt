@@ -3,7 +3,7 @@
         console.log("Ready")
         var original_rows = null;
         function save() {
-            console.log("Original rows "+original_rows)
+            console.log("Original rows " + original_rows)
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
@@ -48,10 +48,10 @@
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             //alert("Initilize: ");
-            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
             original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log("Original rows " + original_rows)
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
