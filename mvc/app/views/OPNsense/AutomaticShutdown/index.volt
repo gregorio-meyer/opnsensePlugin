@@ -70,10 +70,7 @@
                 }
             }
         }
-        $(document).on('hide.bs.modal', '#DialogAddress', function () {
-            alert('');
-            console.log("BUTTON " + $('#btn_DialogAddress_save'));
-        })
+
         $("#saveAct").on('click', function () {
             //remove()
             save();
@@ -81,7 +78,10 @@
             alert("Saved");
         });
     });
-
+    $(document).on('hide.bs.modal', '#DialogAddress', function () {
+        alert('');
+        console.log("BUTTON " + $('#btn_DialogAddress_save'));
+    });
 </script>
 
 <div class="alert alert-info hidden" role="alert" id="shutdownMsg">
