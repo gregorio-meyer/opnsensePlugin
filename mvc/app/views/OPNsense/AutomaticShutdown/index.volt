@@ -8,7 +8,7 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    if(count(rows)==0){
+                    if(rows.length==0){
                         rows = Object.values(data['message']['hours']['hour']);
                         console.log("All rows: "+rows)
                     }
