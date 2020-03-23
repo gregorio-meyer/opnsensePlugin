@@ -13,7 +13,7 @@
                         h = data['message']['hours']['hour'][i]
                         var enabled = h['enabled']
                         console.log("Enabled: " + enabled)
-                        if (enabled === 1) {
+                        if (enabled == 1) {
                             var startHour = h['StartHour'];
                             var endHour = h['EndHour'];
                             console.log("Start hour: " + startHour);
