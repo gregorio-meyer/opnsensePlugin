@@ -13,9 +13,10 @@
                     }
                     console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
-                        var h = data['message']['hours']['hour'][i]
-                        if (rows.length == 0) {
-                            h = i;
+                        var h = i;
+                        //if a selection was made get the selected element
+                        if (rows.length != 0) {
+                            h = data['message']['hours']['hour'][i] 
                         }
                         var enabled = h['enabled']
                         console.log("Enabled: " + enabled)
