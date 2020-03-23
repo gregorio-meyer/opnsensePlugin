@@ -44,11 +44,6 @@
                             console.log(status);
                         });
                     });
-<<<<<<< HEAD
-=======
-                    //$.get("/api/automaticshutdown/service/status"){ }
-                    // action to run after reload
->>>>>>> d51747e2c8fc4ddf1463bbf1a2839cfe508341df
                     $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                     $("#shutdownMsg").removeClass("hidden");
                 });
