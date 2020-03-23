@@ -3,22 +3,21 @@
         console.log("Ready")
         //add
         function save() {
+            $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                    //add cron job
-                    var hour = data['message']['hours']['hour'];
-                    var times = Object.keys(hour);
-                    var rows =$("#grid-addresses").bootgrid('getSelectedRows');
-                    console.log("Rows: "+JSON.stringify(rows))
-                    $("#shutdownMsg").html("")
-                    times.forEach(i => {
+                    var rows = $("#grid-addresses").bootgrid('getSelectedRows');
+                    console.log("Rows: " + JSON.stringify(rows))
+                    rows.forEach(i => {
                         h = hour[i]
+                        var enabled = h['enabled']
                         var startHour = h['StartHour'];
                         var endHour = h['EndHour'];
+                        console.log("Enabled: " + enabled)
                         console.log("Start hour: " + startHour);
                         console.log("End hour: " + endHour);
-                        //plan firewall stop
+                        //add cron job if enabled
                         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                             console.log(data);
                             console.log(status);
