@@ -61,10 +61,13 @@
                                 ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
                                     console.log(JSON.stringify(data));
                                     console.log(status);
+                                    ajaxCall(url = "/api/cron/service/reconfigure", sendData = {}, callback = function (data, status) {
+                                        console.log(JSON.stringify(data));
+                                        console.log(status);
+                                    });
                                 });
-                            });
-                            $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-                        }
+                                $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                            }
                     });
                     $("#shutdownMsg").removeClass("hidden");
                 });
