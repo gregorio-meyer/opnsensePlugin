@@ -1,30 +1,6 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
-            // ...
-            //alert("Initilize: ");
-
-        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
-            // ...
-            //alert("Initialized ");
-        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Select: ");
-        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Deselect: ");
-        }).UIBootgrid(
-            {
-                search: '/api/automaticshutdown/settings/searchItem/',
-                get: '/api/automaticshutdown/settings/getItem/',
-                set: '/api/automaticshutdown/settings/setItem/',
-                add: '/api/automaticshutdown/settings/addItem/',
-                del: '/api/automaticshutdown/settings/delItem/',
-                toggle: '/api/automaticshutdown/settings/toggleItem/'
-            }).on("removed.rs.jquery.bootgrid", function (e, rows) {
-                alert("Removed: ");
-            }).on("appended.rs.jquery.bootgrid", function (e, rows) {
-                alert("Appended: ");
-            });
         //add
         function save() {
             console.log("Saved")
@@ -49,6 +25,35 @@
                 });
             });
         }
+        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
+            // ...
+            //alert("Initilize: ");
+
+        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
+            // ...
+            //alert("Initialized ");
+        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+            alert("Select: ");
+        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
+
+            alert("Deselect: ");
+        }).UIBootgrid(
+            {
+                search: '/api/automaticshutdown/settings/searchItem/',
+                get: '/api/automaticshutdown/settings/getItem/',
+                set: '/api/automaticshutdown/settings/setItem/',
+                add: '/api/automaticshutdown/settings/addItem/',
+                del: '/api/automaticshutdown/settings/delItem/',
+                toggle: '/api/automaticshutdown/settings/toggleItem/',
+                ajax: true,
+                post: save
+            }
+        ).on("removed.rs.jquery.bootgrid", function (e, rows) {
+            alert("Removed: ");
+        }).on("appended.rs.jquery.bootgrid", function (e, rows) {
+            alert("Appended: ");
+        });
+
 
     });
 </script>
