@@ -80,6 +80,7 @@
         }
         function addJobs() {
             var rows = $("#grid-addresses").bootgrid('getCurrentRows');
+            console.log(JSON.stringify(rows))
             rows.forEach(h => {
                 console.log(JSON.stringify(h))
                 //remove it should only enable/disable scheduling                    
