@@ -56,20 +56,6 @@
                     });
                 }); */
         // delete
-        $("#grid-addresses").bootgrid({
-            //options
-            ajax: true,
-            post: function () {
-                return 'Hello';
-            },
-            url: "/api/automaticshutdown/service/reload"
-        })
-            .on("removed.rs.jquery.bootgrid", function (e, removedRows) {
-                alert("Removed")
-                console.log("Removed")
-                $("#shutdownMsg").html('<p> Scheduled shutdown removed ' + startHour + ' and ' + endHour + '</p>');
-                $("#shutdownMsg").removeClass("hidden");
-            });
 
         $("#grid-addresses").bootgrid({
             ajax: true,
@@ -85,12 +71,20 @@
 
             alert("Select: ");
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Deselect: ")
+            alert("Deselect: ");
         })
+        $("#grid-addresses").bootgrid({})
         .on("removed.rs.jquery.bootgrid", function (e, rows) {
-            alert("Removed: ")
+            alert("Removed: ");
         })
-        ;
+        $("#grid-addresses").bootgrid({})
+        .on("appended.rs.jquery.bootgrid", function (e, rows) {
+            alert("Appended: ");
+        });
+        $(this).find(".command-add").on("click", function(e){
+            alert("Add pressed");
+        })
+
 
 
         /*.bootgrid({
