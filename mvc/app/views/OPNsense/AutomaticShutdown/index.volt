@@ -15,15 +15,11 @@
                     console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
                         var h = i;
-                        console.log(i)
                         //if a selection was made get the selected element
                         if (length != 0) {
-                            console.log(JSON.stringify(['message']['hours']['hour']))
-                            console.log(JSON.stringify(['message']['hours']['hour'][i]))
                             h = data['message']['hours']['hour'][i] 
                         }
                         var enabled = h['enabled']
-                        console.log("Enabled: " + enabled)
                         if (enabled == 1) {
                             var startHour = h['StartHour'];
                             var endHour = h['EndHour'];
@@ -50,8 +46,10 @@
         }
         $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
-            //alert("Initilize: ");
+            //
 
+        }).on("initialized.rs.jquery.bootgrid", function (e){
+            alert("Initialized: "+JSON.stringify(e));
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
             alert("Removed: ");
