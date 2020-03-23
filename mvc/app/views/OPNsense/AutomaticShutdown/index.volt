@@ -66,12 +66,9 @@
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getCurrentRows');
                     rows.forEach(h => {
-                        //remove it should only enable/disable scheduling
-                        var enabled = h['enabled']
-                        if (enabled == 1) {
-                            var startHour = h['StartHour'];
-                            var endHour = h['EndHour'];
-                            addJobs(startHour, endHour);
+                        //remove it should only enable/disable scheduling                    
+                        if (h['enabled'] == 1) {
+                            addJobs(h['StartHour'], h['EndHour']);
                         }
                     });
                     $("#shutdownMsg").removeClass("hidden");
