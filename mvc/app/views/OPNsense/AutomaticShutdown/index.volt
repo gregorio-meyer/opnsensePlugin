@@ -71,7 +71,11 @@
                 console.log("Loaded")
                 $("#shutdownMsg").html('<p>Loaded </p>');
                 $("#shutdownMsg").removeClass("hidden");
-            });
+            }).on("initialized.rs.jquery.bootgrid", function (e) {
+                console.log("Initialized")
+                $("#shutdownMsg").html('<p>Initialized </p>');
+                $("#shutdownMsg").removeClass("hidden");
+            };
     });
 </script>
 
