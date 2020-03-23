@@ -6,9 +6,11 @@
             console.log("Saved")
 
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+                console.log("Set")
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     //add cron job
+                    console.log("Reload")
                     var startHour = data['message']['general']['StartHour'];
                     var endHour = data['message']['general']['EndHour'];
                     //plan firewall stop
