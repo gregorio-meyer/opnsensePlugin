@@ -28,13 +28,15 @@
         );
         var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
         function save() {
-            console.log("Original rows " + original_rows)
-
+            
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
+                    console.log("rows " + original_rows)
+                    var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+                    console.log("Original rows " + original_rows)
                     var length = rows.length
                     if (length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
