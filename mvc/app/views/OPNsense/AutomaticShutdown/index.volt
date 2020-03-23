@@ -48,7 +48,6 @@
             });
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 console.log("Add start hour " + startHour);
-                console.log(status);
             });
             addEndJob(endHour);
         }
