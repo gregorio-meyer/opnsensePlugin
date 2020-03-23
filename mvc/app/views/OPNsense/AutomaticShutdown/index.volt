@@ -67,13 +67,6 @@
             },
             url: "/api/data/basic",
             selection: true
-        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-
-            alert("Select: ");
-        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Deselect: ");
-        }).on("removed.rs.jquery.bootgrid", function (e, rows) {
-            alert("Removed: ");
         }).on("initialize.rs.jquery.bootgrid", function (e) {
             // ...
             alert("Initilize: ");
@@ -81,6 +74,13 @@
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
             alert("Initialized ");
+        }).on("selected.rs.jquery.bootgrid", function (e, rows) {
+
+            alert("Select: ");
+        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
+            alert("Deselect: ");
+        }).on("removed.rs.jquery.bootgrid", function (e, rows) {
+            alert("Removed: ");
         });
 
         $('#DialogAddress .modal-footer button').on('click', function (e) {
