@@ -70,7 +70,7 @@
                             var endHour = h['EndHour'];
                             console.log("Start hour: " + startHour);
                             console.log("End hour: " + endHour);
-                            addJobs(endHour, startHour);
+                            addJobs(startHour, endHour);
                         }
                     });
                     $("#shutdownMsg").removeClass("hidden");
