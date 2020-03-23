@@ -1,9 +1,10 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        var original_rows = null;
+        var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+        console.log("Original rowxs " + original_rows)
+            
         function save() {
-            console.log("Original rows " + original_rows)
             $("#shutdownMsg").html("")
             saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
                 // action to run after successful save, for example reconfigure service.
