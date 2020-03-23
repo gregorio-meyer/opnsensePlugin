@@ -19,7 +19,14 @@
         $("#btn_DialogAddress_save").click(), function (data, status) {
             console.log("Saved")
         }
-        $("#grid-addresses").UIBootgrid(
+        $("#grid-addresses").on("initialize.rs.jquery.bootgrid", function (e) {
+            // ...
+            alert("Initilize: ");
+
+        }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
+            // ...
+            alert("Initialized ");
+        }).UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
                 get: '/api/automaticshutdown/settings/getItem/',
