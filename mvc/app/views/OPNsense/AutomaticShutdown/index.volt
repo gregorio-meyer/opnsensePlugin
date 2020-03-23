@@ -1,8 +1,20 @@
 <script>
     $(document).ready(function () {
         console.log("Ready")
-        //add
+        //rows already present
         var original_rows = null;
+        function remove() {
+            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                var rows = $("#grid-addresses").bootgrid('getSelectedRows');
+                var length = rows.length
+                if (length == 0) {
+                    rows = Object.values(data['message']['hours']['hour']);
+                }
+                //remove remaining rows from original rows to see what elements we have removed
+                var removed = original_rows.filter((e) => !rows.includes(e));
+                console.log(JSON.stringify(removed) + " was removed");
+            });
+        }
         function save() {
             console.log("Original rows " + JSON.stringify(original_rows))
 
@@ -82,6 +94,7 @@
             }
         );
         $("#saveAct").on('click', function () {
+            remove()
             save()
             alert("Saved")
         });
