@@ -1,8 +1,7 @@
 <script>
-
     $(document).ready(function () {
         console.log("Ready")
-        var original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
+        var original_rows = null;
         function save() {
             console.log("Original rows " + original_rows)
             $("#shutdownMsg").html("")
@@ -52,14 +51,9 @@
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
-            console.log("Removed");
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
-            console.log("Saved");
             save()
         }).on("selected.rs.jquery.bootgrid", function (e, rows) {
-            original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            console.log("Original rows " + JSON.stringify(original_rows))
-
             save();
         }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
 
@@ -79,6 +73,10 @@
             save()
             alert("Saved")
         });
+        $("#btn_DialogAddress_save").unbind('click').click(function () {
+            save()
+            alert("Saved")
+        })
     });
 
 </script>
