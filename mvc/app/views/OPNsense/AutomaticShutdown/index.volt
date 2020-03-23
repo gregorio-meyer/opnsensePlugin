@@ -93,7 +93,7 @@
             //remove()
             save()
             addJobs()
-            save()
+            //save()
             alert("Saved")
         });
     });
