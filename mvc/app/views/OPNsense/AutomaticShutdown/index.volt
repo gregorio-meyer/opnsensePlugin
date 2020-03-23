@@ -10,7 +10,7 @@
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
                     console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
-                        h = hour[i]
+                        h = data['message']['hours']['hour'][i]
                         var enabled = h['enabled']
                         var startHour = h['StartHour'];
                         var endHour = h['EndHour'];
