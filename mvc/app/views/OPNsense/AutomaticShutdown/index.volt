@@ -50,28 +50,10 @@
                 })
             });
         }
-        function addJobs(startHour, endHour) {
-            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                console.log("Add start hour " + startHour);
-                //add cron job if enabled
-                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                    console.log("Add end hour " + endHour);
-                });
-            });
-        }
+
         //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
 
         /*       */
-
-        function add() {
-            var rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            for (r of rows) {
-                //remove it should only enable/disable scheduling                    
-                if (r['enabled'] == 1) {
-                    addJobs(r['StartHour'], r['EndHour']);
-                }
-            }
-        }
 
         $("#saveAct").click(function () {
             //remove()
@@ -81,6 +63,25 @@
         });
 
     });
+    function addJobs(startHour, endHour) {
+        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+            console.log("Add start hour " + startHour);
+            //add cron job if enabled
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                console.log("Add end hour " + endHour);
+            });
+        });
+    }
+    function add() {
+        var rows = $("#grid-addresses").bootgrid('getCurrentRows');
+        for (r of rows) {
+            //remove it should only enable/disable scheduling                    
+            if (r['enabled'] == 1) {
+                addJobs(r['StartHour'], r['EndHour']);
+            }
+        }
+    }
+
     function save() {
         $("#shutdownMsg").html("")
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
