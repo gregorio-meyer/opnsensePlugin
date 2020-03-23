@@ -93,7 +93,7 @@
            
             // do something...
             console.log("Hidden "  + button);
-            alert("Hidden " + button);
+            alert("Hidden " + JSON.stringify(button));
         }) 
 
         /*.bootgrid({
