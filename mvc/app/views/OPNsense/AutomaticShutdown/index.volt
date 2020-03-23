@@ -8,12 +8,15 @@
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                     var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-                    if(rows.length==0){
+                    if (rows.length == 0) {
                         rows = Object.values(data['message']['hours']['hour']);
                     }
                     console.log("Rows: " + JSON.stringify(rows))
                     rows.forEach(i => {
                         var h = data['message']['hours']['hour'][i]
+                        if (rows.length == 0) {
+                            h = i;
+                        }
                         var enabled = h['enabled']
                         console.log("Enabled: " + enabled)
                         if (enabled == 1) {
@@ -32,7 +35,7 @@
                             });
                             $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                         }
-                        else{
+                        else {
                             console.log("Not enabled")
                         }
                     });
