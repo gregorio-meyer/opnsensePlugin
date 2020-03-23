@@ -42,7 +42,7 @@
                 })
             });
         }
-        function addStartJob(startHour) {
+        function addStartJob(startHour, endHour) {
             console.log("Start hour: " + startHour)
             $.post(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
                 $.post(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
@@ -52,6 +52,7 @@
                     console.log(status);
                 });
             });
+            addEndJob(endHour);
         }
         function addEndJob(endHour) {
             console.log("End hour: " + endHour);
@@ -84,15 +85,14 @@
             rows.forEach(h => {
                 //remove it should only enable/disable scheduling                    
                 if (h['enabled'] == 1) {
-                    addStartJob(h['StartHour']);
-                    addEndJob(h['EndHour']);
+                    addStartJob(h['StartHour'], h['EndHour']);
                 }
             });
         }
         $("#saveAct").on('click', function () {
             //remove()
             save()
-            addJobs()
+            // addJobs()
             alert("Saved")
         });
     });
