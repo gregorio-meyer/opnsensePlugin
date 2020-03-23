@@ -49,11 +49,11 @@
             });
             //remove cron jobs with an AJAX call
             // removed.forEach(r => {
-            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase='Stop Firewall'", sendData = {}, callback = function (data, status) {
+            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
                 console.log("Stop: ")
                 console.log(data);
                 console.log(status);
-                ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase='Start Firewall'", sendData = {}, callback = function (data, status) {
+                ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Start Firewall", sendData = {}, callback = function (data, status) {
                     console.log("Start: ")
                     console.log(data);
                     console.log(status);
