@@ -29,6 +29,9 @@
                             });
                             $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
                         }
+                        else{
+                            console.log("Not enabled")
+                        }
                     });
                     $("#shutdownMsg").removeClass("hidden");
                 });
