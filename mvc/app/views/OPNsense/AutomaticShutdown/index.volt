@@ -52,6 +52,7 @@
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
             });
+    }
         //add
 </script>
 
