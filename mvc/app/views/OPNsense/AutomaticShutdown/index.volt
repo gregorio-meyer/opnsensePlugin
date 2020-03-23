@@ -51,7 +51,9 @@
         }).on("initialized.rs.jquery.bootgrid", function (e, columns, row) {
             // ...
             original_rows = $("#grid-addresses").bootgrid('getCurrentRows');
-            console.log("Original rows " + original_rows)
+            var rows = $("#grid-addresses").bootgrid('getSelectedRows');
+            console.log(" rows " + JSON.stringify(rows))
+            console.log("Original rows " + JSON.stringify(original_rows))
         }).on("removed.rs.jquery.bootgrid", function (e, removedRows) {
             // save()
         }).on("appended.rs.jquery.bootgrid", function (e, appendedRows) {
