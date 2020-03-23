@@ -44,17 +44,13 @@
                     return e.uuid;
                 }).indexOf(uuid);
                 console.log("Index "+pos)
-                original_rows.forEach(r => {
+              /*   original_rows.forEach(r => {
                     if (r['uuid'] == uuid) {
                         console.log("Deleted: " + JSON.stringify(r))
                         toRemove.push(r)
                     }
-                });
-            }); * /
-            var c = current.filter(function (item) {
-                return original_rows.indexOf(item) == -1;
-            })
-            console.log("To remove " + JSON.stringify(c))
+                }); */
+            }); 
             //remove cron jobs with an AJAX call
         }
         function save() {
