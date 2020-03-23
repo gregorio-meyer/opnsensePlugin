@@ -29,32 +29,32 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/'
             });
         //add
-        /*         $("#grid-addresses").bootgrid({
-                    //options
-                }).on("appended.rs.jquery.bootgrid", function (e) {
-                    console.log("Appended")
-                    saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-                        // action to run after successful save, for example reconfigure service.
-                        ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                            //add cron job
-                            var startHour = data['message']['general']['StartHour'];
-                            var endHour = data['message']['general']['EndHour'];
-                            //plan firewall stop
-                            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                                console.log(data);
-                                console.log(status);
-                                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                                    console.log(data);
-                                    console.log(status);
-                                });
-                            });
-                            //$.get("/api/automaticshutdown/service/status"){ }
-                            // action to run after reload
-                            $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-                            $("#shutdownMsg").removeClass("hidden");
+/*         $("#grid-addresses").bootgrid({
+            //options
+        }).on("appended.rs.jquery.bootgrid", function (e) {
+            console.log("Appended")
+            saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+                // action to run after successful save, for example reconfigure service.
+                ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                    //add cron job
+                    var startHour = data['message']['general']['StartHour'];
+                    var endHour = data['message']['general']['EndHour'];
+                    //plan firewall stop
+                    ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                        console.log(data);
+                        console.log(status);
+                        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                            console.log(data);
+                            console.log(status);
                         });
                     });
-                }); */
+                    //$.get("/api/automaticshutdown/service/status"){ }
+                    // action to run after reload
+                    $("#shutdownMsg").html('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
+                    $("#shutdownMsg").removeClass("hidden");
+                });
+            });
+        }); */
         // delete
         $("#grid-addresses").bootgrid({
             //options
@@ -71,36 +71,46 @@
                 $("#shutdownMsg").removeClass("hidden");
             });
 
-        $("#grid-addresses").bootgrid({
-            ajax: true,
-            post: function () {
-                /* To accumulate custom parameter with the request object */
-                return {
-                    id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
-                };
-            },
-            url: "/api/data/basic",
-            selection: true
-        }).on("selected.rs.jquerys.bootgrid", function (e, rows) {
+         $("#grid-addresses").bootgrid({
+        ajax: true,
+        post: function ()
+        {
+            /* To accumulate custom parameter with the request object */
+            return {
+                id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+            };
+        },
+        url: "/api/data/basic",
+        selection: true,
+        multiSelect: true,
+        formatters: {
+            "link": function(column, row)
+            {
+                return "<a href=\"#\">" + column.id + ": " + row.id + "</a>";
+            }
+        }
+    }).on("selected.rs.jquerys.bootgrid", function(e, rows)
+    {
+      
+        alert("Select: ");
+    }).on("deselected.rs.jquery.bootgrid", function(e, rows)
+    {
+        alert("Deselect: ")
+    });
 
-            alert("Select: ");
-        }).on("deselected.rs.jquery.bootgrid", function (e, rows) {
-            alert("Deselect: ")
-        });
 
+         /*.bootgrid({
 
-        /*.bootgrid({
-
-       })
-           .on("load.rs.jquery.bootgrid", function (e) {
-               console.log("Loaded")
-               $("#shutdownMsg").html('<p>Loaded </p>');
-               $("#shutdownMsg").removeClass("hidden");
-           }).on("initialized.rs.jquery.bootgrid", function (e) {
-               console.log("Initialized")
-               $("#shutdownMsg").html('<p>Initialized </p>');
-               $("#shutdownMsg").removeClass("hidden");
-           }); */
+        })
+            .on("load.rs.jquery.bootgrid", function (e) {
+                console.log("Loaded")
+                $("#shutdownMsg").html('<p>Loaded </p>');
+                $("#shutdownMsg").removeClass("hidden");
+            }).on("initialized.rs.jquery.bootgrid", function (e) {
+                console.log("Initialized")
+                $("#shutdownMsg").html('<p>Initialized </p>');
+                $("#shutdownMsg").removeClass("hidden");
+            }); */
     });
 </script>
 
