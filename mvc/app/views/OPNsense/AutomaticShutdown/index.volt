@@ -37,7 +37,7 @@
             console.log("Original rows " + JSON.stringify(original_rows))
             var current = $("#grid-addresses").bootgrid('getCurrentRows');
             console.log("Current rows " + JSON.stringify(current))
-            var toRemove = []]
+            var toRemove = []
             current.forEach(x => {
                 uuid = x['uuid'];
                 var pos = original_rows.map(function (e) {
