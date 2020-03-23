@@ -92,8 +92,8 @@
             var button = $(e.relatedTarget) //Button that triggered the modal 
            
             // do something...
-            console.log("Hidden", $button);
-            alert("Hidden ", $button);
+            console.log("Hidden "  + button);
+            alert("Hidden " + button);
         }) 
 
         /*.bootgrid({
