@@ -13,7 +13,7 @@
                     console.log("Reload")
                     console.log(JSON.stringify(data))
                     var hour = data['message']['hours']['hour'];
-                    var time = hour[Object.keys(hour))
+                    var time = hour[Object.keys(hour)]
                     console.log("time: " + JSON.stringify(time))
                     var startHour = time['StartHour'];
                     var endHour = time['EndHour'];
