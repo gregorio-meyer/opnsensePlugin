@@ -36,6 +36,9 @@
         //remove cron jobs with an AJAX call
         function remove(elements) {
             console.log("Element to delete " + elements);
+            console.log("Element to delete " + elements['enabled']);
+            console.log("Element to delete " + elements['StartHour']);
+            console.log("Element to delete " + elements['EndHour']);
             //uuids = getUUIDS(elements);
             /*  for (uuid of uuids) {
                   ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
@@ -73,7 +76,7 @@
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
                         console.log("Element to delete " + JSON.stringify(data));
-                        remove(data);
+                        remove(JSON.parse(data));
                     }
                     else {
                         console.log("Error status: " + status);
@@ -107,8 +110,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                alert("Deleted");
-                                                                            }); */
+                                                                                    alert("Deleted");
+                                                                                }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
