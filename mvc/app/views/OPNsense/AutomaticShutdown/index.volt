@@ -60,7 +60,7 @@
     $(document).on('show.bs.modal','#DialogAddress', function (event) {
         alert("Triggered event " + typeof(event));
         var trigger = $(event.target)
-        var name = $(event.relatedTarget.nodeName)
+       // var name = $(event.relatedTarget.nodeName)
         alert("Triggered btn " + JSON.stringify(trigger));
         //alert("Triggered name " + JSON.stringify(name));
     });
