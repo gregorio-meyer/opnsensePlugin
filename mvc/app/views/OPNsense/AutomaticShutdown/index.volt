@@ -5,12 +5,7 @@
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
-            $(document).on('click', ".command-delete-selected", function () {
-                console.log("Delete selected");
-                var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-                alert("Selected for deletion: " + JSON.stringify(selected))
-                //remove selected
-            });
+
         });
         $("#grid-addresses").UIBootgrid(
             {
@@ -22,6 +17,18 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         );
+        $("#deleteSelected").click(function () {
+            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+            alert("Selected for deletion: " + JSON.stringify(selected))
+            alert("Deleted " + $(this));
+        });
+        //dovrebbe farlo dopo l'inizializzaziones
+/*         $(document).on('click', ".command-delete-selected", function () {
+            console.log("Delete selected");
+            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+            alert("Selected for deletion: " + JSON.stringify(selected))
+            //remove selected
+        }); */
         //Search job example :Stop Firewall
         function search(phrase) {
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
@@ -102,8 +109,8 @@
             <td>
                 <button data-action="add" type="button" class="btn btn-xs btn-default"><span
                         class="fa fa-plus"></span></button>
-                <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span
-                        class="fa fa-trash-o"></span></button>
+                <button data-action="deleteSelected" id="deleteSelected" type="button"
+                    class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
             </td>
         </tr>
     </tfoot>
