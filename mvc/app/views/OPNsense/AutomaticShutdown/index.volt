@@ -58,7 +58,7 @@
         });
     });
     $(document).on('show.bs.modal','#DialogAddress', function (event) {
-        alert("Triggered event " + JSON.stringify(event));
+        //alert("Triggered event " + JSON.stringify(event));
         var trigger = $(event.relatedTarget)
         var name = $(event.relatedTarget.nodeName)
         alert("Triggered btn " + JSON.stringify(trigger));
