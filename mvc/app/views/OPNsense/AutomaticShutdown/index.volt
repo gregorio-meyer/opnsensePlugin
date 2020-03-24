@@ -96,7 +96,7 @@
         alert("Saved");
         save();
     })
-    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn .btn-warning", function () {
+    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
        // save();
     })
