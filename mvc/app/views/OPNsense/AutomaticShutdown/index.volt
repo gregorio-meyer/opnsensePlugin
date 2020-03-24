@@ -20,8 +20,8 @@
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
                         //id of the cron job searched
-                        console.log()
                         var uuid = row['uuid'];
+                        console.log("uuid " + uuid);
                         var enabled = row['enabled'];
                         var hours = row['hours'];
                         var description = row['description'];
@@ -59,7 +59,7 @@
             //remove cron jobs with an AJAX call
             var startUUID = getStartUUID(startHour);
             console.log("startUUID: " + startUUID);
-           // var endUUID = getEndUUID(endHour);
+            // var endUUID = getEndUUID(endHour);
             ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
                 if (status === "success") {
                     console.log("Removed start hour " + JSON.stringify(data));
@@ -137,8 +137,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                                                    alert("Deleted");
-                                                                                                                                                                                                                                }); */
+                                                                                                                                                                                                                                        alert("Deleted");
+                                                                                                                                                                                                                                    }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
