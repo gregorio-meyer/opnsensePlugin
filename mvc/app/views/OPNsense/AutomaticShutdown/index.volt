@@ -42,18 +42,19 @@
     function getUUIDS(elements) {
         //search jobs uuids
         console.log("Asked to remove " + elements)
+    }
            /*  uuids.push(uuid)
             uuid = search(element)
         */    
-        }
-     /*    uuids = []
-        for (element of elements) {
-            uuid = search(element)
-            uuids.push(uuid)
+     //   }
+    /*    uuids = []
+       for (element of elements) {
+           uuid = search(element)
+           uuids.push(uuid)
 
-        } */
-        return uuids;
-    }
+       } */
+    //       return uuids;
+    // }
     //remove cron jobs with an AJAX call
     function remove(elements) {
         uuids = getUUIDS(elements);
