@@ -74,7 +74,7 @@
     }
 
     $(document).on('click', "#btn_DialogAddress_save", function () {
-     //   var enabled = $("#hour\\.enabled");
+        //   var enabled = $("#hour\\.enabled");
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
@@ -82,8 +82,8 @@
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
             // action to run after successful save, for example reconfigure service.
             //remove it should only enable/disable scheduling                    
-           // if (enabled == 1) {
-                addJobs(startHour, endHour);
+            // if (enabled == 1) {
+            addJobs(startHour, endHour);
             //}
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                 $("#shutdownMsg").removeClass("hidden");
@@ -97,6 +97,11 @@
     $(document).on('click', ".command-edit", function () {
         console.log("Edit");
         alert("Edit");
+        // save();
+    })
+    $(document).on('click', ".command-delete-selected", function () {
+        console.log("Delete selected");
+        alert("Delete selected");
         // save();
     })
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
