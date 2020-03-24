@@ -76,7 +76,7 @@
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
                         console.log("Element to delete " + JSON.stringify(data));
-                        remove(JSON.parse(data));
+                        remove(JSON.parse(JSON.stringify(data)));
                     }
                     else {
                         console.log("Error status: " + status);
