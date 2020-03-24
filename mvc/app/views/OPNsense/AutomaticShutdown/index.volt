@@ -27,16 +27,7 @@
                 console.log(status);
             });
         }
-        function getUUIDS(elements) {
-            //search jobs uuids
-            uuids = []
-            for (element of elements) {
-                uuid = search(element)
-                uuids.push(uuid)
 
-            }
-            return uuids;
-        }
 
     });
     function addJobs(startHour, endHour) {
@@ -48,11 +39,31 @@
             });
         });
     }
+    function getUUIDS(elements) {
+        //search jobs uuids
+        console.log("Asked to remove " + elements)
+        uuids = []
+
+        for (element of elements) {
+            ajaxCall(url = "/api/automaticshutdown/settings/get/" + element, sendData = {}, callback = function (data, status) {
+                console.log("Data" + JSON.stringify(data));
+            });
+           /*  uuids.push(uuid)
+            uuid = search(element)
+        */    
+        }
+     /*    uuids = []
+        for (element of elements) {
+            uuid = search(element)
+            uuids.push(uuid)
+
+        } */
+        return uuids;
+    }
     //remove cron jobs with an AJAX call
     function remove(elements) {
-        console.log("Asked to remove " + elements)
-        /*   uuids = getUUIDS(elements);
-          for (uuid of uuids) {
+        uuids = getUUIDS(elements);
+        /*  for (uuid of uuids) {
               ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                   console.log(data);
                   console.log(status);
@@ -61,7 +72,6 @@
     }
     $(document).on('click', "#deleteSelected", function () {
         console.log("Delete selected ");
-        console.log(selected);
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
         remove(JSON.stringify(selected))
     });
