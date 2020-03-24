@@ -7,6 +7,14 @@
         mapDataToFormUI(data_get_map).done(function () {
 
         });
+        $(document).on('click', "#deleteSelected", function () {
+            console.log("Delete selected");
+            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+            var current = $("#DialogAddress").bootgrid("getCurrentRows");
+            alert("Selected for deletion on: " + JSON.stringify(selected));
+            alert("Selected for current on: " + JSON.stringify(current))
+            //remove selected
+        });
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -52,14 +60,7 @@
             });
         });
     }
-    $(document).on('click', "#deleteSelected", function () {
-        console.log("Delete selected");
-        var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-        var current = $("#DialogAddress").bootgrid("getCurrentRows");
-        alert("Selected for deletion on: " + JSON.stringify(selected));
-        alert("Selected for current on: " + JSON.stringify(current))
-        //remove selected
-    });
+
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
