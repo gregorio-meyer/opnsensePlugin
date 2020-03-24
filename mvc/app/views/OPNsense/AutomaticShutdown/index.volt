@@ -17,11 +17,11 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         );
-        $("#deleteSelected").click(function () {
+/*         $("#deleteSelected").click(function () {
             var selected = $("#DialogAddress").bootgrid("getSelectedRows");
             alert("Selected for deletion: " + JSON.stringify(selected))
             alert("Deleted " + $(this));
-        });
+        }); */
         //dovrebbe farlo dopo l'inizializzaziones
         $(document).on('click', "#deleteSelected", function () {
             console.log("Delete selected");
@@ -75,11 +75,11 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
-    $(document).on('click', ":button", function () {
+/*     $(document).on('click', ":button", function () {
         var btn = $('button[data-action="add"]').val()
         alert("Button data : " + btn.data);
         alert("Button: " + btn);
-    });
+    }); */
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
