@@ -18,15 +18,15 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
-            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-                var current = $("#DialogAddress").bootgrid("getCurrentRows");
+            var selected = $("#grid-addresses").bootgrid("getSelectedRows");
+                var current = $("#grid-addresses").bootgrid("getCurrentRows");
                 alert("Selected : " + JSON.stringify(selected));
                 alert("current: " + JSON.stringify(current))
         
             $(document).on('click', "#deleteSelected", function () {
                 console.log("Delete selected");
-                var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-                var current = $("#DialogAddress").bootgrid("getCurrentRows");
+                var selected = $("#grid-addresses").bootgrid("getSelectedRows");
+                var current = $("#grid-addresses").bootgrid("getCurrentRows");
                 alert("Selected for deletion on: " + JSON.stringify(selected));
                 alert("Selected for current on: " + JSON.stringify(current))
                 //remove selected
