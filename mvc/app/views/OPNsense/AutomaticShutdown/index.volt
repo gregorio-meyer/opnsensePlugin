@@ -92,21 +92,19 @@
             });
         });
     }
-    $(document).on('click',"#hour\\.StartHour", function () {
-        alert("Click " + $("#hour\\.StartHour").val());
-    })
     $(document).on('click', "#btn_DialogAddress_save", function () {
-        var str = $("#hour\\.StartHour").text()
-        alert("Saved " + str);
+        var startHour = $("#hour\\.StartHour").val();
+        var endHour = $("#hour\\.StartHour").val();
+        alert("Planned shutdown between " + startHour + " and " + endHour);
         save();
     })
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
-       // save();
+        // save();
     })
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
-      //  alert("Hidden");
- 
+        //  alert("Hidden");
+
 
     });
 </script>
