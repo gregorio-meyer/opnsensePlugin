@@ -77,6 +77,14 @@
         alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
     });
+    $(document).on('click', "span.fa.fa-pencil", function (event) {
+        //console.log("Edit " + event.srcElement);
+        //alert("Edit " + event.srcElement);
+        target = event.target
+        alert("Edit " + target.constructor.name);
+        alert("Edit " + JSON.stringify(target));
+        //alert("Edit " + target.tagName.className);
+    });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
         alert("Copy");
