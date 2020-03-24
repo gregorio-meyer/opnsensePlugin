@@ -77,6 +77,7 @@
                     if (status === "success") {
                         var item = JSON.stringify(data);
                         console.log("Element to delete " + item );
+                        console.log("Element to delete " + JSON.parse(item));
                         //remove json object
                         remove(data);
                     }
