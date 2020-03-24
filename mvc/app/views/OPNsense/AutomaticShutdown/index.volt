@@ -94,6 +94,10 @@
         alert("Deleted");
         // save();
     })
+    $(document).on('click', ".command-edit", function () {
+        alert("Edit");
+        // save();
+    })
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         //  alert("Hidden");
 
