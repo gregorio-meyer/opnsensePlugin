@@ -90,6 +90,11 @@
             });
         });
     });
+    $(document).on('click', ".command-delete", function () {
+        console.log("Delete clicked");
+        alert("Delete clicked");
+        // save();
+    });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
         // save();
@@ -97,6 +102,11 @@
     $(document).on('click', ".command-edit", function () {
         console.log("Edit");
         alert("Edit");
+        // save();
+    });
+    $(document).on('click', ".command-copy", function () {
+        console.log("Copy");
+        alert("Copy");
         // save();
     });
     $(document).on('click', ".command-delete-selected", function () {
