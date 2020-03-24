@@ -75,6 +75,16 @@
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
         remove(selected)
     });
+    $(document).on('click', ".command-edit", function () {
+        console.log("Edit selected");
+        var selected = $(this);
+        remove(selected)
+    });
+    $(document).on('click', "td", function () {
+        console.log("Clicked td "+$(this));
+        var selected = $(this);
+        remove(selected)
+    });
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
