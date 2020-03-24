@@ -17,18 +17,13 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         );
-/*         $("#deleteSelected").click(function () {
-            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-            alert("Selected for deletion: " + JSON.stringify(selected))
-            alert("Deleted " + $(this));
-        }); */
+        /*         $("#deleteSelected").click(function () {
+                    var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+                    alert("Selected for deletion: " + JSON.stringify(selected))
+                    alert("Deleted " + $(this));
+                }); */
         //dovrebbe farlo dopo l'inizializzaziones
-        $(document).on('click', "#deleteSelected", function () {
-            console.log("Delete selected");
-            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-            alert("Selected for deletion on: " + JSON.stringify(selected))
-            //remove selected
-        }); 
+
         //Search job example :Stop Firewall
         function search(phrase) {
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
@@ -57,7 +52,12 @@
             });
         });
     }
-
+    $(document).on('click', "#deleteSelected", function () {
+        console.log("Delete selected");
+        var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+        alert("Selected for deletion on: " + JSON.stringify(selected))
+        //remove selected
+    });
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
@@ -75,11 +75,11 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
-/*     $(document).on('click', ":button", function () {
-        var btn = $('button[data-action="add"]').val()
-        alert("Button data : " + btn.data);
-        alert("Button: " + btn);
-    }); */
+    /*     $(document).on('click', ":button", function () {
+            var btn = $('button[data-action="add"]').val()
+            alert("Button data : " + btn.data);
+            alert("Button: " + btn);
+        }); */
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
