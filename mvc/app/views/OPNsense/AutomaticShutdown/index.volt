@@ -71,7 +71,7 @@
           } */
     }
     $(document).on('click', "#deleteSelected", function () {
-        console.log("Delete selected ");
+        console.log("Delete selected");
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
         remove(selected)
     });
