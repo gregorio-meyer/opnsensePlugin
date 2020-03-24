@@ -21,10 +21,10 @@
             console.log("Loaded")
             grid.find(".command-edit").on("click", function (e) {
                 alert("You pressed edit on row: " + $(this).data("row-id"));
-                alert("row: " + $(this));
+                alert("row: " + JSON.stringify($(this)));
             }).end().find(".command-delete").on("click", function (e) {
                 alert("You pressed delete on row: " + $(this).data("row-id"));
-                alert("row: " + $(this));
+                alert("row: " + JSON.stringify($(this)));
 
             });
         });
@@ -88,8 +88,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                alert("Deleted");
-            }); */
+                    alert("Deleted");
+                }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
