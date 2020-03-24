@@ -102,6 +102,12 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
+    $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
+        var e = $(event.relatedTarget);
+        alert("Event " + e);
+        alert("Event " + event.constructor.name);
+        
+    });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
