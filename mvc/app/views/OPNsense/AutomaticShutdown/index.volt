@@ -72,7 +72,8 @@
     $(document).on('click', ":button", function (event) {
         console.log("Edit " + event.srcElement);
         alert("Edit " + event.srcElement);
-        alert("Edit " + event.target);
+        target = event.target
+        alert("Edit " + target.tagName);
     });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
