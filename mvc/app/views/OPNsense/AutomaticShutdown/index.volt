@@ -5,6 +5,12 @@
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
+            $(document).on('click', ".command-delete-selected", function () {
+                console.log("Delete selected");
+                var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+                alert("Selected for deletion: " + JSON.stringify(selected))
+                //remove selected
+            });
         });
         $("#grid-addresses").UIBootgrid(
             {
@@ -70,12 +76,7 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ".command-delete-selected", function () {
-        console.log("Delete selected");
-        var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-        alert("Selected for deletion: " + JSON.stringify(selected))
-        //remove selected
-    });
+
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
     });
 </script>
