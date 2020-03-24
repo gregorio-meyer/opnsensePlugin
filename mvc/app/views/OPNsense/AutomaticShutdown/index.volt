@@ -58,40 +58,30 @@
         });
     });
     $(document).on('show.bs.modal','#DialogAddress', function (event) {
-        alert("Triggered event " + typeof(event));
+        alert(event);
         var trigger = $(event.target)
-       // var name = $(event.relatedTarget.nodeName)
         alert("Triggered " + trigger.nodeName);
-        //alert("Triggered name " + JSON.stringify(name));
     });
     $(document).on('click', ".command-delete", function () {
         console.log("Delete clicked");
         alert("Delete clicked");
-        // save();
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
-        // save();
     });
     $(document).on('click', ".fa.fa-pencil", function () {
         console.log("Edit");
         alert("Edit");
-        // save();
     });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
         alert("Copy");
-        // save();
     });
     $(document).on('click', ".command-delete-selected", function () {
         console.log("Delete selected");
         alert("Delete selected");
-        // save();
     });
         $(document).on('hidden.bs.modal', '#DialogAddress', function () {
-        //  alert("Hidden");
-
-
     });
 </script>
 
