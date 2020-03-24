@@ -76,7 +76,7 @@
     $(document).on('click', "#btn_DialogAddress_save", function () {
      //   var enabled = $("#hour\\.enabled");
         var startHour = $("#hour\\.StartHour").val();
-        var endHour = $("#hour\\.StartHour").val();
+        var endHour = $("#hour\\.EndHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
         $("#shutdownMsg").html("")
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
