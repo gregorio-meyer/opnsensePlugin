@@ -69,34 +69,6 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ":span", function (event) {
-        alert("Edit " + $(this).parent().constructor.name);
-        alert("Edit " + $(this).constructor.name);
-        k = + $(this);
-        alert("Edit " + JSON.stringify(k));
-        alert("Edit " + k.event);
-        alert("Edit " + k.target);
-        alert("Edit " + k.event.currentTarget);
-        alert("Edit " + k.currentTarget);
-        //console.log("Edit " + event.srcElement);
-        //alert("Edit " + event.srcElement);
-        //target = event.target
-        //alert("Edit " + target.constructor.name);
-        //alert("Edit " + JSON.stringify(target));
-        //alert("Edit " + target.tagName.className);
-    });
-    $(document).on('click', "span.fa.fa-pencil", function (event) {
-        //console.log("Edit " + event.srcElement);
-        //alert("Edit " + event.srcElement);
-        target = event.target
-        alert("Edit " + target.constructor.name);
-        alert("Edit " + JSON.stringify(target));
-        //alert("Edit " + target.tagName.className);
-    });
-    $(document).on('click', "button.command-copy", function () {
-        console.log("Copy");
-        alert("Copy");
-    });
     $(document).on('click', ".command-delete-selected", function () {
         console.log("Delete selected");
         var selected = $("#DialogAddress").bootgrid("getSelectedRows");
@@ -106,10 +78,6 @@
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
     });
 </script>
-
-<div class="alert alert-info hidden" role="alert" id="shutdownMsg">
-
-</div>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
     <thead>
