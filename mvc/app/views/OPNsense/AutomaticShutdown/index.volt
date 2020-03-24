@@ -62,9 +62,10 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
-    $(document).on('click', "button.command-delete", function () {
-        console.log("Delete clicked");
-        alert("Delete clicked");
+    $(document).on('click', ":button", function () {
+        console.log("");
+        alert("Button: "+$('[data-action="edit"]'));
+        alert("Button: "+$(this).data);
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
