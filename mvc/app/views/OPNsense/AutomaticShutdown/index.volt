@@ -20,6 +20,7 @@
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
                         //id of the cron job searched
+                        console.log()
                         var uuid = row['uuid'];
                         var enabled = row['enabled'];
                         var hours = row['hours'];
@@ -57,7 +58,7 @@
             //   search(enabled + " " + startHour + " " + endHour + "")
             //remove cron jobs with an AJAX call
             var startUUID = getStartUUID(startHour);
-            console.log("startUUID: " + uuid);
+            console.log("startUUID: " + startUUID);
            // var endUUID = getEndUUID(endHour);
             ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
                 if (status === "success") {
