@@ -42,12 +42,6 @@
     function getUUIDS(elements) {
         //search jobs uuids
         console.log("Asked to remove " + elements)
-        uuids = []
-
-        for (element of elements) {
-            ajaxCall(url = "/api/automaticshutdown/settings/get/" + element, sendData = {}, callback = function (data, status) {
-                console.log("Data" + JSON.stringify(data));
-            });
            /*  uuids.push(uuid)
             uuid = search(element)
         */    
@@ -73,7 +67,7 @@
     $(document).on('click', "#deleteSelected", function () {
         console.log("Delete selected ");
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-        remove(JSON.stringify(selected))
+        remove(selected)
     });
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
