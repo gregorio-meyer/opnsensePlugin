@@ -63,9 +63,7 @@
         alert("Triggered " + trigger.nodeName); */
     });
     $(document).on('click', ":button", function () {
-        console.log("");
-        alert("Button: "+$('[data-action="edit"]'));
-        alert("Button: "+$('button').data);
+        alert("Button: "+$('[data-action="add"]').text());
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
