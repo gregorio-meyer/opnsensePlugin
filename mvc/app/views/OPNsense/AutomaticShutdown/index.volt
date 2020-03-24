@@ -74,6 +74,7 @@
         //alert("Edit " + event.srcElement);
         target = event.target
         alert("Edit " + target.constructor.name);
+        alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
     });
     $(document).on('click', ".command-copy", function () {
