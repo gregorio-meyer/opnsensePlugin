@@ -19,10 +19,10 @@
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
             var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-                var current = $("#grid-addresses").bootgrid("getCurrentRows");
-                alert("Selected : " + JSON.stringify(selected));
-                alert("current: " + JSON.stringify(current))
-        
+            var current = $("#grid-addresses").bootgrid("getCurrentRows");
+            alert("Selected : " + JSON.stringify(selected));
+            alert("current: " + JSON.stringify(current))
+
             $(document).on('click', "#deleteSelected", function () {
                 console.log("Delete selected");
                 var selected = $("#grid-addresses").bootgrid("getSelectedRows");
@@ -30,15 +30,9 @@
                 alert("Selected for deletion on: " + JSON.stringify(selected));
                 alert("Selected for current on: " + JSON.stringify(current))
                 //remove selected
+                remove(JSON.stringify(selected))
             });
         });
-        /*         $("#deleteSelected").click(function () {
-                    var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-                    alert("Selected for deletion: " + JSON.stringify(selected))
-                    alert("Deleted " + $(this));
-                }); */
-        //dovrebbe farlo dopo l'inizializzaziones
-
         //Search job example :Stop Firewall
         function search(phrase) {
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
@@ -46,16 +40,25 @@
                 console.log(status);
             });
         }
+        function getUUIDS(elements) {
+            //search jobs uuids
+            uuids = []
+            for (element of elements) {
+                search(element)
+                uuids.push(uuid)
+
+            }
+            return uuids;
+        }
         //remove cron jobs with an AJAX call
-        function remove(uuid) {
-            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
-                console.log(data);
-                console.log(status);
-            });
-            ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
-                console.log(data);
-                console.log(status);
-            });
+        function remove(elements) {
+            uuids = getUUIDS(elements);
+            for (uuid of uuids) {
+                ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                    console.log(data);
+                    console.log(status);
+                });
+            }
         }
     });
     function addJobs(startHour, endHour) {
