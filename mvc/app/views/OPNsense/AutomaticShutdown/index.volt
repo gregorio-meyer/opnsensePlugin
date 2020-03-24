@@ -20,7 +20,7 @@
         //Search job example :Stop Firewall
         function search(hour, cmd, descr) {
             //?searchPhrase= per cercare testo
-            ajaxCall(url = "/api/cron/settings/searchJobs/*" + phrase, sendData = {}, callback = function (data, status) {
+            ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
                 //get all cron jobs 
                 if (status === "success") {
                     //loop and find the ones that match
