@@ -19,9 +19,18 @@
         }
         //Search job example :Stop Firewall
         function search(phrase) {
-            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
-                if (status === "success")
-                    console.log("Found: " + JSON.stringify(data));
+            //?searchPhrase= per cercare testo
+            ajaxCall(url = "/api/cron/settings/searchJobs/*" + phrase, sendData = {}, callback = function (data, status) {
+                //get all cron jobs 
+                if (status === "success") {
+                    //loop and find the ones that match
+                    var json_str = JSON.stringify(data);
+                    console.log("Found: " + json_str);
+                    var json_data = JSON.parse(json_str);
+                    for (d of json_data) {
+                        console.log("Data: " + JSON.stringify(d));
+                    }
+                }
                 else
                     console.log("Error");
             });
@@ -113,8 +122,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                alert("Deleted");
-                                                                                                                                            }); */
+                                                                                                                                                            alert("Deleted");
+                                                                                                                                                        }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
