@@ -18,11 +18,12 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
+            console.log("Loaded")
             grid.find(".command-delete").on('click', function (e) {
                 alert("Delete!");
             });
             grid.find(".command-edit").on('click', function (e) {
-                alert("Delete!");
+                alert("Edit!");
             });
         });
         //Search job example :Stop Firewall
