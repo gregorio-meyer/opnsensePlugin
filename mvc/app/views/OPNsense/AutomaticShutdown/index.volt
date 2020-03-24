@@ -72,7 +72,7 @@
     $(document).on('click', ":span", function (event) {
         alert("Edit " + $(this).parent().constructor.name);
         alert("Edit " + $(this).constructor.name);
-        k=  + $(this);
+        k = + $(this);
         alert("Edit " + JSON.stringify(k));
         alert("Edit " + k.event);
         alert("Edit " + k.target);
@@ -84,7 +84,7 @@
         //alert("Edit " + target.constructor.name);
         //alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
-    }); 
+    });
     $(document).on('click', "span.fa.fa-pencil", function (event) {
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
@@ -99,7 +99,9 @@
     });
     $(document).on('click', ".command-delete-selected", function () {
         console.log("Delete selected");
-        alert("Delete selected");
+        var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+        alert("Selected for deletion: " + JSON.stringify(selected))
+        //remove selected
     });
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
     });
