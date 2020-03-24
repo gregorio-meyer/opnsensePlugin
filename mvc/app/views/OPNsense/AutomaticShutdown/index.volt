@@ -32,7 +32,7 @@
                         var hours = row['hours'];
                         var description = row['description'];
                         var command = row['command'];
-                        if (hour == hours && cmd === command && descr == description) {
+                        if (hour === hours && cmd === command && descr == description) {
                             console.log("enabled: " + enabled);
                             console.log("hours: " + hours);
                             console.log("description: " + description);
