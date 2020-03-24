@@ -8,7 +8,7 @@
 
         });
 
-        $("#grid-addresses").UIBootgrid(
+        var grid = $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
                 get: '/api/automaticshutdown/settings/getItem/',
@@ -18,7 +18,12 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
-
+            grid.find(".command-delete").on('click', function (e) {
+                alert("Delete!");
+            });
+            grid.find(".command-edit").on('click', function (e) {
+                alert("Delete!");
+            });
         });
         //Search job example :Stop Firewall
         function search(phrase) {
@@ -43,10 +48,10 @@
         //search jobs uuids
         console.log("Asked to remove " + elements)
     }
-           /*  uuids.push(uuid)
-            uuid = search(element)
-        */    
-     //   }
+    /*  uuids.push(uuid)
+     uuid = search(element)
+ */
+    //s   }
     /*    uuids = []
        for (element of elements) {
            uuid = search(element)
