@@ -81,7 +81,7 @@
     });
     $(document).on('show.bs.modal', '#DialogAddress', function (e) {
         var trigger = $(e.relatedTarget)
-        alert("Triggered by " + JSON.stringify(trigger));
+        alert("Triggered by " + trigger.val());
 
 
     });
