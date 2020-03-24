@@ -21,10 +21,10 @@
             console.log("Loaded")
             grid.find(".command-edit").on("click", function (e) {
                 alert("You pressed edit on row: " + $(this).data("row-id"));
-                alert("row: " + JSON.stringify($(this)));
+                alert("row: " + JSON.stringify($(this.data)));
             }).end().find(".command-delete").on("click", function (e) {
                 alert("You pressed delete on row: " + $(this).data("row-id"));
-                alert("row: " + JSON.stringify($(this)));
+                alert("row: " + JSON.stringify($(this.data)));
 
             });
         });
