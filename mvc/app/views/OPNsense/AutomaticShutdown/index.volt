@@ -4,14 +4,15 @@
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
         });
+        //save grid items
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
             });
         });
-
-        //Search job example :Stop Firewall
+        // TODO split function
+        //search and remove job
         function search(hour, cmd, descr) {
-            //?searchPhrase= per cercare testo
+        //?searchPhrase= per cercare testo
             ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
                 //get all cron jobs 
                 if (status === "success") {
@@ -33,38 +34,31 @@
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
                             ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                                 if (status === "success") {
-                                    console.log("Removed start hour " + JSON.stringify(data));
+                                    console.log("Removed " + description + " job" + JSON.stringify(data));
                                 }
                             });
-                           // return uuid;
                         }
                     }
                 }
                 else
                     console.log("Error while searching jobs");
             });
-            //not found
-           // return null;
         }
-
-        function remove(elements) {
-            console.log("Element to delete " + elements);
-            var enabled = elements['hour']['enabled'];
-            var startHour = elements['hour']['StartHour'];
-            var endHour = elements['hour']['EndHour'];
+        //TODO add enabled
+        //delete start and stop cron jobs for item
+        function remove(item) {
+            console.log("Element to delete " + item);
+            var enabled = item['enabled'];
+            var startHour = item['StartHour'];
+            var endHour = item['EndHour'];
             console.log("Element to delete " + enabled);
             console.log("Element to delete " + startHour);
             console.log("Element to delete " + endHour);
             //remove cron jobs with an AJAX call
             search(startHour, "Shutdown firewall", "Stop Firewall");
-            // var endUUID =  search(endHour, "Start firewall", "Start Firewall");;
-                            
-
-            // ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function (data, status) {
-            //     console.log(data);
-            //     console.log(status);
-            // });
+            search(endHour, "Start firewall", "Start Firewall");;
         }
+        //grid
         var grid = $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -75,7 +69,7 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         ).on("loaded.rs.jquery.bootgrid", function (e) {
-            console.log("Loaded")
+            //edit event handler
             grid.find(".command-edit").on("click", function (e) {
                 var id = $(this).data("row-id")
                 console.log("You pressed edit on row: " + id);
@@ -87,15 +81,16 @@
                     else {
                         console.log("Error status: " + status);
                     }
-                });
+                });//delete event handler
             }).end().find(".command-delete").on("click", function (e) {
                 var id = $(this).data("row-id")
                 console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
-                        var item = JSON.stringify(data);
-                        console.log("Element to delete " + item);
-                        remove(JSON.parse(item));
+                        var str = JSON.stringify(data);
+                        console.log("Element to delete " + str);
+                        var item =JSON.parse(item)['hour']; 
+                        remove(item);
                     }
                     else {
                         console.log("Error status: " + status);
@@ -103,8 +98,8 @@
                 });
             });
         });
-
     });
+    //add cron jobs to stop and restart the firewall
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
             console.log("Add start hour " + startHour);
@@ -114,25 +109,23 @@
             });
         });
     }
-
+    //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
         $("#shutdownMsg").html("")
         addJobs(startHour, endHour);
-
     });
-
-    $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
-        var e = $(event.relatedTarget);
-        alert("Event " + e);
-        alert("Event " + event.constructor.name);
-
-    });
-/*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                                                                    alert("Deleted");
-                                                                                                                                                                                                                                                }); */
+/*
+        $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
+            var e = $(event.relatedTarget);
+            alert("Event " + e);
+            alert("Event " + event.constructor.name);
+    
+        }); */
+    /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
+            alert("Deleted");}); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
