@@ -73,7 +73,7 @@
         console.log("Edit " + event.srcElement);
         alert("Edit " + event.srcElement);
         target = event.target
-        alert("Edit " + target.tagName.constructor.name);
+        alert("Edit " + target.className);
     });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
