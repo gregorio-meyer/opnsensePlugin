@@ -19,14 +19,10 @@
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
             console.log("Loaded")
-            grid.find(".command-delete").on('click', function (e) {
-                alert("Delete!");
-            });
-            grid.find(".command-edit").on('click', function (e) {
-                alert("Edit!");
-            });
-            grid.find(".command-delete-selected").on('click', function (e) {
-                alert("Delete selected!");
+            grid.find(".command-edit").on("click", function (e) {
+                alert("You pressed edit on row: " + $(this).data("row-id"));
+            }).end().find(".command-delete").on("click", function (e) {
+                alert("You pressed delete on row: " + $(this).data("row-id"));
             });
         });
         //Search job example :Stop Firewall
