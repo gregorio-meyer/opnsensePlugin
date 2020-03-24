@@ -94,7 +94,7 @@
         alert("Deleted");
         // save();
     })
-    $(document).on('click', ".btn.command-edit", function () {
+    $(document).on('click', ".btn", function () {
         console.log("Edit");
         alert("Edit");
         // save();
