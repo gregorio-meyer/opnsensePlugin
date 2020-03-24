@@ -25,18 +25,26 @@
                 if (status === "success") {
                     //loop and find the ones that match
                     var json_str = JSON.stringify(data);
-                   // console.log("Found: " + json_str);
+                    // console.log("Found: " + json_str);
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
                         var enabled = row['enabled'];
                         var hours = row['hours'];
                         var description = row['description'];
                         var command = row['command'];
-                        if (hour === hours && cmd === command && descr == description) {
-                            console.log("enabled: " + enabled);
-                            console.log("hours: " + hours);
-                            console.log("description: " + description);
+                        if (hour === hours) {
+                            console.log("enabled=== " + enabled);
+                            console.log("hours=== " + hours);
+                        }
+                        if (hour == hours) {
+                            console.log("enabled== " + enabled);
+                            console.log("hours== " + hours);
+                        }
+                        if (cmd === command) {
                             console.log("command: " + command);
+                        }
+                        if (descr == description) {
+                            console.log("description: " + description);
                             console.log("-------------------------------");
                         }
                     }
@@ -132,8 +140,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                        alert("Deleted");
-                                                                                                                                                                                    }); */
+                                                                                                                                                                                                alert("Deleted");
+                                                                                                                                                                                            }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
