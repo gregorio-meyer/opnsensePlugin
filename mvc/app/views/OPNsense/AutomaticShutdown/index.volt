@@ -69,7 +69,7 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ".fa.fa-pencil", function () {
+    $(document).on('click', ":button", function () {
         console.log("Edit");
         alert("Edit");
     });
