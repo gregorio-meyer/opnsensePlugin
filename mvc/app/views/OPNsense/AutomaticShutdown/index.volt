@@ -75,9 +75,10 @@
                 console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
-                        console.log("Element to delete " + JSON.stringify(data));
+                        var item = JSON.stringify(data);
+                        console.log("Element to delete " + item );
                         //remove json object
-                        remove(JSON.parse(JSON.stringify(data)));
+                        remove(item);
                     }
                     else {
                         console.log("Error status: " + status);
