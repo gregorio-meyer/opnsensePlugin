@@ -70,11 +70,11 @@
         alert("Deleted");
     });
     $(document).on('click', ":button", function (event) {
-        console.log("Edit " + event.srcElement);
-        alert("Edit " + event.srcElement);
+        //console.log("Edit " + event.srcElement);
+        //alert("Edit " + event.srcElement);
         target = event.target
         alert("Edit " + target.constructor.name);
-        alert("Edit " + target.tagName.className);
+        //alert("Edit " + target.tagName.className);
     });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
