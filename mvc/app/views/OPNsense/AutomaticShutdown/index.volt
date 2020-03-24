@@ -74,7 +74,7 @@
               });
           } */
     }
-    $(document).on('click', "#deleteSelected", function () {
+/*     $(document).on('click', "#deleteSelected", function () {
         console.log("Delete selected");
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
         remove(selected)
@@ -88,7 +88,7 @@
         console.log("Clicked td " + $(this));
         var selected = $(this);
         //remove(selected)
-    });
+    }); */
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
@@ -97,23 +97,23 @@
         addJobs(startHour, endHour);
 
     });
-    $(document).on('show.bs.modal', '#DialogAddress', function (event) {
+/*     $(document).on('show.bs.modal', '#DialogAddress', function (event) {
         /* alert(event);
         var trigger = $(event.target)
-        alert("Triggered " + trigger.nodeName); */
-    });
+        alert("Triggered " + trigger.nodeName); 
+    }); */
     $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
         var e = $(event.relatedTarget);
         alert("Event " + e);
         alert("Event " + event.constructor.name);
         
     });
-    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
+/*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
-    });
+    }); */
 
-    $(document).on('hidden.bs.modal', '#DialogAddress', function () {
-    });
+/*     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
+    }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
