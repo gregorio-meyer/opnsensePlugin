@@ -65,7 +65,7 @@
     $(document).on('click', ":button", function () {
         var btn = $('button[data-action="add"]').val()
         alert("Button data : " + btn.data);
-        alert("Button: " + btn;
+        alert("Button: " + btn);
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
