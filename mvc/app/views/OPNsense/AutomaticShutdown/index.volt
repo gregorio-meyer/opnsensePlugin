@@ -44,7 +44,7 @@
             //search jobs uuids
             uuids = []
             for (element of elements) {
-                search(element)
+                uuid = search(element)
                 uuids.push(uuid)
 
             }
