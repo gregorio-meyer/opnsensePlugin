@@ -21,7 +21,7 @@
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
-        ).on("load.rs.jquery.bootgrid", function (e) {
+        ).on("loaded.rs.jquery.bootgrid", function (e) {
             console.log("Loaded")
             grid.find(".command-edit").on("click", function (e) {
                 alert("You pressed edit on row: " + $(this).data("row-id"));
