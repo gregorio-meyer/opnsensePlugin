@@ -89,21 +89,21 @@
                 $("#shutdownMsg").removeClass("hidden");
             });
         });
-    })
+    });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
         // save();
-    })
+    });
     $(document).on('click', ".command-edit", function () {
         console.log("Edit");
         alert("Edit");
         // save();
-    })
+    });
     $(document).on('click', ".command-delete-selected", function () {
         console.log("Delete selected");
         alert("Delete selected");
         // save();
-    })
+    });
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         //  alert("Hidden");
 
