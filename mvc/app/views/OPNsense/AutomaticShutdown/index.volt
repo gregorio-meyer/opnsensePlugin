@@ -69,14 +69,14 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ":button", function (event) {
+/*     $(document).on('click', ":button", function (event) {
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
         target = event.target
         alert("Edit " + target.constructor.name);
         alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
-    });
+    }); */
     $(document).on('click', "span.fa.fa-pencil", function (event) {
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
