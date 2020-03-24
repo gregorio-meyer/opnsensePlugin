@@ -57,7 +57,7 @@
             });
         });
     });
-    $(document).on('show.bs.modal','#DialogAddress', function (event) {
+    $(document).on('show.bs.modal', '#DialogAddress', function (event) {
         /* alert(event);
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
@@ -69,9 +69,9 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ":button", function (e) {
-        console.log("Edit "+e.relatedTarget);
-        alert("Edit");
+    $(document).on('click', ":button", function (event) {
+        console.log("Edit " + event.srcElement);
+        alert("Edit " + event.srcElement);
     });
     $(document).on('click', ".command-copy", function () {
         console.log("Copy");
@@ -81,7 +81,7 @@
         console.log("Delete selected");
         alert("Delete selected");
     });
-        $(document).on('hidden.bs.modal', '#DialogAddress', function () {
+    $(document).on('hidden.bs.modal', '#DialogAddress', function () {
     });
 </script>
 
