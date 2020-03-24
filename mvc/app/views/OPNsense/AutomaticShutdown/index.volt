@@ -72,31 +72,23 @@
             });
         });
     }
-    function add() {
-        var rows = $("#grid-addresses").bootgrid('getSelectedRows');
-        for (r of rows) {
-            //remove it should only enable/disable scheduling                    
-            if (r['enabled'] == 1) {
-                addJobs(r['StartHour'], r['EndHour']);
-            }
-        }
-    }
 
-    function save() {
-        $("#shutdownMsg").html("")
-        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-            // action to run after successful save, for example reconfigure service.
-            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                add();
-                $("#shutdownMsg").removeClass("hidden");
-            });
-        });
-    }
     $(document).on('click', "#btn_DialogAddress_save", function () {
+     //   var enabled = $("#hour\\.enabled");
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.StartHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
-        save();
+        $("#shutdownMsg").html("")
+        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+            // action to run after successful save, for example reconfigure service.
+            //remove it should only enable/disable scheduling                    
+           // if (enabled == 1) {
+                addJobs(startHour, endHour);
+            //}
+            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+                $("#shutdownMsg").removeClass("hidden");
+            });
+        });
     })
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
