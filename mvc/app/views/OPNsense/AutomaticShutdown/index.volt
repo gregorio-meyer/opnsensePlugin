@@ -34,7 +34,8 @@
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
                             ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                                 if (status === "success") {
-                                    console.log("Removed " + description + " job" + JSON.stringify(data));
+                                    console.log("Removed " + descr + " job" + JSON.stringify(data));
+                                    return;
                                 }
                             });
                         }
