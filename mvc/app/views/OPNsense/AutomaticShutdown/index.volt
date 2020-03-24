@@ -70,8 +70,8 @@
         alert("Deleted");
     });
     $(document).on('click', ":button", function (event) {
-        alert("Edit " + $(this).parent().constructor.name);
-        alert("Edit " + $(this).constructor.name);
+        alert("Edit " + $(this).tagName);
+        alert("Edit " + $(this).tagName);
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
         //target = event.target
