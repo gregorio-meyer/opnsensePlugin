@@ -27,10 +27,10 @@
                         var description = row['description'];
                         var command = row['command'];
                         if (hour == hours && descr == description && cmd === command) {
-                            console.log("hours: " + hours);
+                        /*     console.log("hours: " + hours);
                             console.log("description: " + description);
                             console.log("command: " + command);
-                            console.log("uuid " + uuid);
+                            console.log("uuid " + uuid); */
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
                             ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                                 if (status === "success") {
@@ -47,13 +47,13 @@
         //TODO add enabled
         //delete start and stop cron jobs for item
         function remove(item) {
-            console.log("Element to delete " + item);
+            //console.log("Element to delete " + item);
             var enabled = item['enabled'];
             var startHour = item['StartHour'];
             var endHour = item['EndHour'];
-            console.log("Element to delete " + enabled);
-            console.log("Element to delete " + startHour);
-            console.log("Element to delete " + endHour);
+          //  console.log("Element to delete " + enabled);
+           // console.log("Element to delete " + startHour);
+           // console.log("Element to delete " + endHour);
             //remove cron jobs with an AJAX call
             search(startHour, "Shutdown firewall", "Stop Firewall");
             search(endHour, "Start firewall", "Start Firewall");;
@@ -84,11 +84,11 @@
                 });//delete event handler
             }).end().find(".command-delete").on("click", function (e) {
                 var id = $(this).data("row-id")
-                console.log("You pressed delete on row: " + id);
+               // console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
                         var str = JSON.stringify(data);
-                        console.log("Element to delete " + str);
+                 //       console.log("Element to delete " + str);
                         var item =JSON.parse(str)["hour"]; 
                         remove(item);
                     }
