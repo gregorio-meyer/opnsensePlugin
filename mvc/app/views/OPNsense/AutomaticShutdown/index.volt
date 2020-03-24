@@ -17,33 +17,31 @@
                 if (status === "success") {
                     //loop and find the ones that match
                     var json_str = JSON.stringify(data);
-                    // console.log("Found: " + json_str);
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
+                        //id of the cron job searched
+                        var uuid = row['uuid'];
                         var enabled = row['enabled'];
                         var hours = row['hours'];
                         var description = row['description'];
                         var command = row['command'];
-                        if (hour == hours && descr == description) {
+                        if (hour == hours && descr == description && cmd === command) {
                             console.log("hours: " + hours);
                             console.log("description: " + description);
-                            if (cmd === command) {
-                                console.log("command: " + command);
-                            }
-                            else {
-                                console.log("command: " + command);
-                                console.log("cmd: " + cmd);
-                            }
-                            console.log("-------------------------------");
+                            console.log("command: " + command);
+                            //return first occurence (it doesn't matter which job we delete since they're equals)
+                            return uuid;
                         }
                     }
                 }
                 else
-                    console.log("Error");
+                    console.log("Error while searching jobs");
             });
+            //not found
+            return null;
         }
         function getStartUUID(startHour) {
-            search(startHour, "automatic shutdown start", "Stop Firewall");
+            return search(startHour, "Shutdown firewall", "Stop Firewall");
         }
         function getEndUUID(endHour) {
 
@@ -59,12 +57,13 @@
             //   search(enabled + " " + startHour + " " + endHour + "")
             //remove cron jobs with an AJAX call
             var startUUID = getStartUUID(startHour);
-            var endUUID = getEndUUID(endHour);
-            // ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
-            //     if (status === "success") {
-            //         console.log("Removed start hour " + JSON.stringify(data));
-            //     }
-            // });
+            console.log("startUUID: " + uuid);
+           // var endUUID = getEndUUID(endHour);
+            ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
+                if (status === "success") {
+                    console.log("Removed start hour " + JSON.stringify(data));
+                }
+            });
 
             // ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function (data, status) {
             //     console.log(data);
@@ -137,8 +136,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                            alert("Deleted");
-                                                                                                                                                                                                        }); */
+                                                                                                                                                                                                                                    alert("Deleted");
+                                                                                                                                                                                                                                }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
