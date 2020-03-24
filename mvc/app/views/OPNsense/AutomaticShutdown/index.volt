@@ -65,7 +65,7 @@
     $(document).on('click', ":button", function () {
         console.log("");
         alert("Button: "+$('[data-action="edit"]'));
-        alert("Button: "+$(this).data);
+        alert("Button: "+$('button').data);
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
