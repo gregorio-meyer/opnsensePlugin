@@ -92,11 +92,11 @@
             });
         });
     }
-    $(document).on('click',"#hour.StartHour", function () {
-        alert("Click " + $("#hour.StartHour").val());
+    $(document).on('click',"#hour\\.StartHour", function () {
+        alert("Click " + $("#hour\\.StartHour").val());
     })
     $(document).on('click', "#btn_DialogAddress_save", function () {
-        var str = $("#hour.StartHour").text()
+        var str = $("#hour\\.StartHour").text()
         alert("Saved " + str);
         save();
     })
