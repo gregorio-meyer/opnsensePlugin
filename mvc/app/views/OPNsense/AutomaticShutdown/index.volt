@@ -18,7 +18,7 @@
             });
         }
         //Search job example :Stop Firewall
-        function search(phrase) {
+        function search(hour, cmd, descr) {
             //?searchPhrase= per cercare testo
             ajaxCall(url = "/api/cron/settings/searchJobs/*" + phrase, sendData = {}, callback = function (data, status) {
                 //get all cron jobs 
@@ -28,16 +28,17 @@
                     console.log("Found: " + json_str);
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
-                        //console.log("Data: " + JSON.stringify(row));
                         var enabled = row['enabled'];
-                        console.log("enabled: " + enabled);
                         var hours = row['hours'];
-                        console.log("hours: " + hours);
                         var description = row['description'];
-                        console.log("description: " + description);
                         var command = row['command'];
-                        console.log("command: " + command);
-                        console.log("-------------------------------");
+                        if (hour == hours && cmd === command && descr == description) {
+                            console.log("enabled: " + enabled);
+                            console.log("hours: " + hours);
+                            console.log("description: " + description);
+                            console.log("command: " + command);
+                            console.log("-------------------------------");
+                        }
                     }
                 }
                 else
@@ -45,7 +46,7 @@
             });
         }
         function getStartUUID(startHour) {
-            search("hours:" + startHour + "command: automatic shutdown start" + "description: Stop Firewall");
+            search(startHour, "automatic shutdown start", "Stop Firewall");
         }
         function getEndUUID(endHour) {
 
@@ -58,7 +59,7 @@
             console.log("Element to delete " + enabled);
             console.log("Element to delete " + startHour);
             console.log("Element to delete " + endHour);
-            search(enabled + " " + startHour + " " + endHour + "")
+            //   search(enabled + " " + startHour + " " + endHour + "")
             //remove cron jobs with an AJAX call
             var startUUID = getStartUUID(startHour);
             var endUUID = getEndUUID(endHour);
@@ -131,8 +132,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                    alert("Deleted");
-                                                                                                                                                                }); */
+                                                                                                                                                                                        alert("Deleted");
+                                                                                                                                                                                    }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
