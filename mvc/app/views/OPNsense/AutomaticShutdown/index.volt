@@ -61,7 +61,7 @@
         alert("Triggered event " + typeof(event));
         var trigger = $(event.target)
        // var name = $(event.relatedTarget.nodeName)
-        alert("Triggered " + $(trigger.nodeName));
+        alert("Triggered " + trigger.nodeName);
         //alert("Triggered name " + JSON.stringify(name));
     });
     $(document).on('click', ".command-delete", function () {
