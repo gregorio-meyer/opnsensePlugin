@@ -93,7 +93,8 @@
         });
     }
     $(document).on('click', "#btn_DialogAddress_save", function () {
-        alert("Saved");
+        var str = $("#hour.StartHour").val()
+        alert("Saved "+str);
         save();
     })
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
@@ -101,7 +102,7 @@
        // save();
     })
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
-        alert("Hidden");
+      //  alert("Hidden");
  
 
     });
