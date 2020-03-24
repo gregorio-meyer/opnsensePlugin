@@ -78,7 +78,7 @@
                         var item = JSON.stringify(data);
                         console.log("Element to delete " + item );
                         //remove json object
-                        remove(item);
+                        remove(data);
                     }
                     else {
                         console.log("Error status: " + status);
