@@ -42,7 +42,9 @@
             return null;
         }
         function getStartUUID(startHour) {
-            return search(startHour, "Shutdown firewall", "Stop Firewall");
+            var uuid = search(startHour, "Shutdown firewall", "Stop Firewall");
+            console.log("Search result " + uuid);
+            return uuid;
         }
         function getEndUUID(endHour) {
 
@@ -137,8 +139,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                                                        alert("Deleted");
-                                                                                                                                                                                                                                    }); */
+                                                                                                                                                                                                                                            alert("Deleted");
+                                                                                                                                                                                                                                        }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
