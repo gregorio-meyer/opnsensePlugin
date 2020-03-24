@@ -30,8 +30,13 @@
                             console.log("description: " + description);
                             console.log("command: " + command);
                             console.log("uuid " + uuid);
-                            //return first occurence (it doesn't matter which job we delete since they're equals)
-                            return uuid;
+                            //delete first occurence (it doesn't matter which job we delete since they're equals)
+                            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                                if (status === "success") {
+                                    console.log("Removed start hour " + JSON.stringify(data));
+                                }
+                            });
+                           // return uuid;
                         }
                     }
                 }
@@ -39,16 +44,9 @@
                     console.log("Error while searching jobs");
             });
             //not found
-            return null;
+           // return null;
         }
-        function getStartUUID(startHour) {
-            var uuid = search(startHour, "Shutdown firewall", "Stop Firewall");
-            console.log("Search result " + uuid);
-            return uuid;
-        }
-        function getEndUUID(endHour) {
 
-        }
         function remove(elements) {
             console.log("Element to delete " + elements);
             var enabled = elements['hour']['enabled'];
@@ -57,16 +55,10 @@
             console.log("Element to delete " + enabled);
             console.log("Element to delete " + startHour);
             console.log("Element to delete " + endHour);
-            //   search(enabled + " " + startHour + " " + endHour + "")
             //remove cron jobs with an AJAX call
-            var startUUID = getStartUUID(startHour);
-            console.log("startUUID: " + startUUID);
-            // var endUUID = getEndUUID(endHour);
-            ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
-                if (status === "success") {
-                    console.log("Removed start hour " + JSON.stringify(data));
-                }
-            });
+            search(startHour, "Shutdown firewall", "Stop Firewall");
+            // var endUUID =  search(endHour, "Start firewall", "Start Firewall");;
+                            
 
             // ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function (data, status) {
             //     console.log(data);
@@ -139,8 +131,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                                                            alert("Deleted");
-                                                                                                                                                                                                                                        }); */
+                                                                                                                                                                                                                                                    alert("Deleted");
+                                                                                                                                                                                                                                                }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
