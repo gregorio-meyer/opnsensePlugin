@@ -17,35 +17,43 @@
                 });
             });
         }
-        function getUUIDS(elements) {
-            //search jobs uuids
-            console.log("Asked to remove " + elements)
+        //Search job example :Stop Firewall
+        function search(phrase) {
+            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
+                if (status === "success")
+                    console.log("Found: " + JSON.stringify(data));
+                else
+                    console.log("Error");
+            });
         }
-        /*  uuids.push(uuid)
-         uuid = search(element)
-     */
-        //s   }
-        /*    uuids = []
-           for (element of elements) {
-               uuid = search(element)
-               uuids.push(uuid)
-    
-           } */
-        //       return uuids;
-        // }
-        //remove cron jobs with an AJAX call
+        function getStartUUID(startHour) {
+            search("hours:" + startHour + "command: automatic shutdown start" + "description: Stop Firewall");
+        }
+        function getEndUUID(endHour) {
+
+        }
         function remove(elements) {
             console.log("Element to delete " + elements);
-            console.log("Element to delete " + elements['hour']['enabled']);
-            console.log("Element to delete " + elements['hour']['StartHour']);
-            console.log("Element to delete " + elements['hour']['EndHour']);
-            //uuids = getUUIDS(elements);
-            /*  for (uuid of uuids) {
-                  ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
-                      console.log(data);
-                      console.log(status);
-                  });
-              } */
+            var enabled = elements['hour']['enabled'];
+            var startHour = elements['hour']['StartHour'];
+            var endHour = elements['hour']['EndHour'];
+            console.log("Element to delete " + enabled);
+            console.log("Element to delete " + startHour);
+            console.log("Element to delete " + endHour);
+            search(enabled + " " + startHour + " " + endHour + "")
+            //remove cron jobs with an AJAX call
+            var startUUID = getStartUUID(startHour);
+            var endUUID = getEndUUID(endHour);
+            // ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function (data, status) {
+            //     if (status === "success") {
+            //         console.log("Removed start hour " + JSON.stringify(data));
+            //     }
+            // });
+
+            // ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function (data, status) {
+            //     console.log(data);
+            //     console.log(status);
+            // });
         }
         var grid = $("#grid-addresses").UIBootgrid(
             {
@@ -77,8 +85,6 @@
                     if (status === "success") {
                         var item = JSON.stringify(data);
                         console.log("Element to delete " + item);
-                   //     console.log("Element to delete " + JSON.parse(item));
-                        //remove json object
                         remove(JSON.parse(item));
                     }
                     else {
@@ -87,13 +93,7 @@
                 });
             });
         });
-        //Search job example :Stop Firewall
-        function search(phrase) {
-            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
-                console.log(JSON.stringify(data));
-                console.log(status);
-            });
-        }
+
     });
 
 
@@ -113,8 +113,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                        alert("Deleted");
-                                                                                    }); */
+                                                                                                                                                alert("Deleted");
+                                                                                                                                            }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
