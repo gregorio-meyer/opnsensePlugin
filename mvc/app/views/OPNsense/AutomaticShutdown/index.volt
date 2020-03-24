@@ -62,8 +62,6 @@
         console.log("Delete selected ");
         console.log(selected);
         var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-        //                alert("Selected for deletion on: " + JSON.stringify(selected));
-        //remove selected
         remove(JSON.stringify(selected))
     });
     $(document).on('click', "#btn_DialogAddress_save", function () {
