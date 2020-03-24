@@ -92,9 +92,12 @@
             });
         });
     }
+    $(document).on('click',"#hour.StartHour", function () {
+        alert("Click " + $("#hour.StartHour").val());
+    })
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var str = $("#hour.StartHour").text()
-        alert("Saved "+str);
+        alert("Saved " + str);
         save();
     })
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
