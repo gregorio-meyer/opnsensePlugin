@@ -26,8 +26,8 @@
                     //loop and find the ones that match
                     var json_str = JSON.stringify(data);
                     console.log("Found: " + json_str);
-                    var json_data = JSON.parse(json_str);
-                    for (d of json_data) {
+                    var rows = JSON.parse(json_str)["rows"];
+                    for (d of rows) {
                         console.log("Data: " + JSON.stringify(d));
                     }
                 }
