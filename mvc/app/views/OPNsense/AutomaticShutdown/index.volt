@@ -1,5 +1,12 @@
 <script>
     $(document).ready(function () {
+        $('#DialogAddress').on('show.bs.modal', function (e) {
+        var trigger = $(e.relatedTarget)
+        alert("Triggered btn " + JSON.stringify(trigger));
+        alert("Triggered btn " + trigger.data('button'));
+        alert("Triggered by " + trigger.val());
+    });
+
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
@@ -79,13 +86,7 @@
         alert("Delete selected");
         // save();
     });
-    $('.modal').on('show.bs.modal', function (e) {
-        var trigger = $(e.relatedTarget)
-        alert("Triggered btn " + JSON.stringify(trigger));
-        alert("Triggered btn " + trigger.data('button'));
-        alert("Triggered by " + trigger.val());
-    });
-    $(document).on('hidden.bs.modal', '#DialogAddress', function () {
+        $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         //  alert("Hidden");
 
 
