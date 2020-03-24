@@ -8,15 +8,7 @@
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
             });
         });
-        function addJobs(startHour, endHour) {
-            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-                console.log("Add start hour " + startHour);
-                //add cron job if enabled
-                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                    console.log("Add end hour " + endHour);
-                });
-            });
-        }
+
         //Search job example :Stop Firewall
         function search(hour, cmd, descr) {
             //?searchPhrase= per cercare testo
@@ -32,19 +24,16 @@
                         var hours = row['hours'];
                         var description = row['description'];
                         var command = row['command'];
-                        if (hour === hours) {
-                            console.log("enabled=== " + enabled);
-                            console.log("hours=== " + hours);
-                        }
-                        if (hour == hours) {
-                            console.log("enabled== " + enabled);
-                            console.log("hours== " + hours);
-                        }
-                        if (cmd === command) {
-                            console.log("command: " + command);
-                        }
-                        if (descr == description) {
+                        if (hour == hours && descr == description) {
+                            console.log("hours: " + hours);
                             console.log("description: " + description);
+                            if (cmd === command) {
+                                console.log("command: " + command);
+                            }
+                            else {
+                                console.log("command: " + command);
+                                console.log("cmd: " + cmd);
+                            }
                             console.log("-------------------------------");
                         }
                     }
@@ -122,7 +111,15 @@
         });
 
     });
-
+    function addJobs(startHour, endHour) {
+        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+            console.log("Add start hour " + startHour);
+            //add cron job if enabled
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                console.log("Add end hour " + endHour);
+            });
+        });
+    }
 
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
@@ -140,8 +137,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                                                                alert("Deleted");
-                                                                                                                                                                                            }); */
+                                                                                                                                                                                                            alert("Deleted");
+                                                                                                                                                                                                        }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
