@@ -20,15 +20,10 @@
         ).on("load.rs.jquery.bootgrid", function (e) {
             var selected = $("#grid-addresses").bootgrid("getSelectedRows");
             var current = $("#grid-addresses").bootgrid("getCurrentRows");
-            alert("Selected : " + JSON.stringify(selected));
-            alert("current: " + JSON.stringify(current))
-
             $(document).on('click', "#deleteSelected", function () {
-                console.log("Delete selected");
+                console.log("Delete selected " + selected);
                 var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-                var current = $("#grid-addresses").bootgrid("getCurrentRows");
-                alert("Selected for deletion on: " + JSON.stringify(selected));
-                alert("Selected for current on: " + JSON.stringify(current))
+                //                alert("Selected for deletion on: " + JSON.stringify(selected));
                 //remove selected
                 remove(JSON.stringify(selected))
             });
@@ -53,13 +48,13 @@
         //remove cron jobs with an AJAX call
         function remove(elements) {
             console.log("Asked to remove " + elements)
-          /*   uuids = getUUIDS(elements);
-            for (uuid of uuids) {
-                ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
-                    console.log(data);
-                    console.log(status);
-                });
-            } */
+            /*   uuids = getUUIDS(elements);
+              for (uuid of uuids) {
+                  ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                      console.log(data);
+                      console.log(status);
+                  });
+              } */
         }
     });
     function addJobs(startHour, endHour) {
