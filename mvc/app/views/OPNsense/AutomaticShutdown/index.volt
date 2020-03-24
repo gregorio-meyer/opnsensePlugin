@@ -22,6 +22,7 @@
             grid.find(".command-edit").on("click", function (e) {
                 var id = $(this).data("row-id")
                 alert("You pressed edit on row: " + id);
+                //get item since we can only retrieve row-id from click event
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
                         console.log("Element to edit " + JSON.stringify(data));
@@ -104,8 +105,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                            alert("Deleted");
-                                                        }); */
+                                                                alert("Deleted");
+                                                            }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
