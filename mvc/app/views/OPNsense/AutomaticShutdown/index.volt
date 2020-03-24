@@ -18,15 +18,7 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         ).on("load.rs.jquery.bootgrid", function (e) {
-            var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-            var current = $("#grid-addresses").bootgrid("getCurrentRows");
-            $(document).on('click', "#deleteSelected", function () {
-                console.log("Delete selected " + selected);
-                var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-                //                alert("Selected for deletion on: " + JSON.stringify(selected));
-                //remove selected
-                remove(JSON.stringify(selected))
-            });
+
         });
         //Search job example :Stop Firewall
         function search(phrase) {
@@ -66,7 +58,14 @@
             });
         });
     }
-
+    $(document).on('click', "#deleteSelected", function () {
+        console.log("Delete selected ");
+        console.log(selected);
+        var selected = $("#grid-addresses").bootgrid("getSelectedRows");
+        //                alert("Selected for deletion on: " + JSON.stringify(selected));
+        //remove selected
+        remove(JSON.stringify(selected))
+    });
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
