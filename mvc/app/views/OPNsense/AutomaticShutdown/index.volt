@@ -73,6 +73,7 @@
         alert("Edit " + $(this).parent().constructor.name);
         alert("Edit " + $(this).constructor.name);
         k=  + $(this);
+        alert("Edit " + JSON.stringify(k));
         alert("Edit " + k.event);
         alert("Edit " + k.target);
         alert("Edit " + k.event.currentTarget);
