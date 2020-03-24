@@ -66,8 +66,14 @@
         console.log("Delete clicked");
         alert("Delete clicked");
     });
-    $(document).on('click', "table tbody tr td button", function () {
+    $(document).on('click', "table", function () {
         alert("Clicked");
+    });
+    $(document).on('click', "tr", function () {
+        alert("Clicked" + $(this).text());
+    });
+    $(document).on('click', ":span", function () {
+        alert("Clicked" + $(this).text());
     });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
