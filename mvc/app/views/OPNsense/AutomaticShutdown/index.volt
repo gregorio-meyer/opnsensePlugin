@@ -1,15 +1,8 @@
 <script>
     $(document).ready(function () {
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
-
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
-            /*            formatTokenizersUI();
-                       $('.selectpicker').selectpicker('refresh');
-                       // request service status on load and update status box
-                       ajaxCall(url = "/api/automaticshutdown/service/status", sendData = {}, callback = function (data, status) {
-                           updateServiceStatusUI(data['status']);
-                       }); */
         });
         $("#grid-addresses").UIBootgrid(
             {
@@ -21,47 +14,24 @@
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
         );
-        //remove cron jobs with an AJAX call
-        /* function remove() {
-            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Stop Firewall", sendData = {}, callback = function (data, status) {
+        //Search job example :Stop Firewall
+        function search(phrase) {
+            ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
                 console.log(JSON.stringify(data));
                 console.log(status);
-                console.log("Stop: ")
-                data['rows'].forEach(d => {
-                    ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
-                        console.log(data);
-                        console.log(status);
-                    });
-                })
-                ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=Start Firewall", sendData = {}, callback = function (data, status) {
-                    console.log("Start: ")
-                    data['rows'].forEach(d => {
-                        ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
-                            console.log(data);
-                            console.log(status);
-                        });
-                    })
-                });
-                ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
-                    console.log("Result: ")
-                    data['rows'].forEach(d => {
-                        console.log(JSON.stringify(d));
-                    });
-                })
-            }); */
-        //}
-
-        //   $("#shutdownMsg").append('<p> Shutdown scheduled between ' + startHour + ' and ' + endHour + '</p>');
-
-        /*       */
-
-        $("#saveAct").click(function () {
-            //remove()
-            save();
-            //save()
-            // alert("Saved");
-        });
-
+            });
+        }
+        //remove cron jobs with an AJAX call
+        function remove(uuid) {
+            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                console.log(data);
+                console.log(status);
+            });
+            ajaxCall(url = "/api/cron/settings/delJob/" + d['uuid'], sendData = {}, callback = function (data, status) {
+                console.log(data);
+                console.log(status);
+            });
+        }
     });
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
@@ -74,17 +44,12 @@
     }
 
     $(document).on('click', "#btn_DialogAddress_save", function () {
-        //   var enabled = $("#hour\\.enabled");
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
         $("#shutdownMsg").html("")
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-            // action to run after successful save, for example reconfigure service.
-            //remove it should only enable/disable scheduling                    
-            // if (enabled == 1) {
             addJobs(startHour, endHour);
-            //}
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
                 $("#shutdownMsg").removeClass("hidden");
             });
@@ -113,6 +78,12 @@
         console.log("Delete selected");
         alert("Delete selected");
         // save();
+    });
+    $(document).on('show.bs.modal', '#DialogAddress', function (e) {
+        var trigger = $(e.relatedTarget)
+        alert("Triggered by " + trigger);
+
+
     });
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         //  alert("Hidden");
