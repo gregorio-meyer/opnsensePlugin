@@ -66,28 +66,20 @@
         console.log("Delete clicked");
         alert("Delete clicked");
     });
-    $(document).on('click', "table", function () {
-        alert("Clicked");
-    });
-    $(document).on('click', "tr", function () {
-        alert("Clicked" + $(this).text());
-    });
-    $(document).on('click', ":span", function () {
-        alert("Clicked" + $(this).text());
-    });
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-/*     $(document).on('click', ":button", function (event) {
-        alert("Edit " + $(this).tagName);
-        alert("Edit " + $(this).tagName);
+    $(document).on('click', ":button", function (event) {
+        alert("Edit " + $(this).parent().constructor.name);
+        alert("Edit " + $(this).constructor.name);
+        alert("Edit " + $(this).event);
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
         //target = event.target
         //alert("Edit " + target.constructor.name);
         //alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
-    });  */
+    }); 
     $(document).on('click', "span.fa.fa-pencil", function (event) {
         //console.log("Edit " + event.srcElement);
         //alert("Edit " + event.srcElement);
