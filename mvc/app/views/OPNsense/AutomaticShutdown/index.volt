@@ -37,17 +37,7 @@
             }
             return uuids;
         }
-        //remove cron jobs with an AJAX call
-        function remove(elements) {
-            console.log("Asked to remove " + elements)
-            /*   uuids = getUUIDS(elements);
-              for (uuid of uuids) {
-                  ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
-                      console.log(data);
-                      console.log(status);
-                  });
-              } */
-        }
+
     });
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
@@ -57,6 +47,17 @@
                 console.log("Add end hour " + endHour);
             });
         });
+    }
+    //remove cron jobs with an AJAX call
+    function remove(elements) {
+        console.log("Asked to remove " + elements)
+        /*   uuids = getUUIDS(elements);
+          for (uuid of uuids) {
+              ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                  console.log(data);
+                  console.log(status);
+              });
+          } */
     }
     $(document).on('click', "#deleteSelected", function () {
         console.log("Delete selected ");
