@@ -53,13 +53,13 @@
         //remove cron jobs with an AJAX call
         function remove(elements) {
             console.log("Asked to remove " + elements)
-            uuids = getUUIDS(elements);
+          /*   uuids = getUUIDS(elements);
             for (uuid of uuids) {
                 ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                     console.log(data);
                     console.log(status);
                 });
-            }
+            } */
         }
     });
     function addJobs(startHour, endHour) {
