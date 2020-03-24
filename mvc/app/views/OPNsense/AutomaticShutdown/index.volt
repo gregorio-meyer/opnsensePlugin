@@ -8,6 +8,42 @@
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
             });
         });
+        function addJobs(startHour, endHour) {
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
+                console.log("Add start hour " + startHour);
+                //add cron job if enabled
+                ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
+                    console.log("Add end hour " + endHour);
+                });
+            });
+        }
+        function getUUIDS(elements) {
+            //search jobs uuids
+            console.log("Asked to remove " + elements)
+        }
+        /*  uuids.push(uuid)
+         uuid = search(element)
+     */
+        //s   }
+        /*    uuids = []
+           for (element of elements) {
+               uuid = search(element)
+               uuids.push(uuid)
+    
+           } */
+        //       return uuids;
+        // }
+        //remove cron jobs with an AJAX call
+        function remove(elements) {
+            console.log("Element to delete " + elements);
+            //uuids = getUUIDS(elements);
+            /*  for (uuid of uuids) {
+                  ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
+                      console.log(data);
+                      console.log(status);
+                  });
+              } */
+        }
         var grid = $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -21,7 +57,7 @@
             console.log("Loaded")
             grid.find(".command-edit").on("click", function (e) {
                 var id = $(this).data("row-id")
-                alert("You pressed edit on row: " + id);
+                console.log("You pressed edit on row: " + id);
                 //get item since we can only retrieve row-id from click event
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
@@ -33,11 +69,11 @@
                 });
             }).end().find(".command-delete").on("click", function (e) {
                 var id = $(this).data("row-id")
-                alert("You pressed delete on row: " + id);
+                console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
-                    console.log(JSON.stringify(data));
                     if (status === "success") {
                         console.log("Element to delete " + JSON.stringify(data));
+                        remove(data);
                     }
                     else {
                         console.log("Error status: " + status);
@@ -53,41 +89,7 @@
             });
         }
     });
-    function addJobs(startHour, endHour) {
-        ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
-            console.log("Add start hour " + startHour);
-            //add cron job if enabled
-            ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": endHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown stop", "parameters": "", "description": "Start Firewall" } }, callback = function (data, status) {
-                console.log("Add end hour " + endHour);
-            });
-        });
-    }
-    function getUUIDS(elements) {
-        //search jobs uuids
-        console.log("Asked to remove " + elements)
-    }
-    /*  uuids.push(uuid)
-     uuid = search(element)
- */
-    //s   }
-    /*    uuids = []
-       for (element of elements) {
-           uuid = search(element)
-           uuids.push(uuid)
 
-       } */
-    //       return uuids;
-    // }
-    //remove cron jobs with an AJAX call
-    function remove(elements) {
-        uuids = getUUIDS(elements);
-        /*  for (uuid of uuids) {
-              ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
-                  console.log(data);
-                  console.log(status);
-              });
-          } */
-    }
 
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
@@ -105,8 +107,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                alert("Deleted");
-                                                            }); */
+                                                                                alert("Deleted");
+                                                                            }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
