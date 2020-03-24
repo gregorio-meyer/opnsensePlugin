@@ -58,9 +58,9 @@
         });
     });
     $(document).on('show.bs.modal','#DialogAddress', function (event) {
-        alert(event);
+        /* alert(event);
         var trigger = $(event.target)
-        alert("Triggered " + trigger.nodeName);
+        alert("Triggered " + trigger.nodeName); */
     });
     $(document).on('click', ".command-delete", function () {
         console.log("Delete clicked");
@@ -69,8 +69,8 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ":button", function () {
-        console.log("Edit");
+    $(document).on('click', ":button", function (e) {
+        console.log("Edit "+e.relatedTarget);
         alert("Edit");
     });
     $(document).on('click', ".command-copy", function () {
