@@ -27,8 +27,17 @@
                     var json_str = JSON.stringify(data);
                     console.log("Found: " + json_str);
                     var rows = JSON.parse(json_str)["rows"];
-                    for (d of rows) {
-                        console.log("Data: " + JSON.stringify(d));
+                    for (row of rows) {
+                        //console.log("Data: " + JSON.stringify(row));
+                        var enabled = row['enabled'];
+                        console.log("enabled: " + enabled);
+                        var hours = row['hours'];
+                        console.log("hours: " + hours);
+                        var description = row['description'];
+                        console.log("description: " + description);
+                        var command = row['command'];
+                        console.log("command: " + command);
+                        console.log("-------------------------------");
                     }
                 }
                 else
@@ -122,8 +131,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                                                                                                                                            alert("Deleted");
-                                                                                                                                                        }); */
+                                                                                                                                                                    alert("Deleted");
+                                                                                                                                                                }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
