@@ -55,7 +55,9 @@
     $(document).on('click', "#deleteSelected", function () {
         console.log("Delete selected");
         var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-        alert("Selected for deletion on: " + JSON.stringify(selected))
+        var current = $("#DialogAddress").bootgrid("getCurrentRows");
+        alert("Selected for deletion on: " + JSON.stringify(selected));
+        alert("Selected for current on: " + JSON.stringify(current))
         //remove selected
     });
     $(document).on('click', "#btn_DialogAddress_save", function () {
