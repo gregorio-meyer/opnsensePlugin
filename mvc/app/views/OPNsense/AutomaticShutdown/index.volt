@@ -62,7 +62,7 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
-    $(document).on('click', ".command-delete", function () {
+    $(document).on('click', "button.command-delete", function () {
         console.log("Delete clicked");
         alert("Delete clicked");
     });
@@ -85,7 +85,7 @@
         alert("Edit " + JSON.stringify(target));
         //alert("Edit " + target.tagName.className);
     });
-    $(document).on('click', ".command-copy", function () {
+    $(document).on('click', "button.command-copy", function () {
         console.log("Copy");
         alert("Copy");
     });
