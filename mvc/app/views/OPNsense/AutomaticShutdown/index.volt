@@ -89,7 +89,7 @@
                     if (status === "success") {
                         var str = JSON.stringify(data);
                         console.log("Element to delete " + str);
-                        var item =JSON.parse(item)['hour']; 
+                        var item =JSON.parse(str)["hour"]; 
                         remove(item);
                     }
                     else {
