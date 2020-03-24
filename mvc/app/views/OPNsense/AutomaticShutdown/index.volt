@@ -57,11 +57,11 @@
             });
         });
     });
-    $(document).on('shown.bs.modal','#DialogAddress', function (event) {
+    $(document).on('show.bs.modal','#DialogAddress', function (event) {
         var trigger = $(event.relatedTarget)
+        var name = $(event.relatedTarget.nodeName)
         alert("Triggered btn " + JSON.stringify(trigger));
-        alert("Triggered btn " + trigger.data('button'));
-        alert("Triggered by " + trigger.val());
+        alert("Triggered name " + JSON.stringify(name));
     });
     $(document).on('click', ".command-delete", function () {
         console.log("Delete clicked");
@@ -72,7 +72,7 @@
         alert("Deleted");
         // save();
     });
-    $(document).on('click', ".command-edit", function () {
+    $(document).on('click', ".fa.fa-pencil", function () {
         console.log("Edit");
         alert("Edit");
         // save();
