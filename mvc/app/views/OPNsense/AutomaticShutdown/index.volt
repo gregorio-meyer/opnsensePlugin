@@ -25,7 +25,7 @@
                 if (status === "success") {
                     //loop and find the ones that match
                     var json_str = JSON.stringify(data);
-                    console.log("Found: " + json_str);
+                   // console.log("Found: " + json_str);
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
                         var enabled = row['enabled'];
