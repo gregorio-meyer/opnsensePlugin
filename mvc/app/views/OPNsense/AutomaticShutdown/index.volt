@@ -1,11 +1,6 @@
 <script>
     $(document).ready(function () {
-        $('#DialogAddress').on('show.bs.modal', function (e) {
-        var trigger = $(e.relatedTarget)
-        alert("Triggered btn " + JSON.stringify(trigger));
-        alert("Triggered btn " + trigger.data('button'));
-        alert("Triggered by " + trigger.val());
-    });
+
 
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
@@ -61,6 +56,12 @@
                 $("#shutdownMsg").removeClass("hidden");
             });
         });
+    });
+    $(document).on('shown.bs.modal','#DialogAddress', function (event) {
+        var trigger = $(event.relatedTarget)
+        alert("Triggered btn " + JSON.stringify(trigger));
+        alert("Triggered btn " + trigger.data('button'));
+        alert("Triggered by " + trigger.val());
     });
     $(document).on('click', ".command-delete", function () {
         console.log("Delete clicked");
