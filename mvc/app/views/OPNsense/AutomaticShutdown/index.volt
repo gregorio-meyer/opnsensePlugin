@@ -93,7 +93,7 @@
         });
     }
     $(document).on('click', "#btn_DialogAddress_save", function () {
-        var str = $("#hour.StartHour").val()
+        var str = $("#hour.StartHour").text()
         alert("Saved "+str);
         save();
     })
