@@ -92,12 +92,13 @@
             });
         });
     }
+    $(document).on('click', "#btn_DialogAddress_save", function () {
+        alert("Saved");
+    })
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         alert("Hidden");
         save();
-        $("#btn_DialogAddress_save").unbind('click').click(function () {
-            alert("Saved");
-        })
+
     });
 </script>
 
