@@ -7,14 +7,7 @@
         mapDataToFormUI(data_get_map).done(function () {
 
         });
-        $(document).on('click', "#deleteSelected", function () {
-            console.log("Delete selected");
-            var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-            var current = $("#DialogAddress").bootgrid("getCurrentRows");
-            alert("Selected for deletion on: " + JSON.stringify(selected));
-            alert("Selected for current on: " + JSON.stringify(current))
-            //remove selected
-        });
+
         $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -24,7 +17,16 @@
                 del: '/api/automaticshutdown/settings/delItem/',
                 toggle: '/api/automaticshutdown/settings/toggleItem/',
             }
-        );
+        ).on("load.rs.jquery.bootgrid", function (e) {
+            $(document).on('click', "#deleteSelected", function () {
+                console.log("Delete selected");
+                var selected = $("#DialogAddress").bootgrid("getSelectedRows");
+                var current = $("#DialogAddress").bootgrid("getCurrentRows");
+                alert("Selected for deletion on: " + JSON.stringify(selected));
+                alert("Selected for current on: " + JSON.stringify(current))
+                //remove selected
+            });
+        });
         /*         $("#deleteSelected").click(function () {
                     var selected = $("#DialogAddress").bootgrid("getSelectedRows");
                     alert("Selected for deletion: " + JSON.stringify(selected))
@@ -78,11 +80,6 @@
         var trigger = $(event.target)
         alert("Triggered " + trigger.nodeName); */
     });
-    /*     $(document).on('click', ":button", function () {
-            var btn = $('button[data-action="add"]').val()
-            alert("Button data : " + btn.data);
-            alert("Button: " + btn);
-        }); */
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
