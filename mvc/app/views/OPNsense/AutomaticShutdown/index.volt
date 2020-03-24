@@ -79,7 +79,7 @@
         alert("Delete selected");
         // save();
     });
-    $(document).on('show.bs.modal', '#DialogAddress', function (e) {
+    $(document).on('shown.bs.modal', '#DialogAddress', function (e) {
         var trigger = $(e.relatedTarget)
         alert("Triggered by " + trigger.val());
 
