@@ -23,12 +23,12 @@
             alert("Deleted " + $(this));
         });
         //dovrebbe farlo dopo l'inizializzaziones
-/*         $(document).on('click', ".command-delete-selected", function () {
+        $(document).on('click', "#deleteSelected", function () {
             console.log("Delete selected");
             var selected = $("#DialogAddress").bootgrid("getSelectedRows");
-            alert("Selected for deletion: " + JSON.stringify(selected))
+            alert("Selected for deletion on: " + JSON.stringify(selected))
             //remove selected
-        }); */
+        }); 
         //Search job example :Stop Firewall
         function search(phrase) {
             ajaxCall(url = "/api/cron/settings/searchJobs/*?searchPhrase=" + phrase, sendData = {}, callback = function (data, status) {
