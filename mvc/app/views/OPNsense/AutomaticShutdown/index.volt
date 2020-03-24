@@ -79,11 +79,11 @@
         alert("Delete selected");
         // save();
     });
-    $(document).on('shown.bs.modal', '#DialogAddress', function (e) {
+    $('.modal').on('show.bs.modal', function (e) {
         var trigger = $(e.relatedTarget)
+        alert("Triggered btn " + JSON.stringify(trigger));
+        alert("Triggered btn " + trigger.data('button'));
         alert("Triggered by " + trigger.val());
-
-
     });
     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
         //  alert("Hidden");
