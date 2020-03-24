@@ -58,11 +58,11 @@
         });
     });
     $(document).on('show.bs.modal','#DialogAddress', function (event) {
-        //alert("Triggered event " + JSON.stringify(event));
+        alert("Triggered event " + event);
         var trigger = $(event.relatedTarget)
         var name = $(event.relatedTarget.nodeName)
-        alert("Triggered btn " + JSON.stringify(trigger));
-        alert("Triggered name " + JSON.stringify(name));
+        //alert("Triggered btn " + JSON.stringify(trigger));
+        //alert("Triggered name " + JSON.stringify(name));
     });
     $(document).on('click', ".command-delete", function () {
         console.log("Delete clicked");
