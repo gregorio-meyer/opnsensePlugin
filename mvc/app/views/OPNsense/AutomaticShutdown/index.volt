@@ -21,7 +21,6 @@
                     for (row of rows) {
                         //id of the cron job searched
                         var uuid = row['uuid'];
-                        console.log("uuid " + uuid);
                         var enabled = row['enabled'];
                         var hours = row['hours'];
                         var description = row['description'];
@@ -30,6 +29,7 @@
                             console.log("hours: " + hours);
                             console.log("description: " + description);
                             console.log("command: " + command);
+                            console.log("uuid " + uuid);
                             //return first occurence (it doesn't matter which job we delete since they're equals)
                             return uuid;
                         }
