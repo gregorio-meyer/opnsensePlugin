@@ -69,7 +69,7 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
         alert("Deleted");
     });
-    $(document).on('click', ":button", function (event) {
+    $(document).on('click', ":span", function (event) {
         alert("Edit " + $(this).parent().constructor.name);
         alert("Edit " + $(this).constructor.name);
         k=  + $(this);
