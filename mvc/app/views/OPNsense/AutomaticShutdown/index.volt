@@ -8,6 +8,10 @@
 
         });
 
+        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
+            });
+        });
         var grid = $("#grid-addresses").UIBootgrid(
             {
                 search: '/api/automaticshutdown/settings/searchItem/',
@@ -81,21 +85,17 @@
         remove(selected)
     });
     $(document).on('click', "td", function () {
-        console.log("Clicked td "+$(this));
+        console.log("Clicked td " + $(this));
         var selected = $(this);
-        remove(selected)
+        //remove(selected)
     });
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         alert("Planned shutdown between " + startHour + " and " + endHour);
         $("#shutdownMsg").html("")
-        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
-            addJobs(startHour, endHour);
-            ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
-                $("#shutdownMsg").removeClass("hidden");
-            });
-        });
+        addJobs(startHour, endHour);
+
     });
     $(document).on('show.bs.modal', '#DialogAddress', function (event) {
         /* alert(event);
