@@ -25,6 +25,9 @@
             grid.find(".command-edit").on('click', function (e) {
                 alert("Edit!");
             });
+            grid.find(".command-delete-selected").on('click', function (e) {
+                alert("Delete selected!");
+            });
         });
         //Search job example :Stop Firewall
         function search(phrase) {
