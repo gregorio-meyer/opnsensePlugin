@@ -1,13 +1,9 @@
 <script>
     $(document).ready(function () {
-
-
         var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
         mapDataToFormUI(data_get_map).done(function () {
-
         });
-
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
             });
@@ -25,8 +21,11 @@
             console.log("Loaded")
             grid.find(".command-edit").on("click", function (e) {
                 alert("You pressed edit on row: " + $(this).data("row-id"));
+                alert("row: " + $(this));
             }).end().find(".command-delete").on("click", function (e) {
                 alert("You pressed delete on row: " + $(this).data("row-id"));
+                alert("row: " + $(this));
+
             });
         });
         //Search job example :Stop Firewall
@@ -36,8 +35,6 @@
                 console.log(status);
             });
         }
-
-
     });
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
@@ -74,21 +71,7 @@
               });
           } */
     }
-/*     $(document).on('click', "#deleteSelected", function () {
-        console.log("Delete selected");
-        var selected = $("#grid-addresses").bootgrid("getSelectedRows");
-        remove(selected)
-    });
-    $(document).on('click', ".command-edit", function () {
-        console.log("Edit selected");
-        var selected = $(this);
-        remove(selected)
-    });
-    $(document).on('click', "td", function () {
-        console.log("Clicked td " + $(this));
-        var selected = $(this);
-        //remove(selected)
-    }); */
+
     $(document).on('click', "#btn_DialogAddress_save", function () {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
@@ -97,23 +80,16 @@
         addJobs(startHour, endHour);
 
     });
-/*     $(document).on('show.bs.modal', '#DialogAddress', function (event) {
-        /* alert(event);
-        var trigger = $(event.target)
-        alert("Triggered " + trigger.nodeName); 
-    }); */
+
     $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
         var e = $(event.relatedTarget);
         alert("Event " + e);
         alert("Event " + event.constructor.name);
-        
+
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-        alert("Deleted");
-    }); */
-
-/*     $(document).on('hidden.bs.modal', '#DialogAddress', function () {
-    }); */
+                alert("Deleted");
+            }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
