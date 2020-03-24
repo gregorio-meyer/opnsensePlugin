@@ -23,15 +23,24 @@
                 var id = $(this).data("row-id")
                 alert("You pressed edit on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
-                    console.log(JSON.stringify(data));
-                    console.log(status);
+                    if (status === "success") {
+                        console.log("Element to edit " + JSON.stringify(data));
+                    }
+                    else {
+                        console.log("Error status: " + status);
+                    }
                 });
             }).end().find(".command-delete").on("click", function (e) {
                 var id = $(this).data("row-id")
                 alert("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     console.log(JSON.stringify(data));
-                    console.log(status);
+                    if (status === "success") {
+                        console.log("Element to delete " + JSON.stringify(data));
+                    }
+                    else {
+                        console.log("Error status: " + status);
+                    }
                 });
             });
         });
@@ -95,8 +104,8 @@
 
     });
 /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-                                    alert("Deleted");
-                                }); */
+                                                            alert("Deleted");
+                                                        }); */
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
