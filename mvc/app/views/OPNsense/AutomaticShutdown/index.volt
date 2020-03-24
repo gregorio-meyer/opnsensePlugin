@@ -79,7 +79,7 @@
                         console.log("Element to delete " + item );
                         console.log("Element to delete " + JSON.parse(item));
                         //remove json object
-                        remove(data);
+                        remove(item);
                     }
                     else {
                         console.log("Error status: " + status);
