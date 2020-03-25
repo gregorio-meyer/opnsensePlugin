@@ -24,74 +24,56 @@
         }).on("loaded.rs.jquery.bootgrid", function(e) {
             //edit event handler
             grid.find(".command-edit").on("click", function(e) {
-                var id = $(this).data("row-id")
-                console.log("You pressed edit on row: " + id);
-                //get item since we can only retrieve row-id from click event
-                ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                    if (status === "success") {
-                        console.log("Element to edit " + JSON.stringify(data));
-                        edit = true;
-                    } else {
-                        console.log("Error while retrieving element to edit, status: " + status);
-                    }
-                }); //delete event handler
-            }).end().find(".command-delete").on("click", function(e) {
-                var id = $(this).data("row-id")
-                ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                    if (status === "success") {
-                        var str = JSON.stringify(data);
-                        var item = JSON.parse(str)["hour"];
-                        if (item !== null) {
-                            //if we found the row to delete save it and set the delete flag
-                            //the element will be removed if the user press "Yes"
-                            toDelete = item;
+                    var id = $(this).data("row-id")
+                    console.log("You pressed edit on row: " + id);
+                    //get item since we can only retrieve row-id from click event
+                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            console.log("Element to edit " + JSON.stringify(data));
+                            edit = true;
                         } else {
-                            alert("An unexpected error occured, couldn't find element to delete!");
+                            console.log("Error while retrieving element to edit, status: " + status);
                         }
-                    } else {
-                        console.log("Error status: " + status);
-                    }
+                    }); //delete event handler
+                }).end().find(".command-delete").on("click", function(e) {
+                    var id = $(this).data("row-id")
+                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            var str = JSON.stringify(data);
+                            var item = JSON.parse(str)["hour"];
+                            if (item !== null) {
+                                //if we found the row to delete save it and set the delete flag
+                                //the element will be removed if the user press "Yes"
+                                toDelete = item;
+                            } else {
+                                alert("An unexpected error occured, couldn't find element to delete!");
+                            }
+                        } else {
+                            console.log("Error status: " + status);
+                        }
+                    })
+                }).end().find(".command-copy").on("click", function(e) {
+                    var id = $(this).data("row-id")
+                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            var str = JSON.stringify(data);
+                            var item = JSON.parse(str)["hour"];
+                            if (item !== null) {
+                                var startHour = item['StartHour'];
+                                var endHour = item['EndHour'];
+                                copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
+                            } else {
+                                alert("An unexpected error occured, couldn't find element to copy!");
+                            }
+                        } else {
+                            console.log("Error while retrieving element to copy, status: " + status);
+                        }
+                    });
                 })
-            }).end().find(".command-copy").on("click", function(e) {
-                var id = $(this).data("row-id")
-                ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                    if (status === "success") {
-                        var str = JSON.stringify(data);
-                        var item = JSON.parse(str)["hour"];
-                        if (item !== null) {
-                            var startHour = item['StartHour'];
-                            var endHour = item['EndHour'];
-                            copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
-                        } else {
-                            alert("An unexpected error occured, couldn't find element to copy!");
-                        }
-                    } else {
-                        console.log("Error while retrieving element to copy, status: " + status);
-                    }
+                .end().find(".command-delete-selected").on("click", function(e) {
+                    elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
+                    alert("Selected for removal " + JSON.stringify(elementsToDelete));
                 });
-            })
-        }).end().find(".command-delete-selected").on("click", function(e) {
-            //var id = $(this).data("row-id")
-            elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
-            alert("Selected for removal " + JSON.stringify(elementsToDelete));
-            /*ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                if (status === "success") {
-
-
-                    /*                             var str = JSON.stringify(data);
-                                                var item = JSON.parse(str)["hour"];
-                                                if (item !== null) {
-                                                    var startHour = item['StartHour'];
-                                                    var endHour = item['EndHour'];
-                                                    copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
-                                                } else {
-                                                    alert("An unexpected error occured, couldn't find element to copy!");
-                                                }
-                     
-                } else {
-                    console.log("Error while retrieving element to copy, status: " + status);
-                }*/
-            //});
         });
     });
 
