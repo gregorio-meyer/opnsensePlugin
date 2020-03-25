@@ -187,7 +187,7 @@
             setTimeout(function() {
                 editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
             }, 100);
-            console.log("Edited start hour");
+            console.log("Edited start hour " + startHour);
             setTimeout(function() {
                 editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
             }, 100);
