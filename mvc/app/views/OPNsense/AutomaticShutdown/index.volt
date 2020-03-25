@@ -111,7 +111,7 @@
                                 }
                             }, callback = function(data, status) {
                                 if (status === "success") {
-                                    console.log("Edited " + descr + " job" + JSON.stringify(data));
+                                    console.log("Edited " + descr + " job " + JSON.stringify(data));
                                     edited = true;
                                 }
                             });
