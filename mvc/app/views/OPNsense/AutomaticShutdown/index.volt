@@ -84,17 +84,14 @@
                 //loop and find the ones that match
                 var json_str = JSON.stringify(data);
                 var rows = JSON.parse(json_str)["rows"];
-
                 for (row of rows) {
-                    var s = JSON.stringify(row);
-                    console.log("Row " + s);
                     var enabled = row['enabled'];
                     var hours = row['hours'];
                     var description = row['description'];
                     var command = row['command'];
+                    var uuid = row['uuid'];
                     if (oldHour == hours && descr == description && oldCmd === command) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        var uuid = row['uuid'];
                         var edited = false;
                         setTimeout(function() {
                             ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
