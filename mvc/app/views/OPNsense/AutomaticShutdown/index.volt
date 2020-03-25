@@ -76,6 +76,14 @@
                 });
         });
     });
+    //save values before editing 
+    $(document).on('focusin', "#hour\\.StartHour", function() {
+        oldStartHour = $("#hour\\.StartHour").val();
+
+    });
+    $(document).on('focusin', "#hour\\.EndHour", function() {
+        oldEndHour = $("#hour\\.EndHour").val();
+    });
     //edit an existing cron job
     function editJobs(oldStartHour, oldStartCmd, startCmd, startDescr, startNewHour, oldEndHour, oldEndCmd, endCmd, endDescr, endNewHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
@@ -184,15 +192,6 @@
             });
         });
     }
-    //save values before editing 
-    $(document).on('focusin', "#hour\\.StartHour", function() {
-        oldStartHour = $("#hour\\.StartHour").val();
-
-    });
-    $(document).on('focusin', "#hour\\.EndHour", function() {
-        oldEndHour = $("#hour\\.EndHour").val();
-    });
-
     //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function() {
         var startHour = $("#hour\\.StartHour").val();
@@ -206,17 +205,13 @@
             addJobs(startHour, endHour);
         } else {
             //if none was selected take val from textbox
-            if (oldStartHour == null) {
-                oldStartHour = startHour;
-            }
-            if (oldEndHour == null) {
-                oldEndHour = endHour;
-            }
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
+            if (oldStartHour == null) oldStartHour = startHour;
+            if (oldEndHour == null) oldEndHour = endHour;
             setTimeout(function() {
                 editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour, oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
             }, 100);
             edit = false;
+            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
         }
     });
     // TODO split function
