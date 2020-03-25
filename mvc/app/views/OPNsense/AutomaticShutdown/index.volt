@@ -145,6 +145,7 @@
         } else {
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour);
             editJobs(startHour, endHour);
+            edit = false;
         }
     });
     /*
