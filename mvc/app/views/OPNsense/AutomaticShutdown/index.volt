@@ -114,8 +114,10 @@
                                 }
                             });
                         }, 100);
-                        if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
-                            if (edited) {
+                    }
+                    if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
+                        if (edited) {
+                            setTimeout(function() {
                                 ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
                                     "job": {
                                         "enabled": "1",
@@ -134,10 +136,10 @@
                                         allEdited = true;
                                     }
                                 });
-                            }
-                            if (allEdited) break;
+                            }, 100);
                         }
                     }
+                    if (allEdited) break;
                 }
             }
         });
