@@ -86,6 +86,8 @@
                 var rows = JSON.parse(json_str)["rows"];
 
                 for (row of rows) {
+                    var s = JSON.stringify(row);
+                    console.log("Row " + s);
                     var enabled = row['enabled'];
                     var hours = row['hours'];
                     var description = row['description'];
