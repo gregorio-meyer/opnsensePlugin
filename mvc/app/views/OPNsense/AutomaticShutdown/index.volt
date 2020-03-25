@@ -254,7 +254,7 @@
                         setTimeout(function() {
                             ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
                                 if (status === "success") {
-                                    console.log("Removed " + descr + " job" + JSON.stringify(data));
+                                    console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
                                     deleted = true;
                                 }
                             });
