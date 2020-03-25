@@ -41,17 +41,15 @@
         function setDelete(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    var item = JSON.getJSON(data)["hour"];
                     if (item !== null) {
-                        //if we found the row to delete save it and set the delete flag
-                        //the element will be removed if the user press "Yes"
+                        //if we found the row to delete save it the element will be removed if the user press "Yes"
                         toDelete = item;
                     } else {
                         alert("An unexpected error occured, couldn't find element to delete!");
                     }
                 } else {
-                    console.log("Error status: " + status);
+                    console.log("Error while retrieving element to delete, status: " + status);
                 }
             })
         }
@@ -59,8 +57,7 @@
         function setCopy(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    var item = getJSON(data)["hour"];
                     if (item !== null) {
                         copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
                     } else {
@@ -71,7 +68,7 @@
                 }
             });
         }
-
+        //check if necessary
         function setDeleteSelected() {
             do {
                 elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
@@ -79,20 +76,22 @@
         }
 
         function setEventHandlers() {
-            //edit event handler
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
                     setEdit(id);
-                    //delete event handler
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id")
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id")
                     setCopy(id);
-                }) //check if necessary
+                })
                 .end().find(".command-delete-selected").on("click", function(e) {
                     setDeleteSelected();
+                })
+                .end().find(".command-toggle").on("click", function(e) {
+                    var data = JSON.stringify($(this).data)
+                    alert("Toggle pressed " + data)
                 });
         }
     });
@@ -102,6 +101,42 @@
     });
     $(document).on('focusin', "#hour\\.EndHour", function() {
         oldEndHour = $("#hour\\.EndHour").val();
+    });
+    //on save get data from modal input fields and add jobs to schedule
+    $(document).on('click', "#btn_DialogAddress_save", function() {
+        var startHour = $("#hour\\.StartHour").val();
+        var endHour = $("#hour\\.EndHour").val();
+        if (!edit) {
+            //copy or add new job
+            if (copyMessage == null)
+                alert("Planned shutdown between " + startHour + " and " + endHour);
+            else
+                alert(copyMessage);
+            addJobs(startHour, endHour);
+        } else {
+            //if none was selected take val from textbox
+            if (oldStartHour == null) oldStartHour = startHour;
+            if (oldEndHour == null) oldEndHour = endHour;
+            setTimeout(function() {
+                editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour, oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
+            }, 100);
+            edit = false;
+            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
+        }
+    });
+    //event handler for remove confirmation dialog button TODO simplify
+    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
+        if (toDelete !== null) {
+            remove(toDelete);
+            alert("Deleted!");
+            toDelete = null;
+        } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
+            removeAll();
+            alert("All deleted!");
+            elementsToDelete = null;
+        } else {
+            alert("Error no element set to delete")
+        }
     });
 
     function getJSON(data) {
@@ -217,32 +252,9 @@
             });
         });
     }
-    //on save get data from modal input fields and add jobs to schedule
-    $(document).on('click', "#btn_DialogAddress_save", function() {
-        var startHour = $("#hour\\.StartHour").val();
-        var endHour = $("#hour\\.EndHour").val();
-        if (!edit) {
-            //copy or add new job
-            if (copyMessage == null)
-                alert("Planned shutdown between " + startHour + " and " + endHour);
-            else
-                alert(copyMessage);
-            addJobs(startHour, endHour);
-        } else {
-            //if none was selected take val from textbox
-            if (oldStartHour == null) oldStartHour = startHour;
-            if (oldEndHour == null) oldEndHour = endHour;
-            setTimeout(function() {
-                editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour, oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
-            }, 100);
-            edit = false;
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
-        }
-    });
     // TODO split function
     //search and remove job
     function removeJobs(enabled, hour, cmd, descr, endHour, endCmd, endDescr) {
-        var deleted = false;
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
@@ -262,35 +274,27 @@
                 if (startUUID !== null && endUUID !== null) {
                     setTimeout(function() {
                         ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
+                            //check if not found 
                             if (status === "success") {
                                 console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + startUUID);
                                 ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
                                     if (status === "success") {
-                                        //  deleted = true;
                                         console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + endUUID);
-                                        //   deleted = true;
                                         return true;
                                     }
                                 });
-
                             }
                         });
                     }, 100);
                 }
-                // if (deleted) break;
             } else
                 console.log("Error while searching jobs");
         });
-        return deleted;
     }
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
-        //remove cron jobs with an AJAX call
-        var deleted = removeJobs(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall", item['EndHour'], "Start firewall", "Start Firewall");
-        console.log("deleted " + deleted)
-            //  deleted = removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");
-            // console.log("End " + deleted)
+        removeJobs(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall", item['EndHour'], "Start firewall", "Start Firewall");
     }
 
     function removeAll() {
@@ -310,20 +314,6 @@
             });
         }
     }
-    //event handler for remove confirmation dialog button TODO simplify
-    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        if (toDelete !== null) {
-            remove(toDelete);
-            alert("Deleted!");
-            toDelete = null;
-        } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
-            removeAll();
-            alert("All deleted!");
-            elementsToDelete = null;
-        } else {
-            alert("Error no element set to delete")
-        }
-    });
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
