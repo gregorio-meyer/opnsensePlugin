@@ -1,6 +1,7 @@
 <script>
     var edit = false;
     var toDelete = null;
+    var copyMessage = null;
     $(document).ready(function() {
         var data_get_map = {
             'DialogAddress': "/api/automaticshutdown/settings/get"
@@ -59,7 +60,7 @@
                         if (item !== null) {
                             var startHour = item['StartHour'];
                             var endHour = item['EndHour'];
-                            alert("Copied schedule with start hour: " + startHour + " and end hour: " + endHour);
+                            copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
                         } else {
                             alert("An unexpected error occured, couldn't find element to copy!");
                         }
@@ -180,6 +181,7 @@
             if (toDelete !== null) {
                 remove(toDelete);
                 alert("Deleted!");
+                toDelete = null;
             } else {
                 alert("Error no element set to delete")
             }
