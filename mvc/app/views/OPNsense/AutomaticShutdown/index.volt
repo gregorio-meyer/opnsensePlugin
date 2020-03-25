@@ -155,8 +155,10 @@
                 alert("Event " + event.constructor.name);
         
             }); */
-    /*     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function () {
-            alert("Deleted");}); */
+    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
+        var btnText = $(this).text();
+        alert("Deleted " + btnText);
+    });
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
