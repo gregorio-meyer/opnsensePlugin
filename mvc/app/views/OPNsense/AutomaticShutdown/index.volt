@@ -79,9 +79,9 @@
                     var item = JSON.parse(str)["hour"];
                     if (item !== null) {
                         if (item['enabled'] == 1) {
-                            alert("Disabled");
-                        } else {
                             alert("Enabled");
+                        } else {
+                            alert("Disabled");
                         }
                     } else {
                         alert("An unexpected error occured, couldn't find element to copy!");
