@@ -189,8 +189,9 @@
                 oldEndHour = endHour;
             }
             alert("Instead of " + oldStartHour + " and " + oldEndHour)
-                //editJobs(startHour, endHour);
-                //edit = false;
+            editJobs(oldStartHour, "Shutdown firewall", "Stop Firewall", startHour);
+            editJobs(oldEndHour, "Start firewall", "Start Firewall", endHour);
+            edit = false;
         }
     });
     /*
