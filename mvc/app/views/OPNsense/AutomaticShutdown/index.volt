@@ -11,51 +11,6 @@
         saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function() {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function(data, status) {});
         });
-        // TODO split function
-        //search and remove job
-        function search(hour, cmd, descr) {
-            //?searchPhrase= per cercare testo
-            ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
-                //get all cron jobs 
-                if (status === "success") {
-                    //loop and find the ones that match
-                    var json_str = JSON.stringify(data);
-                    var rows = JSON.parse(json_str)["rows"];
-                    for (row of rows) {
-                        //id of the cron job searched
-                        var enabled = row['enabled'];
-                        var hours = row['hours'];
-                        var description = row['description'];
-                        var command = row['command'];
-                        if (hour == hours && descr == description && cmd === command) {
-                            //delete first occurence (it doesn't matter which job we delete since they're equals)
-                            var uuid = row['uuid'];
-                            var deleted = false;
-                            setTimeout(function() {
-                                ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function(data, status) {
-                                    if (status === "success") {
-                                        console.log("Removed " + descr + " job" + JSON.stringify(data));
-                                        deleted = true;
-                                    }
-                                });
-                            }, 100);
-                            if (deleted) break;
-                        }
-                    }
-                } else
-                    console.log("Error while searching jobs");
-            });
-        }
-        //TODO add enabled
-        //delete start and stop cron jobs for item
-        function remove(item) {
-            var enabled = item['enabled'];
-            var startHour = item['StartHour'];
-            var endHour = item['EndHour'];
-            //remove cron jobs with an AJAX call
-            search(startHour, "Shutdown firewall", "Stop Firewall");
-            search(endHour, "Start firewall", "Start Firewall");;
-        }
         //grid
         var grid = $("#grid-addresses").UIBootgrid({
             search: '/api/automaticshutdown/settings/searchItem/',
@@ -157,6 +112,51 @@
                 alert("Event " + event.constructor.name);
         
             }); */
+    // TODO split function
+    //search and remove job
+    function search(hour, cmd, descr) {
+        //?searchPhrase= per cercare testo
+        ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
+            //get all cron jobs 
+            if (status === "success") {
+                //loop and find the ones that match
+                var json_str = JSON.stringify(data);
+                var rows = JSON.parse(json_str)["rows"];
+                for (row of rows) {
+                    //id of the cron job searched
+                    var enabled = row['enabled'];
+                    var hours = row['hours'];
+                    var description = row['description'];
+                    var command = row['command'];
+                    if (hour == hours && descr == description && cmd === command) {
+                        //delete first occurence (it doesn't matter which job we delete since they're equals)
+                        var uuid = row['uuid'];
+                        var deleted = false;
+                        setTimeout(function() {
+                            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function(data, status) {
+                                if (status === "success") {
+                                    console.log("Removed " + descr + " job" + JSON.stringify(data));
+                                    deleted = true;
+                                }
+                            });
+                        }, 100);
+                        if (deleted) break;
+                    }
+                }
+            } else
+                console.log("Error while searching jobs");
+        });
+    }
+    //TODO add enabled
+    //delete start and stop cron jobs for item
+    function remove(item) {
+        var enabled = item['enabled'];
+        var startHour = item['StartHour'];
+        var endHour = item['EndHour'];
+        //remove cron jobs with an AJAX call
+        search(startHour, "Shutdown firewall", "Stop Firewall");
+        search(endHour, "Start firewall", "Start Firewall");;
+    }
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         var btnText = $(this).text();
         if (btnText === "Yes") {
