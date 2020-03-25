@@ -78,12 +78,13 @@
     });
     //edit an existing cron job
     function editJobs(oldHour, oldCmd, cmd, descr, newHour) {
+        var rows = null;
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
                 var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
+                rows = JSON.parse(json_str)["rows"];
             }
         });
         for (row of rows) {
