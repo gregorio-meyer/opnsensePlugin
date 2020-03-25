@@ -266,9 +266,9 @@
                             if (status === "success") {
                                 ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
                                     if (status === "success") {
-                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + startUUID);
                                         //  deleted = true;
-                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + endUUID);
                                         //   deleted = true;
                                         return true;
                                     }
