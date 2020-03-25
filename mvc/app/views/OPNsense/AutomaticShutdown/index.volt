@@ -267,12 +267,13 @@
                                 ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
                                     if (status === "success") {
                                         console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
-                                        deleted = true;
+                                        //  deleted = true;
+                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                        //   deleted = true;
+                                        return true;
                                     }
                                 });
-                                console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
-                                //   deleted = true;
-                                return true;
+
                             }
                         });
                     }, 100);
