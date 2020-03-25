@@ -24,6 +24,10 @@
             del: '/api/automaticshutdown/settings/delItem/',
             toggle: '/api/automaticshutdown/settings/toggleItem/',
         }).on("loaded.rs.jquery.bootgrid", function(e) {
+            setEventHandlers();
+        });
+
+        function setEventHandlers() {
             //edit event handler
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
@@ -74,7 +78,7 @@
                     } while (elementsToDelete == null);
                     //       alert("Selected for removal " + JSON.stringify(elementsToDelete));
                 });
-        });
+        }
     });
     //save values before editing 
     $(document).on('focusin', "#hour\\.StartHour", function() {
@@ -101,12 +105,10 @@
                     var command = row['command'];
                     var uuid = row['uuid'];
                     if (oldStartHour == hours && startDescr == description && oldStartCmd === command) {
-                        alert("Found start hour job");
                         startJobUUID = uuid;
                     }
                     if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
                         endJobUUID = uuid;
-                        alert("Found end hour job");
                     }
                     //edit first occurence (it doesn't matter which job we delete since they're equals        
                     if (startJobUUID !== null && endJobUUID !== null) {
@@ -273,24 +275,18 @@
     }
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-            var btnText = $(this).text();
-            //   if (btnText === "Yes") {
-            if (toDelete !== null) {
-                remove(toDelete);
-                alert("Deleted!");
-                toDelete = null;
-            } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
-                removeAll();
-                elementsToDelete = null;
-            } else {
-                alert("Error no element set to delete")
-            }
-        }
-        /*  else {
-            //the user doesn't want to delete
+        var btnText = $(this).text();
+        if (toDelete !== null) {
+            remove(toDelete);
+            alert("Deleted!");
             toDelete = null;
-        }} */
-    );
+        } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
+            removeAll();
+            elementsToDelete = null;
+        } else {
+            alert("Error no element set to delete")
+        }
+    });
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
