@@ -5,10 +5,10 @@
         mapDataToFormUI(data_get_map).done(function () {
         });
         //save grid items
-        saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
+    /*     saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
             });
-        });
+        }); */
         // TODO split function
         //search and remove job
         function search(hour, cmd, descr) {
@@ -51,13 +51,9 @@
         //TODO add enabled
         //delete start and stop cron jobs for item
         function remove(item) {
-            //console.log("Element to delete " + item);
             var enabled = item['enabled'];
             var startHour = item['StartHour'];
             var endHour = item['EndHour'];
-          //  console.log("Element to delete " + enabled);
-           // console.log("Element to delete " + startHour);
-           // console.log("Element to delete " + endHour);
             //remove cron jobs with an AJAX call
             search(startHour, "Shutdown firewall", "Stop Firewall");
             search(endHour, "Start firewall", "Start Firewall");;
@@ -88,11 +84,9 @@
                 });//delete event handler
             }).end().find(".command-delete").on("click", function (e) {
                 var id = $(this).data("row-id")
-               // console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function (data, status) {
                     if (status === "success") {
                         var str = JSON.stringify(data);
-                 //       console.log("Element to delete " + str);
                         var item =JSON.parse(str)["hour"]; 
                         remove(item);
                     }
