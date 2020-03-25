@@ -22,6 +22,7 @@
             del: '/api/automaticshutdown/settings/delItem/',
             toggle: '/api/automaticshutdown/settings/toggleItem/',
         }).on("loaded.rs.jquery.bootgrid", function(e) {
+            elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
             //edit event handler
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
@@ -71,7 +72,6 @@
                     });
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
-                    elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
                     alert("Selected for removal " + JSON.stringify(elementsToDelete));
                 });
         });
