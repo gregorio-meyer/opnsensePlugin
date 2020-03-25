@@ -201,7 +201,7 @@
                 remove(toDelete);
                 alert("Deleted!");
                 toDelete = null;
-            } else if (elementsToDelete !== null) {
+            } else if (elementsToDelete !== null && elementsToDelete !== "[]") {
                 removeSelected(elementsToDelete)
                 elementsToDelete = null;
             } else {
