@@ -103,6 +103,12 @@
     $(document).on('focusin', "#hour\\.EndHour", function() {
         oldEndHour = $("#hour\\.EndHour").val();
     });
+
+    function getJSON(data) {
+        var json_str = JSON.stringify(data);
+        var rows = JSON.parse(json_str);
+        return rows;
+    }
     //magari dividere
     //edit an existing cron job
     function editJobs(oldStartHour, oldStartCmd, startCmd, startDescr, startNewHour, oldEndHour, oldEndCmd, endCmd, endDescr, endNewHour) {
@@ -235,22 +241,20 @@
     });
     // TODO split function
     //search and remove job
-    function removeJob(hour, cmd, descr) {
+    function removeJob(enabled, hour, cmd, descr) {
+        //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
-            //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
                 var json_str = JSON.stringify(data);
                 var rows = JSON.parse(json_str)["rows"];
                 for (row of rows) {
                     //id of the cron job searched
-                    var enabled = row['enabled'];
-                    if (hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
+                    if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        var uuid = row['uuid'];
                         var deleted = false;
                         setTimeout(function() {
-                            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function(data, status) {
+                            ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
                                 if (status === "success") {
                                     console.log("Removed " + descr + " job" + JSON.stringify(data));
                                     deleted = true;
@@ -267,10 +271,9 @@
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
-        var enabled = item['enabled'];
         //remove cron jobs with an AJAX call
-        removeJob(item['StartHour'], "Shutdown firewall", "Stop Firewall");
-        removeJob(item['EndHour'], "Start firewall", "Start Firewall");;
+        removeJob(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall");
+        removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");;
     }
 
     function removeAll() {
@@ -292,7 +295,6 @@
     }
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        var btnText = $(this).text();
         if (toDelete !== null) {
             remove(toDelete);
             alert("Deleted!");
