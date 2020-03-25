@@ -70,25 +70,26 @@
                     });
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
+                    var id = $(this).data("row-id")
+                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
+                            alert("Selected for removal " + JSON.stringify(elementsToDelete));
 
-                    elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
-                    alert("Selected for removal " + JSON.stringify(elementsToDelete));
-                    /* var id = $(this).data("row-id")
-                        ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                            if (status === "success") {
-                                var str = JSON.stringify(data);
-                                var item = JSON.parse(str)["hour"];
-                                if (item !== null) {
-                                    var startHour = item['StartHour'];
-                                    var endHour = item['EndHour'];
-                                    copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
-                                } else {
-                                    alert("An unexpected error occured, couldn't find element to copy!");
-                                }
-                            } else {
-                                console.log("Error while retrieving element to copy, status: " + status);
-                            }
-                        }); */
+                            /*                             var str = JSON.stringify(data);
+                                                        var item = JSON.parse(str)["hour"];
+                                                        if (item !== null) {
+                                                            var startHour = item['StartHour'];
+                                                            var endHour = item['EndHour'];
+                                                            copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
+                                                        } else {
+                                                            alert("An unexpected error occured, couldn't find element to copy!");
+                                                        }
+                             */
+                        } else {
+                            console.log("Error while retrieving element to copy, status: " + status);
+                        }
+                    });
                 });
         });
     });
