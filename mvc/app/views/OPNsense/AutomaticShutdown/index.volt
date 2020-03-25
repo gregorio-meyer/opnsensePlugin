@@ -201,7 +201,7 @@
                 remove(toDelete);
                 alert("Deleted!");
                 toDelete = null;
-            } else if (elementsToDelete !== null && elementsToDelete !== "[]") {
+            } else if (elementsToDelete !== null && elementsToDelete !== JSON.parse("[]")) {
                 removeSelected(elementsToDelete)
                 elementsToDelete = null;
             } else {
