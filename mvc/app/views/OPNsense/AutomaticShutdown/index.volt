@@ -71,7 +71,7 @@
             })
         }).end().find(".command-delete-selected").on("click", function(e) {
             //var id = $(this).data("row-id")
-            elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
+            var elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
             alert("Selected for removal " + JSON.stringify(elementsToDelete));
             /*ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
