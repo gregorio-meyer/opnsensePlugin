@@ -78,7 +78,7 @@
                     var str = JSON.stringify(data);
                     var item = JSON.parse(str)["hour"];
                     if (item !== null) {
-                        copyMessage = "Enabled " + item['enabled'];
+                        alert("Toggle: " + item['enabled']);
                     } else {
                         alert("An unexpected error occured, couldn't find element to copy!");
                     }
