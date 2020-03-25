@@ -116,8 +116,8 @@
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
-                var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
+                //var json_str = JSON.stringify(data);
+                var rows = getJSON(data)["rows"];
                 var startJobUUID = null;
                 var endJobUUID = null;
                 for (row of rows) {
@@ -246,8 +246,8 @@
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
                 //loop and find the ones that match
-                var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
+                //var json_str = JSON.stringify(data);
+                var rows = getJSON(data)["rows"];
                 for (row of rows) {
                     //id of the cron job searched
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
@@ -280,8 +280,8 @@
         for (element of elementsToDelete) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    // var str = JSON.stringify(data);
+                    var item = getJSON(data)["hour"];
                     if (item !== null && item !== "undefined") {
                         remove(item);
                     } else {
