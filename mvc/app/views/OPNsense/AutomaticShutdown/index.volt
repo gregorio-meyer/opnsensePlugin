@@ -78,49 +78,49 @@
     });
     //edit an existing cron job
     function editJobs(oldHour, oldCmd, cmd, descr, newHour) {
-        var rows = null;
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
                 var json_str = JSON.stringify(data);
-                rows = JSON.parse(json_str)["rows"];
+                var rows = JSON.parse(json_str)["rows"];
+
+                for (row of rows) {
+                    var enabled = row['enabled'];
+                    var hours = row['hours'];
+                    var description = row['description'];
+                    var command = row['command'];
+                    if (oldHour == hours && descr == description && oldCmd === command) {
+                        //delete first occurence (it doesn't matter which job we delete since they're equals)
+                        var uuid = row['uuid'];
+                        var edited = false;
+                        setTimeout(function() {
+                            ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
+                                "job": {
+                                    "enabled": "1",
+                                    "minutes": "0",
+                                    "hours": newHour,
+                                    "days": "*",
+                                    "months": "*",
+                                    "weekdays": "*",
+                                    "command": cmd,
+                                    "parameters": "",
+                                    "description": descr
+                                }
+                            }, callback = function(data, status) {
+                                if (status === "success") {
+                                    console.log("Edited " + descr + " job" + JSON.stringify(data));
+                                    edited = true;
+                                }
+                            });
+                        }, 100);
+                        if (edited) break;
+                    }
+                }
             }
         });
-        do {} while (rows == null);
-        for (row of rows) {
-            var enabled = row['enabled'];
-            var hours = row['hours'];
-            var description = row['description'];
-            var command = row['command'];
-            if (oldHour == hours && descr == description && oldCmd === command) {
-                //delete first occurence (it doesn't matter which job we delete since they're equals)
-                var uuid = row['uuid'];
-                var edited = false;
-                setTimeout(function() {
-                    ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
-                        "job": {
-                            "enabled": "1",
-                            "minutes": "0",
-                            "hours": newHour,
-                            "days": "*",
-                            "months": "*",
-                            "weekdays": "*",
-                            "command": cmd,
-                            "parameters": "",
-                            "description": descr
-                        }
-                    }, callback = function(data, status) {
-                        if (status === "success") {
-                            console.log("Edited " + descr + " job" + JSON.stringify(data));
-                            edited = true;
-                        }
-                    });
-                }, 100);
-                if (edited) break;
-            }
-        }
     }
+
     //add cron jobs to stop and restart the firewall
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = {
