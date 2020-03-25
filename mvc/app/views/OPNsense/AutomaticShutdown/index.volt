@@ -241,27 +241,43 @@
     });
     // TODO split function
     //search and remove job
-    function removeJob(enabled, hour, cmd, descr) {
+    function removeJobs(enabled, hour, cmd, descr, endHour, endCmd, endDescr) {
         var deleted = false;
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
                 var rows = getJSON(data)["rows"];
+                var startUUID = null;
+                var endUUID = null;
                 for (row of rows) {
                     //if cron job searched
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        setTimeout(function() {
-                            ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
-                                if (status === "success") {
-                                    console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
-                                    deleted = true;
-                                }
-                            });
-                        }, 200);
-                        if (deleted) break;
+                        startUUID = row['uuid'];
+                    }
+                    if (enabled == row['enabled'] && endHour == row['hours'] && endFescr == row['description'] && endCmd === row['command']) {
+                        //delete first occurence (it doesn't matter which job we delete since they're equals)
+                        endUUID = row['uuid'];
                     }
                 }
+                if (startUUID !== null && endUUID !== null) {
+                    setTimeout(function() {
+                        ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
+                            if (status === "success") {
+                                ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
+                                    if (status === "success") {
+                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                        deleted = true;
+                                    }
+                                });
+                                console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                //   deleted = true;
+                                return true;
+                            }
+                        });
+                    }, 100);
+                }
+                if (deleted) break;
             } else
                 console.log("Error while searching jobs");
         });
@@ -271,10 +287,10 @@
     //delete start and stop cron jobs for item
     function remove(item) {
         //remove cron jobs with an AJAX call
-        var deleted = removeJob(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall");
-        console.log("Start " + deleted)
-        deleted = removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");
-        console.log("End " + deleted)
+        var deleted = removeJobs(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall", item['EndHour'], "Start firewall", "Start Firewall");
+        console.log("deleted " + deleted)
+            //  deleted = removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");
+            // console.log("End " + deleted)
     }
 
     function removeAll() {
