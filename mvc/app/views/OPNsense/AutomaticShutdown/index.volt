@@ -343,7 +343,7 @@
         for (element of elementsToDelete) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var str = JSON.stringify(data);
+                    var json_str = JSON.stringify(data);
                     var item = JSON.parse(json_str)["hour"];
                     if (item !== null && item !== "undefined") {
                         remove(item);
