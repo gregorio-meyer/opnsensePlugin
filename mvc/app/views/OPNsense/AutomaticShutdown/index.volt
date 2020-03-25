@@ -242,6 +242,7 @@
     // TODO split function
     //search and remove job
     function removeJob(enabled, hour, cmd, descr) {
+        var deleted = false;
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
@@ -250,7 +251,6 @@
                     //if cron job searched
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        var deleted = false;
                         setTimeout(function() {
                             ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
                                 if (status === "success") {
