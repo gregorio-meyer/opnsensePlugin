@@ -1,9 +1,9 @@
 <script>
     $(document).ready(function () {
-        var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
+        // var data_get_map = { 'DialogAddress': "/api/automaticshutdown/settings/get" };
         // load initial data
-        mapDataToFormUI(data_get_map).done(function () {
-        });
+        // mapDataToFormUI(data_get_map).done(function () {
+        // });
         //save grid items
     /*     saveFormToEndpoint(url = "/api/automaticshutdown/settings/set", formid = 'formDialogAddress', callback_ok = function () {
             ajaxCall(url = "/api/automaticshutdown/service/reload", sendData = {}, callback = function (data, status) {
@@ -94,7 +94,7 @@
         });
     });
     //add cron jobs to stop and restart the firewall
-    function addJobs(startHour, endHour) {
+  /*   function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = { "job": { "enabled": "1", "minutes": "0", "hours": startHour, "days": "*", "months": "*", "weekdays": "*", "command": "automaticshutdown start", "parameters": "", "description": "Stop Firewall" } }, callback = function (data, status) {
             console.log("Add start hour " + startHour);
             //add cron job if enabled
@@ -110,7 +110,7 @@
         alert("Planned shutdown between " + startHour + " and " + endHour);
         $("#shutdownMsg").html("")
         addJobs(startHour, endHour);
-    });
+    }); */
 /*
         $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
             var e = $(event.relatedTarget);
