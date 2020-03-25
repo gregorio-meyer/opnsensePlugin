@@ -91,6 +91,7 @@
                     var command = row['command'];
                     var uuid = row['uuid'];
                     if (oldStartHour == hours && startDescr == description && oldStartCmd === command) {
+                        alert("Found start hour job");
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var edited = false;
                         var allEdited = false;
@@ -116,6 +117,7 @@
                         }, 100);
                     }
                     if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
+                        alert("Found end hour job");
                         if (edited) {
                             setTimeout(function() {
                                 ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
@@ -137,6 +139,8 @@
                                     }
                                 });
                             }, 100);
+                        } else {
+                            console.log("Not edited yet");
                         }
                     }
                     if (allEdited) break;
