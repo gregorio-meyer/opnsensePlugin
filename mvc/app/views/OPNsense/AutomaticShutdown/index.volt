@@ -177,14 +177,7 @@
         });
     }
 
-    function removeSelected(selected) {
-        alert("Trying to remove " + JSON.stringify(selected))
-        for (item of selected) {
-            console.log("Removing " + JSON.stringify(item));
-            remove(item);
-        }
-        alert("Completed!")
-    }
+
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
@@ -203,9 +196,23 @@
                 alert("Deleted!");
                 toDelete = null;
             } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
-
-                alert("Elements = " + elementsToDelete);
-                removeSelected(elementsToDelete);
+                for (element of elementsToDelete) {
+                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            var str = JSON.stringify(data);
+                            var item = JSON.parse(str)["hour"];
+                            if (item !== null) {
+                                //remove
+                                remove(item);
+                            } else {
+                                alert("An unexpected error occured, couldn't find element to copy!");
+                            }
+                        } else {
+                            console.log("Error while retrieving element to copy, status: " + status);
+                        }
+                    });
+                }
+                // removeSelected(elementsToDelete);
                 elementsToDelete = null;
             } else {
                 alert("Error no element set to delete")
