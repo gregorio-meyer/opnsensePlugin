@@ -115,7 +115,10 @@
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         if (!edit) {
-            alert("Planned shutdown between " + startHour + " and " + endHour);
+            if (copyMessage == null)
+                alert("Planned shutdown between " + startHour + " and " + endHour);
+            else
+                alert(copyMessage);
             addJobs(startHour, endHour);
         } else {
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour);
