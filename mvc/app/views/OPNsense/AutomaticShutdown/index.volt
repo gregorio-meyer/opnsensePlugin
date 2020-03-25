@@ -71,6 +71,22 @@
                 }
             });
         }
+
+        function setToggle(id) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
+                    if (item !== null) {
+                        copyMessage = "Enabled " + item['enabled'];
+                    } else {
+                        alert("An unexpected error occured, couldn't find element to copy!");
+                    }
+                } else {
+                    console.log("Error while retrieving element to copy, status: " + status);
+                }
+            });
+        }
         //check if necessary
         function setDeleteSelected() {
             do {
@@ -88,6 +104,9 @@
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id")
                     setCopy(id);
+                }).end().find(".command-toggle").on("click", function(e) {
+                    var id = $(this).data("row-id")
+                    setToggle(id);
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
                     setDeleteSelected();
