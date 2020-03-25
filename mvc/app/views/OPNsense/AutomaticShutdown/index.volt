@@ -197,9 +197,11 @@
                 toDelete = null;
             } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
                 for (element of elementsToDelete) {
+                    console.log(element);
                     ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
                         if (status === "success") {
                             var str = JSON.stringify(data);
+                            console.log(str);
                             var item = JSON.parse(str)["hour"];
                             if (item !== null) {
                                 //remove
