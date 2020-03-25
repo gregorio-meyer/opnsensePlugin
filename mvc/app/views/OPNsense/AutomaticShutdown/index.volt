@@ -118,8 +118,8 @@
                     }
                     if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
                         alert("Found end hour job");
-                        if (edited) {
-                            setTimeout(function() {
+                        setTimeout(function() {
+                            if (edited) {
                                 ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
                                     "job": {
                                         "enabled": "1",
@@ -138,10 +138,11 @@
                                         allEdited = true;
                                     }
                                 });
-                            }, 100);
-                        } else {
-                            console.log("Not edited yet");
-                        }
+                            } else {
+                                console.log("Not edited yet");
+                            }
+                        }, 100);
+
                     }
                     if (allEdited) break;
                 }
