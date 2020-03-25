@@ -336,7 +336,11 @@
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
-        removeJobs(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall", item['EndHour'], "Start firewall", "Start Firewall");
+        if (item !== null && item !== "undefined") {
+            removeJobs(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall", item['EndHour'], "Start firewall", "Start Firewall");
+        } else {
+            alert("No element to remove " + JSON.stringify(item))
+        }
     }
 
     function removeAll() {
