@@ -1,5 +1,6 @@
 <script>
     var edit = false;
+    var toDelete = null;
     $(document).ready(function() {
         var data_get_map = {
             'DialogAddress': "/api/automaticshutdown/settings/get"
@@ -27,10 +28,6 @@
                         var description = row['description'];
                         var command = row['command'];
                         if (hour == hours && descr == description && cmd === command) {
-                            /*     console.log("hours: " + hours);
-                                console.log("description: " + description);
-                                console.log("command: " + command);
-                                console.log("uuid " + uuid); */
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
                             var uuid = row['uuid'];
                             var deleted = false;
@@ -83,12 +80,17 @@
                 }); //delete event handler
             }).end().find(".command-delete").on("click", function(e) {
                 var id = $(this).data("row-id")
-                    // console.log("You pressed delete on row: " + id);
                 ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                     if (status === "success") {
                         var str = JSON.stringify(data);
                         var item = JSON.parse(str)["hour"];
-                        remove(item);
+                        if (item !== null) {
+                            //if we found the row to delete save it and set the delete flag
+                            //the element will be removed if the user press "Yes"
+                            toDelete = item;
+                        } else {
+                            alert("An unexpected error occured, couldn't find element to delete!");
+                        }
                     } else {
                         console.log("Error status: " + status);
                     }
@@ -157,7 +159,17 @@
             }); */
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         var btnText = $(this).text();
-        alert("Deleted " + btnText);
+        if (btnText === "Yes") {
+            if (toDelete !== null) {
+                remove(toDelete);
+                alert("Deleted!");
+            } else {
+                alert("Error no element set to delete")
+            }
+        } else {
+            //the user doesn't want to delete
+            toDelete = null;
+        }
     });
 </script>
 
