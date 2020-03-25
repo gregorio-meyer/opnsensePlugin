@@ -150,7 +150,6 @@
             }
         });
     }
-
     //add cron jobs to stop and restart the firewall
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = {
