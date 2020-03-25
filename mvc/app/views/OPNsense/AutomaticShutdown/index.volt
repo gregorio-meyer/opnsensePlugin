@@ -87,6 +87,7 @@
                 rows = JSON.parse(json_str)["rows"];
             }
         });
+        do {} while (rows == null);
         for (row of rows) {
             var enabled = row['enabled'];
             var hours = row['hours'];
