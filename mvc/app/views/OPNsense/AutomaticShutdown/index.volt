@@ -180,7 +180,7 @@
     function removeSelected(selected) {
         alert("Trying to remove " + JSON.stringify(selected))
         for (item of selected) {
-            remove(selected);
+            remove(item);
         }
         alert("Completed!")
     }
