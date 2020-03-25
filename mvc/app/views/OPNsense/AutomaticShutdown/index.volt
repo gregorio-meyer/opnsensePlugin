@@ -137,12 +137,6 @@
             alert("Error no element set to delete")
         }
     });
-
-    function getJSON(data) {
-        var json_str = JSON.stringify(data);
-        var rows = JSON.parse(json_str);
-        return rows;
-    }
     //magari dividere
     //edit an existing cron job
     function editJobs(oldStartHour, oldStartCmd, startCmd, startDescr, startNewHour, oldEndHour, oldEndCmd, endCmd, endDescr, endNewHour) {
@@ -150,8 +144,8 @@
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
-                //var json_str = JSON.stringify(data);
-                var rows = getJSON(data)["rows"];
+                var json_str = JSON.stringify(data);
+                var rows = JSON.parse(json_str)["rows"];
                 var startJobUUID = null;
                 var endJobUUID = null;
                 for (row of rows) {
@@ -257,7 +251,8 @@
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
-                var rows = getJSON(data)["rows"];
+                var json_str = JSON.stringify(data);
+                var rows = JSON.parse(json_str)["rows"];
                 var startUUID = null;
                 var endUUID = null;
                 for (row of rows) {
@@ -300,8 +295,8 @@
         for (element of elementsToDelete) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    // var str = JSON.stringify(data);
-                    var item = getJSON(data)["hour"];
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(json_str)["hour"];
                     if (item !== null && item !== "undefined") {
                         remove(item);
                     } else {
