@@ -11,7 +11,7 @@
         }); */
         // TODO split function
         //search and remove job
-        function search(hour, cmd, descr) {
+/*         function search(hour, cmd, descr) {
         //?searchPhrase= per cercare testo
             ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function (data, status) {
                 //get all cron jobs 
@@ -26,10 +26,6 @@
                         var description = row['description'];
                         var command = row['command'];
                         if (hour == hours && descr == description && cmd === command) {
-                        /*     console.log("hours: " + hours);
-                            console.log("description: " + description);
-                            console.log("command: " + command);
-                            console.log("uuid " + uuid); */
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
                             var uuid = row['uuid'];
                            var deleted = false;
@@ -57,7 +53,7 @@
             //remove cron jobs with an AJAX call
             search(startHour, "Shutdown firewall", "Stop Firewall");
             search(endHour, "Start firewall", "Start Firewall");;
-        }
+        } */
         //grid
         var grid = $("#grid-addresses").UIBootgrid(
             {
