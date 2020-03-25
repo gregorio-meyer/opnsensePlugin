@@ -21,7 +21,6 @@
                     var rows = JSON.parse(json_str)["rows"];
                     for (row of rows) {
                         //id of the cron job searched
-                        var uuid = row['uuid'];
                         var enabled = row['enabled'];
                         var hours = row['hours'];
                         var description = row['description'];
@@ -32,14 +31,18 @@
                             console.log("command: " + command);
                             console.log("uuid " + uuid); */
                             //delete first occurence (it doesn't matter which job we delete since they're equals)
+                            var uuid = row['uuid'];
+                           var deleted = false;
+                            setTimeout(function () {
                             ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function (data, status) {
                                 if (status === "success") {
                                     console.log("Removed " + descr + " job" + JSON.stringify(data));
-                                    return;
+                                    deleted = true;
                                 }
                             });
-                        }
-                    }
+                        },100);
+                        if(deleted) break;
+                        }}
                 }
                 else
                     console.log("Error while searching jobs");
