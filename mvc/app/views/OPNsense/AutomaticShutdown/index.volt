@@ -72,7 +72,7 @@
                     do {
                         elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
                     } while (elementsToDelete == null);
-                    alert("Selected for removal " + JSON.stringify(elementsToDelete));
+                    //       alert("Selected for removal " + JSON.stringify(elementsToDelete));
                 });
         });
     });
@@ -218,17 +218,12 @@
             setTimeout(function() {
                 editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour, oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
             }, 100);
-            //  console.log("Edited start hour " + startHour);
-            /*         setTimeout(function() {
-                        editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
-                    }, 100);
-                    console.log("Edited end hour " + endHour); */
             edit = false;
         }
     });
     // TODO split function
     //search and remove job
-    function search(hour, cmd, descr) {
+    function removeJob(hour, cmd, descr) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
@@ -238,10 +233,7 @@
                 for (row of rows) {
                     //id of the cron job searched
                     var enabled = row['enabled'];
-                    var hours = row['hours'];
-                    var description = row['description'];
-                    var command = row['command'];
-                    if (hour == hours && descr == description && cmd === command) {
+                    if (hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var uuid = row['uuid'];
                         var deleted = false;
@@ -264,11 +256,9 @@
     //delete start and stop cron jobs for item
     function remove(item) {
         var enabled = item['enabled'];
-        var startHour = item['StartHour'];
-        var endHour = item['EndHour'];
         //remove cron jobs with an AJAX call
-        search(startHour, "Shutdown firewall", "Stop Firewall");
-        search(endHour, "Start firewall", "Start Firewall");;
+        removeJob(item['StartHour'], "Shutdown firewall", "Stop Firewall");
+        removeJob(item['EndHour'], "Start firewall", "Start Firewall");;
     }
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
