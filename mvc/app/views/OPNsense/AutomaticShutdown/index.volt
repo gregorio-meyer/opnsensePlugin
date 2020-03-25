@@ -80,7 +80,7 @@
                 });
         });
     });
-
+    //edit an existing cron job
     function editJobs(oldHour, oldCmd, cmd, descr, newHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
@@ -89,7 +89,6 @@
                 var json_str = JSON.stringify(data);
                 var rows = JSON.parse(json_str)["rows"];
                 for (row of rows) {
-                    //id of the cron job searched
                     var enabled = row['enabled'];
                     var hours = row['hours'];
                     var description = row['description'];
@@ -174,17 +173,16 @@
 
     //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function() {
-
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         if (!edit) {
+            //copy or add new job
             if (copyMessage == null)
                 alert("Planned shutdown between " + startHour + " and " + endHour);
             else
                 alert(copyMessage);
             addJobs(startHour, endHour);
         } else {
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour);
             //if none was selected take val from textbox
             if (oldStartHour == null) {
                 oldStartHour = startHour;
@@ -192,23 +190,15 @@
             if (oldEndHour == null) {
                 oldEndHour = endHour;
             }
-            alert("Instead of " + oldStartHour + " and " + oldEndHour)
+            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
             editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
-            //editJobs(oldEndHour, "Start firewall", "Start Firewall", endHour);
+            editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Stop Firewall", endHour);
             edit = false;
         }
     });
-    /*
-            $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
-                var e = $(event.relatedTarget);
-                alert("Event " + e);
-                alert("Event " + event.constructor.name);
-        
-            }); */
     // TODO split function
     //search and remove job
     function search(hour, cmd, descr) {
-        //?searchPhrase= per cercare testo
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
@@ -240,8 +230,6 @@
                 console.log("Error while searching jobs");
         });
     }
-
-
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
@@ -268,7 +256,6 @@
                             console.log(str);
                             var item = JSON.parse(str)["hour"];
                             if (item !== null && item !== "undefined") {
-                                //remove
                                 remove(item);
                             } else {
                                 alert("An unexpected error occured, couldn't find element to copy!");
@@ -278,7 +265,6 @@
                         }
                     });
                 }
-                // removeSelected(elementsToDelete);
                 elementsToDelete = null;
             } else {
                 alert("Error no element set to delete")
