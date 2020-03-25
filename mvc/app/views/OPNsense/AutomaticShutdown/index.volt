@@ -3,6 +3,8 @@
     var toDelete = null;
     var copyMessage = null;
     var elementsToDelete = null;
+    var oldStartHour = null;
+    var oldEndHour = null;
     $(document).ready(function() {
         var data_get_map = {
             'DialogAddress': "/api/automaticshutdown/settings/get"
@@ -71,7 +73,6 @@
                     });
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
-                    alert("Click")
                     do {
                         elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
                     } while (elementsToDelete == null);
@@ -80,150 +81,206 @@
         });
     });
 
-    function editJobs(startHour, endHour) {
-        alert("Editing...")
-    }
-    //add cron jobs to stop and restart the firewall
-    function addJobs(startHour, endHour) {
-        ajaxCall(url = "/api/cron/settings/addJob", sendData = {
-            "job": {
-                "enabled": "1",
-                "minutes": "0",
-                "hours": startHour,
-                "days": "*",
-                "months": "*",
-                "weekdays": "*",
-                "command": "automaticshutdown start",
-                "parameters": "",
-                "description": "Stop Firewall"
-            }
-        }, callback = function(data, status) {
-            console.log("Add start hour " + startHour);
-            //add cron job if enabled
-            ajaxCall(url = "/api/cron/settings/addJob", sendData = {
-                "job": {
-                    "enabled": "1",
-                    "minutes": "0",
-                    "hours": endHour,
-                    "days": "*",
-                    "months": "*",
-                    "weekdays": "*",
-                    "command": "automaticshutdown stop",
-                    "parameters": "",
-                    "description": "Start Firewall"
-                }
-            }, callback = function(data, status) {
-                console.log("Add end hour " + endHour);
-            });
-        });
-    }
-    //on save get data from modal input fields and add jobs to schedule
-    $(document).on('click', "#btn_DialogAddress_save", function() {
-
-        var startHour = $("#hour\\.StartHour").val();
-        var endHour = $("#hour\\.EndHour").val();
-        if (!edit) {
-            if (copyMessage == null)
-                alert("Planned shutdown between " + startHour + " and " + endHour);
-            else
-                alert(copyMessage);
-            addJobs(startHour, endHour);
-        } else {
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour);
-            editJobs(startHour, endHour);
-            edit = false;
-        }
-    });
-    /*
-            $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
-                var e = $(event.relatedTarget);
-                alert("Event " + e);
-                alert("Event " + event.constructor.name);
-        
-            }); */
-    // TODO split function
-    //search and remove job
-    function search(hour, cmd, descr) {
-        //?searchPhrase= per cercare testo
+    function editJobs(oldHour, cmd, descr, newHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
-            //get all cron jobs 
-            if (status === "success") {
-                //loop and find the ones that match
-                var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
-                for (row of rows) {
-                    //id of the cron job searched
-                    var enabled = row['enabled'];
-                    var hours = row['hours'];
-                    var description = row['description'];
-                    var command = row['command'];
-                    if (hour == hours && descr == description && cmd === command) {
-                        //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        var uuid = row['uuid'];
-                        var deleted = false;
-                        setTimeout(function() {
-                            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function(data, status) {
-                                if (status === "success") {
-                                    console.log("Removed " + descr + " job" + JSON.stringify(data));
-                                    deleted = true;
+                    //get all cron jobs 
+                    if (status === "success") {
+                        //loop and find the ones that match
+                        var json_str = JSON.stringify(data);
+                        var rows = JSON.parse(json_str)["rows"];
+                        for (row of rows) {
+                            //id of the cron job searched
+                            var enabled = row['enabled'];
+                            var hours = row['hours'];
+                            var description = row['description'];
+                            var command = row['command'];
+                            if (oldHour == hours && descr == description && cmd === command) {
+                                //delete first occurence (it doesn't matter which job we delete since they're equals)
+                                var uuid = row['uuid'];
+                                var edited = false;
+                                var data = {
+                                    "job": {
+                                        "enabled": "1",
+                                        "minutes": "0",
+                                        "hours": newHour,
+                                        "days": "*",
+                                        "months": "*",
+                                        "weekdays": "*",
+                                        "command": cmd,
+                                        "parameters": "",
+                                        "description": descr
+                                    }
                                 }
-                            });
-                        }, 100);
-                        if (deleted) break;
-                    }
-                }
-            } else
-                console.log("Error while searching jobs");
-        });
-    }
-
-
-    //TODO add enabled
-    //delete start and stop cron jobs for item
-    function remove(item) {
-        var enabled = item['enabled'];
-        var startHour = item['StartHour'];
-        var endHour = item['EndHour'];
-        //remove cron jobs with an AJAX call
-        search(startHour, "Shutdown firewall", "Stop Firewall");
-        search(endHour, "Start firewall", "Start Firewall");;
-    }
-    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        var btnText = $(this).text();
-        if (btnText === "Yes") {
-            if (toDelete !== null) {
-                remove(toDelete);
-                alert("Deleted!");
-                toDelete = null;
-            } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
-                for (element of elementsToDelete) {
-                    console.log(element);
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var str = JSON.stringify(data);
-                            console.log(str);
-                            var item = JSON.parse(str)["hour"];
-                            if (item !== null && item !== "undefined") {
-                                //remove
-                                remove(item);
-                            } else {
-                                alert("An unexpected error occured, couldn't find element to copy!");
+                                setTimeout(function() {
+                                    ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = data, callback = function(data, status) {
+                                        if (status === "success") {
+                                            console.log("Edited " + descr + " job" + JSON.stringify(data));
+                                            edited = true;
+                                        }
+                                    });
+                                }, 100);
+                                if (edited) break;
                             }
+                        }
+                        alert("Completed!")
+                    }
+                    //add cron jobs to stop and restart the firewall
+                    function addJobs(startHour, endHour) {
+                        ajaxCall(url = "/api/cron/settings/addJob", sendData = {
+                            "job": {
+                                "enabled": "1",
+                                "minutes": "0",
+                                "hours": startHour,
+                                "days": "*",
+                                "months": "*",
+                                "weekdays": "*",
+                                "command": "automaticshutdown start",
+                                "parameters": "",
+                                "description": "Stop Firewall"
+                            }
+                        }, callback = function(data, status) {
+                            console.log("Add start hour " + startHour);
+                            //add cron job if enabled
+                            ajaxCall(url = "/api/cron/settings/addJob", sendData = {
+                                "job": {
+                                    "enabled": "1",
+                                    "minutes": "0",
+                                    "hours": endHour,
+                                    "days": "*",
+                                    "months": "*",
+                                    "weekdays": "*",
+                                    "command": "automaticshutdown stop",
+                                    "parameters": "",
+                                    "description": "Start Firewall"
+                                }
+                            }, callback = function(data, status) {
+                                console.log("Add end hour " + endHour);
+                            });
+                        });
+                    }
+                    $(document).on('focusin', "#hour\\.StartHour", function() {
+                        oldStartHour = $("#hour\\.StartHour").val();
+
+                    });
+                    $(document).on('focusin', "#hour\\.EndHour", function() {
+                        oldEndHour = $("#hour\\.EndHour").val();
+                    });
+
+                    //on save get data from modal input fields and add jobs to schedule
+                    $(document).on('click', "#btn_DialogAddress_save", function() {
+
+                        var startHour = $("#hour\\.StartHour").val();
+                        var endHour = $("#hour\\.EndHour").val();
+                        if (!edit) {
+                            if (copyMessage == null)
+                                alert("Planned shutdown between " + startHour + " and " + endHour);
+                            else
+                                alert(copyMessage);
+                            addJobs(startHour, endHour);
                         } else {
-                            console.log("Error while retrieving element to copy, status: " + status);
+                            alert("Modified planned shutdown to run between " + startHour + " and " + endHour);
+                            //if none was selected take val from textbox
+                            if (oldStartHour == null) {
+                                oldStartHour = startHour;
+                            }
+                            if (oldEndHour == null) {
+                                oldEndHour = endHour;
+                            }
+                            alert("Instead of " + oldStartHour + " and " + oldEndHour)
+                                //editJobs(startHour, endHour);
+                                //edit = false;
                         }
                     });
-                }
-                // removeSelected(elementsToDelete);
-                elementsToDelete = null;
-            } else {
-                alert("Error no element set to delete")
-            }
-        } else {
-            //the user doesn't want to delete
-            toDelete = null;
-        }
-    });
+                    /*
+                            $(document).on('show.bs.modal', '#OPNsenseStdWaitDialog', function (event) {
+                                var e = $(event.relatedTarget);
+                                alert("Event " + e);
+                                alert("Event " + event.constructor.name);
+                        
+                            }); */
+                    // TODO split function
+                    //search and remove job
+                    function search(hour, cmd, descr) {
+                        //?searchPhrase= per cercare testo
+                        ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
+                            //get all cron jobs 
+                            if (status === "success") {
+                                //loop and find the ones that match
+                                var json_str = JSON.stringify(data);
+                                var rows = JSON.parse(json_str)["rows"];
+                                for (row of rows) {
+                                    //id of the cron job searched
+                                    var enabled = row['enabled'];
+                                    var hours = row['hours'];
+                                    var description = row['description'];
+                                    var command = row['command'];
+                                    if (hour == hours && descr == description && cmd === command) {
+                                        //delete first occurence (it doesn't matter which job we delete since they're equals)
+                                        var uuid = row['uuid'];
+                                        var deleted = false;
+                                        setTimeout(function() {
+                                            ajaxCall(url = "/api/cron/settings/delJob/" + uuid, sendData = {}, callback = function(data, status) {
+                                                if (status === "success") {
+                                                    console.log("Removed " + descr + " job" + JSON.stringify(data));
+                                                    deleted = true;
+                                                }
+                                            });
+                                        }, 100);
+                                        if (deleted) break;
+                                    }
+                                }
+                            } else
+                                console.log("Error while searching jobs");
+                        });
+                    }
+
+
+                    //TODO add enabled
+                    //delete start and stop cron jobs for item
+                    function remove(item) {
+                        var enabled = item['enabled'];
+                        var startHour = item['StartHour'];
+                        var endHour = item['EndHour'];
+                        //remove cron jobs with an AJAX call
+                        search(startHour, "Shutdown firewall", "Stop Firewall");
+                        search(endHour, "Start firewall", "Start Firewall");;
+                    }
+                    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
+                        var btnText = $(this).text();
+                        if (btnText === "Yes") {
+                            if (toDelete !== null) {
+                                remove(toDelete);
+                                alert("Deleted!");
+                                toDelete = null;
+                            } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
+                                for (element of elementsToDelete) {
+                                    console.log(element);
+                                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
+                                        if (status === "success") {
+                                            var str = JSON.stringify(data);
+                                            console.log(str);
+                                            var item = JSON.parse(str)["hour"];
+                                            if (item !== null && item !== "undefined") {
+                                                //remove
+                                                remove(item);
+                                            } else {
+                                                alert("An unexpected error occured, couldn't find element to copy!");
+                                            }
+                                        } else {
+                                            console.log("Error while retrieving element to copy, status: " + status);
+                                        }
+                                    });
+                                }
+                                // removeSelected(elementsToDelete);
+                                elementsToDelete = null;
+                            } else {
+                                alert("Error no element set to delete")
+                            }
+                        } else {
+                            //the user doesn't want to delete
+                            toDelete = null;
+                        }
+                    });
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
