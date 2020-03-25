@@ -66,7 +66,7 @@
             }
         ).on("loaded.rs.jquery.bootgrid", function (e) {
             //edit event handler
-            grid.find(".command-edit").on("click", function (e) {
+           /*  grid.find(".command-edit").on("click", function (e) {
                 var id = $(this).data("row-id")
                 console.log("You pressed edit on row: " + id);
                 //get item since we can only retrieve row-id from click event
@@ -90,7 +90,7 @@
                         console.log("Error status: " + status);
                     }
                 });
-            });
+            }); */
         });
     });
     //add cron jobs to stop and restart the firewall
