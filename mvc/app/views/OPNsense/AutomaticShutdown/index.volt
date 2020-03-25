@@ -81,7 +81,7 @@
         });
     });
 
-    function editJobs(oldHour, cmd, descr, newHour) {
+    function editJobs(oldHour, oldCmd, cmd, oldDescr, descr, newHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
@@ -94,7 +94,7 @@
                     var hours = row['hours'];
                     var description = row['description'];
                     var command = row['command'];
-                    if (oldHour == hours && descr == description && cmd === command) {
+                    if (oldHour == hours && oldDescr == description && oldCmd === command) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var uuid = row['uuid'];
                         var edited = false;
