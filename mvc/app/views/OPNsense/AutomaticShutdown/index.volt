@@ -119,28 +119,28 @@
                     if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
                         alert("Found end hour job");
                         setTimeout(function() {
-                            if (edited) {
-                                ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
-                                    "job": {
-                                        "enabled": "1",
-                                        "minutes": "0",
-                                        "hours": endNewHour,
-                                        "days": "*",
-                                        "months": "*",
-                                        "weekdays": "*",
-                                        "command": endCmd,
-                                        "parameters": "",
-                                        "description": endDescr
-                                    }
-                                }, callback = function(data, status) {
-                                    if (status === "success") {
-                                        console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + endNewHour + " result: " + JSON.stringify(data));
-                                        allEdited = true;
-                                    }
-                                });
-                            } else {
-                                console.log("Not edited yet");
-                            }
+                            // if (edited) {
+                            ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
+                                "job": {
+                                    "enabled": "1",
+                                    "minutes": "0",
+                                    "hours": endNewHour,
+                                    "days": "*",
+                                    "months": "*",
+                                    "weekdays": "*",
+                                    "command": endCmd,
+                                    "parameters": "",
+                                    "description": endDescr
+                                }
+                            }, callback = function(data, status) {
+                                if (status === "success") {
+                                    console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + endNewHour + " result: " + JSON.stringify(data));
+                                    allEdited = true;
+                                }
+                            });
+                            /*  } else {
+                                 console.log("Not edited yet");
+                             } */
                         }, 100);
 
                     }
