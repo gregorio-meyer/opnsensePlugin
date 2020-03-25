@@ -111,7 +111,7 @@
                                 }
                             }, callback = function(data, status) {
                                 if (status === "success") {
-                                    console.log("Edited " + descr + " oldHour " + hours + " new hour " + newHour + " result: " + JSON.stringify(data));
+                                    console.log("Edited " + descr + " oldHour " + oldHour + " new hour " + newHour + " result: " + JSON.stringify(data));
                                     edited = true;
                                 }
                             });
