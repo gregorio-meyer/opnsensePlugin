@@ -41,15 +41,17 @@
         function setDelete(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var item = JSON.getJSON(data)["hour"];
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
                     if (item !== null) {
-                        //if we found the row to delete save it the element will be removed if the user press "Yes"
+                        //if we found the row to delete save it and set the delete flag
+                        //the element will be removed if the user press "Yes"
                         toDelete = item;
                     } else {
                         alert("An unexpected error occured, couldn't find element to delete!");
                     }
                 } else {
-                    console.log("Error while retrieving element to delete, status: " + status);
+                    console.log("Error status: " + status);
                 }
             })
         }
@@ -57,7 +59,8 @@
         function setCopy(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var item = getJSON(data)["hour"];
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
                     if (item !== null) {
                         copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
                     } else {
@@ -88,10 +91,6 @@
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
                     setDeleteSelected();
-                })
-                .end().find(".command-toggle").on("click", function(e) {
-                    var data = JSON.stringify($(this).data)
-                    alert("Toggle pressed " + data)
                 });
         }
     });
