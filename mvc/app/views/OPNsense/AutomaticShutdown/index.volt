@@ -203,7 +203,7 @@
                             var str = JSON.stringify(data);
                             console.log(str);
                             var item = JSON.parse(str)["hour"];
-                            if (item !== null) {
+                            if (item !== null && item !== "undefined") {
                                 //remove
                                 remove(item);
                             } else {
