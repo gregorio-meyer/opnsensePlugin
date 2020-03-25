@@ -255,7 +255,7 @@
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         startUUID = row['uuid'];
                     }
-                    if (enabled == row['enabled'] && endHour == row['hours'] && endFescr == row['description'] && endCmd === row['command']) {
+                    if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         endUUID = row['uuid'];
                     }
