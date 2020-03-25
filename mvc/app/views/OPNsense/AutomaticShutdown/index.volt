@@ -98,6 +98,10 @@
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var uuid = row['uuid'];
                         var edited = false;
+                        alert("Command " + command);
+                        alert("Cmd " + cmd);
+                        alert("Description " + description);
+                        alert("Descr " + descr);
                         var data = {
                             "job": {
                                 "enabled": "1",
