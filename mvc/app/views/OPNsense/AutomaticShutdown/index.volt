@@ -204,7 +204,6 @@
             else
                 alert(copyMessage);
             addJobs(startHour, endHour);
-            console.log("Jobs added")
         } else {
             //if none was selected take val from textbox
             if (oldStartHour == null) {
@@ -259,41 +258,44 @@
         removeJob(item['StartHour'], "Shutdown firewall", "Stop Firewall");
         removeJob(item['EndHour'], "Start firewall", "Start Firewall");;
     }
+
+    function removeAll() {
+        for (element of elementsToDelete) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
+                    if (item !== null && item !== "undefined") {
+                        remove(item);
+                    } else {
+                        alert("An unexpected error occured, couldn't find element to copy!");
+                    }
+                } else {
+                    console.log("Error while retrieving element to copy, status: " + status);
+                }
+            });
+        }
+    }
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        var btnText = $(this).text();
-        if (btnText === "Yes") {
+            var btnText = $(this).text();
+            //   if (btnText === "Yes") {
             if (toDelete !== null) {
                 remove(toDelete);
                 alert("Deleted!");
                 toDelete = null;
             } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
-                for (element of elementsToDelete) {
-                    console.log(element);
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var str = JSON.stringify(data);
-                            console.log(str);
-                            var item = JSON.parse(str)["hour"];
-                            if (item !== null && item !== "undefined") {
-                                remove(item);
-                            } else {
-                                alert("An unexpected error occured, couldn't find element to copy!");
-                            }
-                        } else {
-                            console.log("Error while retrieving element to copy, status: " + status);
-                        }
-                    });
-                }
+                removeAll();
                 elementsToDelete = null;
             } else {
                 alert("Error no element set to delete")
             }
-        } else {
+        }
+        /*  else {
             //the user doesn't want to delete
             toDelete = null;
-        }
-    });
+        }} */
+    );
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
