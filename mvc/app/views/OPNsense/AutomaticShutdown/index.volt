@@ -277,7 +277,7 @@
                         });
                     }, 100);
                 }
-                if (deleted) break;
+                // if (deleted) break;
             } else
                 console.log("Error while searching jobs");
         });
