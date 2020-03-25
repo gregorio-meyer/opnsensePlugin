@@ -251,14 +251,14 @@
                     //if cron job searched
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        //   setTimeout(function() {
-                        ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
-                            if (status === "success") {
-                                console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
-                                deleted = true;
-                            }
-                        });
-                        // }, 100);
+                        setTimeout(function() {
+                            ajaxCall(url = "/api/cron/settings/delJob/" + row['uuid'], sendData = {}, callback = function(data, status) {
+                                if (status === "success") {
+                                    console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + row['uuid']);
+                                    deleted = true;
+                                }
+                            });
+                        }, 200);
                         if (deleted) break;
                     }
                 }
