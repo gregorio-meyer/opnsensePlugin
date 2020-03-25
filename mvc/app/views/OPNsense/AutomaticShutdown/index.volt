@@ -71,9 +71,9 @@
                     });
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
+                    alert("Click")
                     do {
                         elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
-
                     } while (elementsToDelete == null);
                     alert("Selected for removal " + JSON.stringify(elementsToDelete));
                 });
