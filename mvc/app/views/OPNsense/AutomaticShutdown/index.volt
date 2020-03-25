@@ -183,8 +183,12 @@
                 oldEndHour = endHour;
             }
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
-            editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
-            editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
+            setTimeout(function() {
+                editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
+            }, 100);
+            setTimeout(function() {
+                editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
+            }, 100);
             edit = false;
         }
     });
