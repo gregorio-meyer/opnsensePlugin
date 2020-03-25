@@ -77,7 +77,7 @@
         });
     });
     //edit an existing cron job
-    function editJobs(oldHour, oldCmd, cmd, descr, newHour) {
+    function editJobs(oldStartHour, oldStartCmd, startCmd, startDescr, startNewHour, endStartHour, endStartCmd, endCmd, endDescr, endNewHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
@@ -90,30 +90,53 @@
                     var description = row['description'];
                     var command = row['command'];
                     var uuid = row['uuid'];
-                    if (oldHour == hours && descr == description && oldCmd === command) {
+                    if (oldStartHour == hours && startDescr == description && startOldCmd === command) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var edited = false;
+                        var allEdited = false;
                         setTimeout(function() {
                             ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
                                 "job": {
                                     "enabled": "1",
                                     "minutes": "0",
-                                    "hours": newHour,
+                                    "hours": startNewHour,
                                     "days": "*",
                                     "months": "*",
                                     "weekdays": "*",
-                                    "command": cmd,
+                                    "command": startCmd,
                                     "parameters": "",
-                                    "description": descr
+                                    "description": startDescr
                                 }
                             }, callback = function(data, status) {
                                 if (status === "success") {
-                                    console.log("Edited " + descr + " oldHour " + oldHour + " new hour " + newHour + " result: " + JSON.stringify(data));
+                                    console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + startNewHour + " result: " + JSON.stringify(data));
                                     edited = true;
                                 }
                             });
                         }, 100);
-                        if (edited) break;
+                        if (oldEndHour == hours && endDescr == description && endOldCmd === command) {
+                            if (edited) {
+                                ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
+                                    "job": {
+                                        "enabled": "1",
+                                        "minutes": "0",
+                                        "hours": endNewHour,
+                                        "days": "*",
+                                        "months": "*",
+                                        "weekdays": "*",
+                                        "command": endCmd,
+                                        "parameters": "",
+                                        "description": endDescr
+                                    }
+                                }, callback = function(data, status) {
+                                    if (status === "success") {
+                                        console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + endNewHour + " result: " + JSON.stringify(data));
+                                        allEdited = true;
+                                    }
+                                });
+                            }
+                            if (allEdited) break;
+                        }
                     }
                 }
             }
@@ -185,13 +208,13 @@
             }
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
             setTimeout(function() {
-                editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
+                editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour, oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
             }, 100);
-            console.log("Edited start hour " + startHour);
-            setTimeout(function() {
-                editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
-            }, 100);
-            console.log("Edited send hour " + endHour);
+            //  console.log("Edited start hour " + startHour);
+            /*         setTimeout(function() {
+                        editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
+                    }, 100);
+                    console.log("Edited end hour " + endHour); */
             edit = false;
         }
     });
