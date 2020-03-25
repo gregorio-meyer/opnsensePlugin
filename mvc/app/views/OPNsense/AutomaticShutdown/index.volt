@@ -245,11 +245,9 @@
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
-                //loop and find the ones that match
-                //var json_str = JSON.stringify(data);
                 var rows = getJSON(data)["rows"];
                 for (row of rows) {
-                    //id of the cron job searched
+                    //if cron job searched
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var deleted = false;
@@ -267,13 +265,16 @@
             } else
                 console.log("Error while searching jobs");
         });
+        return deleted;
     }
     //TODO add enabled
     //delete start and stop cron jobs for item
     function remove(item) {
         //remove cron jobs with an AJAX call
-        removeJob(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall");
-        removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");;
+        var deleted = removeJob(item['enabled'], item['StartHour'], "Shutdown firewall", "Stop Firewall");
+        console.log("Start " + deleted)
+        deleted = removeJob(item['enabled'], item['EndHour'], "Start firewall", "Start Firewall");
+        console.log("End " + deleted)
     }
 
     function removeAll() {
