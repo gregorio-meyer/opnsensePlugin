@@ -27,11 +27,9 @@
             //edit event handler
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
-                    console.log("You pressed edit on row: " + id);
-                    //get item since we can only retrieve row-id from click event
+                        //get item since we can only retrieve row-id from click event
                     ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                         if (status === "success") {
-                            console.log("Element to edit " + JSON.stringify(data));
                             edit = true;
                         } else {
                             console.log("Error while retrieving element to edit, status: " + status);
@@ -61,9 +59,7 @@
                             var str = JSON.stringify(data);
                             var item = JSON.parse(str)["hour"];
                             if (item !== null) {
-                                var startHour = item['StartHour'];
-                                var endHour = item['EndHour'];
-                                copyMessage = "Copied schedule with start hour: " + startHour + " and end hour: " + endHour;
+                                copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
                             } else {
                                 alert("An unexpected error occured, couldn't find element to copy!");
                             }
@@ -71,7 +67,7 @@
                             console.log("Error while retrieving element to copy, status: " + status);
                         }
                     });
-                })
+                }) //check if necessary
                 .end().find(".command-delete-selected").on("click", function(e) {
                     do {
                         elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
@@ -97,25 +93,20 @@
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         var uuid = row['uuid'];
                         var edited = false;
-                        alert("Command " + command);
-                        alert("Cmd " + cmd);
-                        alert("Description " + description);
-                        alert("Descr " + descr);
-                        var data = {
-                            "job": {
-                                "enabled": "1",
-                                "minutes": "0",
-                                "hours": newHour,
-                                "days": "*",
-                                "months": "*",
-                                "weekdays": "*",
-                                "command": cmd,
-                                "parameters": "",
-                                "description": descr
-                            }
-                        }
                         setTimeout(function() {
-                            ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = data, callback = function(data, status) {
+                            ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
+                                "job": {
+                                    "enabled": "1",
+                                    "minutes": "0",
+                                    "hours": newHour,
+                                    "days": "*",
+                                    "months": "*",
+                                    "weekdays": "*",
+                                    "command": cmd,
+                                    "parameters": "",
+                                    "description": descr
+                                }
+                            }, callback = function(data, status) {
                                 if (status === "success") {
                                     console.log("Edited " + descr + " job" + JSON.stringify(data));
                                     edited = true;
@@ -125,7 +116,6 @@
                         if (edited) break;
                     }
                 }
-                alert("Completed!")
             }
         });
     }
@@ -163,6 +153,7 @@
             });
         });
     }
+    //save values before editing 
     $(document).on('focusin', "#hour\\.StartHour", function() {
         oldStartHour = $("#hour\\.StartHour").val();
 
@@ -240,6 +231,7 @@
         search(startHour, "Shutdown firewall", "Stop Firewall");
         search(endHour, "Start firewall", "Start Firewall");;
     }
+    //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         var btnText = $(this).text();
         if (btnText === "Yes") {
@@ -297,14 +289,9 @@
             <td>
                 <button data-action="add" type="button" class="btn btn-xs btn-default"><span
                         class="fa fa-plus"></span></button>
-                <button data-action="deleteSelected" id="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
+                <button data-action="deleteSelected" type="button" class="btn btn-xs btn-default"><span class="fa fa-trash-o"></span></button>
             </td>
         </tr>
     </tfoot>
 </table>
-<div class="col-md-12">
-    <br><br>
-    <button class="btn btn-primary" id="saveAct" type="button"><b>Apply</b><i id="saveAct_progress" class=""></i>
-    </button>
-</div>
 {{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit hour')])}}
