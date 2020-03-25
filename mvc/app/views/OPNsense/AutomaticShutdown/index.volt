@@ -95,25 +95,18 @@
                     if (oldStartHour == hours && startDescr == description && oldStartCmd === command) {
                         alert("Found start hour job");
                         startJobUUID = uuid;
-                        //delete first occurence (it doesn't matter which job we delete since they're equals)
-                        var edited = false;
-                        var allEdited = false;
-
                     }
                     if (oldEndHour == hours && endDescr == description && oldEndCmd === command) {
                         endJobUUID = uuid;
                         alert("Found end hour job");
-
-
                     }
+                    //edit first occurence (it doesn't matter which job we delete since they're equals        
                     if (startJobUUID !== null && endJobUUID !== null) {
-                        allEdited = true;
-
+                        break;
                     }
                 }
                 if (startJobUUID === null || endJobUUID === null) {
                     console.log("Error start " + startJobUUID + " end " + endJobUUID);
-
                 } else {
                     setTimeout(function() {
                         ajaxCall(url = "/api/cron/settings/setJob/" + startJobUUID, sendData = {
@@ -131,28 +124,26 @@
                         }, callback = function(data, status) {
                             if (status === "success") {
                                 console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + startNewHour + " result: " + JSON.stringify(data));
-                                edited = true;
+                                setTimeout(function() {
+                                    ajaxCall(url = "/api/cron/settings/setJob/" + endJobUUID, sendData = {
+                                        "job": {
+                                            "enabled": "1",
+                                            "minutes": "0",
+                                            "hours": endNewHour,
+                                            "days": "*",
+                                            "months": "*",
+                                            "weekdays": "*",
+                                            "command": endCmd,
+                                            "parameters": "",
+                                            "description": endDescr
+                                        }
+                                    }, callback = function(data, status) {
+                                        if (status === "success") {
+                                            console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + endNewHour + " result: " + JSON.stringify(data));
+                                        }
+                                    });
+                                }, 100);
                             }
-                            setTimeout(function() {
-                                // if (edited) {
-                                ajaxCall(url = "/api/cron/settings/setJob/" + uuid, sendData = {
-                                    "job": {
-                                        "enabled": "1",
-                                        "minutes": "0",
-                                        "hours": endNewHour,
-                                        "days": "*",
-                                        "months": "*",
-                                        "weekdays": "*",
-                                        "command": endCmd,
-                                        "parameters": "",
-                                        "description": endDescr
-                                    }
-                                }, callback = function(data, status) {
-                                    if (status === "success") {
-                                        console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + endNewHour + " result: " + JSON.stringify(data));
-                                    }
-                                });
-                            }, 100);
                         });
                     }, 100);
                 }
