@@ -27,67 +27,83 @@
             setEventHandlers();
         });
 
+        function setEdit(id) {
+            //get item since we can only retrieve row-id from click event
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    edit = true;
+                } else {
+                    console.log("Error while retrieving element to edit, status: " + status);
+                }
+            });
+        }
+
+        function setDelete(id) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
+                    if (item !== null) {
+                        //if we found the row to delete save it and set the delete flag
+                        //the element will be removed if the user press "Yes"
+                        toDelete = item;
+                    } else {
+                        alert("An unexpected error occured, couldn't find element to delete!");
+                    }
+                } else {
+                    console.log("Error status: " + status);
+                }
+            })
+        }
+
+        function setCopy(id) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    var str = JSON.stringify(data);
+                    var item = JSON.parse(str)["hour"];
+                    if (item !== null) {
+                        copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
+                    } else {
+                        alert("An unexpected error occured, couldn't find element to copy!");
+                    }
+                } else {
+                    console.log("Error while retrieving element to copy, status: " + status);
+                }
+            });
+        }
+
+        function setDeleteSelected() {
+            do {
+                elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
+            } while (elementsToDelete == null);
+        }
+
         function setEventHandlers() {
             //edit event handler
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
-                        //get item since we can only retrieve row-id from click event
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            edit = true;
-                        } else {
-                            console.log("Error while retrieving element to edit, status: " + status);
-                        }
-                    }); //delete event handler
+                    setEdit(id);
+                    //delete event handler
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id")
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var str = JSON.stringify(data);
-                            var item = JSON.parse(str)["hour"];
-                            if (item !== null) {
-                                //if we found the row to delete save it and set the delete flag
-                                //the element will be removed if the user press "Yes"
-                                toDelete = item;
-                            } else {
-                                alert("An unexpected error occured, couldn't find element to delete!");
-                            }
-                        } else {
-                            console.log("Error status: " + status);
-                        }
-                    })
+                    setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id")
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var str = JSON.stringify(data);
-                            var item = JSON.parse(str)["hour"];
-                            if (item !== null) {
-                                copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
-                            } else {
-                                alert("An unexpected error occured, couldn't find element to copy!");
-                            }
-                        } else {
-                            console.log("Error while retrieving element to copy, status: " + status);
-                        }
-                    });
+                    setCopy(id);
                 }) //check if necessary
                 .end().find(".command-delete-selected").on("click", function(e) {
-                    do {
-                        elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
-                    } while (elementsToDelete == null);
-                    //       alert("Selected for removal " + JSON.stringify(elementsToDelete));
+                    setDeleteSelected();
                 });
         }
     });
     //save values before editing 
     $(document).on('focusin', "#hour\\.StartHour", function() {
         oldStartHour = $("#hour\\.StartHour").val();
-
     });
     $(document).on('focusin', "#hour\\.EndHour", function() {
         oldEndHour = $("#hour\\.EndHour").val();
     });
+    //magari dividere
     //edit an existing cron job
     function editJobs(oldStartHour, oldStartCmd, startCmd, startDescr, startNewHour, oldEndHour, oldEndCmd, endCmd, endDescr, endNewHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
@@ -115,6 +131,7 @@
                         break;
                     }
                 }
+                //magari controllare non siano null e al massimo non farlo
                 if (startJobUUID === null || endJobUUID === null) {
                     console.log("Error start " + startJobUUID + " end " + endJobUUID);
                 } else {
@@ -282,6 +299,7 @@
             toDelete = null;
         } else if (elementsToDelete !== null && JSON.stringify(elementsToDelete) !== "[]") {
             removeAll();
+            alert("All deleted!");
             elementsToDelete = null;
         } else {
             alert("Error no element set to delete")
