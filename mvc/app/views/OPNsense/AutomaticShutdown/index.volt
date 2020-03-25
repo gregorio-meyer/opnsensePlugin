@@ -174,6 +174,7 @@
             else
                 alert(copyMessage);
             addJobs(startHour, endHour);
+            console.log("Jobs added")
         } else {
             //if none was selected take val from textbox
             if (oldStartHour == null) {
@@ -186,9 +187,11 @@
             setTimeout(function() {
                 editJobs(oldStartHour, "Shutdown firewall", "automaticshutdown start", "Stop Firewall", startHour);
             }, 100);
+            console.log("Edited start hour");
             setTimeout(function() {
                 editJobs(oldEndHour, "Start firewall", "automaticshutdown stop", "Start Firewall", endHour);
             }, 100);
+            console.log("Edited send hour " + endHour);
             edit = false;
         }
     });
