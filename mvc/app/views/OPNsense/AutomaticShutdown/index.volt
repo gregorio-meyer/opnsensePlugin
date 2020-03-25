@@ -2,6 +2,7 @@
     var edit = false;
     var toDelete = null;
     var copyMessage = null;
+    var elementsToDelete = null;
     $(document).ready(function() {
         var data_get_map = {
             'DialogAddress': "/api/automaticshutdown/settings/get"
@@ -71,7 +72,7 @@
             })
         }).end().find(".command-delete-selected").on("click", function(e) {
             //var id = $(this).data("row-id")
-            var elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
+            elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
             alert("Selected for removal " + JSON.stringify(elementsToDelete));
             /*ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
