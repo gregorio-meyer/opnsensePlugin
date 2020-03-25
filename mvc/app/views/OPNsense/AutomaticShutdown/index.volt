@@ -71,7 +71,7 @@
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
 
-                    elementsToDelete = $("#DataAddress").bootgrid("getSelectedRows");
+                    elementsToDelete = $("#DialogAddress").bootgrid("getSelectedRows");
                     alert("Selected for removal " + JSON.stringify(elementsToDelete));
                     /* var id = $(this).data("row-id")
                         ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
