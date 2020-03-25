@@ -254,8 +254,7 @@
                     if (enabled == row['enabled'] && hour == row['hours'] && descr == row['description'] && cmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         startUUID = row['uuid'];
-                    }
-                    if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCmd === row['command']) {
+                    } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCmd === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         endUUID = row['uuid'];
                     }
@@ -264,9 +263,9 @@
                     setTimeout(function() {
                         ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
                             if (status === "success") {
+                                console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + startUUID);
                                 ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
                                     if (status === "success") {
-                                        console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + startUUID);
                                         //  deleted = true;
                                         console.log("Removed " + descr + " job" + JSON.stringify(data) + " uuid " + endUUID);
                                         //   deleted = true;
