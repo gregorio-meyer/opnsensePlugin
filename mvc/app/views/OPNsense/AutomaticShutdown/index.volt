@@ -123,18 +123,40 @@
             } while (elementsToDelete == null);
         }
 
+        function getItem(id) {
+            $.get("/api/automaticshutdown/settings/getItem/" + element, callback = function(data, status) {
+                if (status === "success") {
+                    var json_str = JSON.stringify(data);
+                    var item = JSON.parse(json_str)["hour"];
+                    if (item == null) {
+                        alert("An unexpected error occured, couldn't find element to remove!");
+                    }
+                } else {
+                    console.log("Error while retrieving element to remove, status: " + status);
+                }
+            });
+        }
+
         function setEventHandlers() {
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
+                    var item = getItem(id);
+                    console.log("Item " + JSON.stringify(item));
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
-                    var id = $(this).data("row-id")
+                    var id = $(this).data("row-id");
+                    var item = getItem(id);
+                    console.log("Item " + JSON.stringify(item));
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
-                    var id = $(this).data("row-id")
+                    var id = $(this).data("row-id");
+                    var item = getItem(id);
+                    console.log("Item " + JSON.stringify(item));
                     setCopy(id);
                 }).end().find(".command-toggle").on("click", function(e) {
-                    var id = $(this).data("row-id")
+                    var id = $(this).data("row-id");
+                    var item = getItem(id);
+                    console.log("Item " + JSON.stringify(item));
                     setToggle(id);
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
