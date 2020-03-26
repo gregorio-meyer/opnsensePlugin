@@ -116,6 +116,7 @@ notConnected = 0
 
 
 def check():
+    print("Hello")
     if not isConnected():
         global notConnected
         global i
@@ -131,13 +132,14 @@ def check():
             print("Already locked")
             notConnected = 0
     else:
+        
         # if the connection is already unlocked continue
         if locked:
             print("Locked, unlock")
             blockTraffic(False)
             locked = False
-            print("Already unlocked")
-            notConnected = 0
+        print("Already unlocked")
+        notConnected = 0
         i += 1
     threading.Timer(1, check).start()
 
