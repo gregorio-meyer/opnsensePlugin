@@ -132,7 +132,7 @@
                     if (item == null) {
                         alert("An unexpected error occured, couldn't find element to remove!");
                     } else {
-                        console.log(JSON.stringify(item));
+                        //  console.log(JSON.stringify(item));
                         searchedItem = item;
                     }
                 } else {
