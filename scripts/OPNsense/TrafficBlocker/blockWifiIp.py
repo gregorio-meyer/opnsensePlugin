@@ -114,7 +114,7 @@ def blockTraffic(lock):
 i = 0
 notConnected = 0
 running = True
-
+pid = 0
 
 def stop():
     global running
@@ -122,13 +122,10 @@ def stop():
     print("Stopped")
 
 def getPID():
-    return os.getpid()
+    return pid
 
-def check(ip):
-    if(not running):
-        print("Stopping...")
-        exit(0)
-        
+def check(ip, pid):
+    print("Running %s %s" %(running, pid))
     if not isConnected(ip):
         global notConnected
         global i
@@ -153,8 +150,9 @@ def check(ip):
         print("Already unlocked")
         notConnected = 0
         i += 1
-    threading.Timer(1, check,[ip]).start()
+    threading.Timer(1, check,[ip,pid]).start()
 
 if __name__ == '__main__':
     ip = sys.argv[1]
-    check(ip)
+    pid = os.getpid()
+    check(ip,pid)
