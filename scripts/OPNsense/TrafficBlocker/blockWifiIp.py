@@ -124,13 +124,15 @@ def stop():
 def getPID():
     return pid
 
-def check(ip, pid):
-    print("Running %s %s" %(running, pid))
+def check(ip):
+    if(not running):
+        print("Stopping...")
+        exit(0)
     if not isConnected(ip):
         global notConnected
         global i
         global locked
-        # print(i)
+        print(i)
         notConnected += 1
         print(notConnected)
         if notConnected >= 20:

@@ -1,9 +1,7 @@
-from blockWifiIp import stop
-from blockWifiIp import getPID
-import os, signal;
-def killScript():
-   pid =  getPID()
-   print("Trying to kill process with PID: %s "% pid)
-   #for UNIX systems
-   os.kill(pid,signal.SIGKILL)
-killScript()
+from subprocess import check_call
+import sys
+
+script = "blockWifiIp.py"
+
+
+check_call(["pkill", "-9", "-f", script])
