@@ -147,6 +147,7 @@
                     getItem(id);
                     if (searchedItem != null) {
                         console.log("Item " + JSON.stringify(searchedItem));
+                        searchedItem = null;
                     }
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
@@ -154,6 +155,7 @@
                     getItem(id);
                     if (searchedItem != null) {
                         console.log("Item " + JSON.stringify(searchedItem));
+                        searchedItem = null;
                     }
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
