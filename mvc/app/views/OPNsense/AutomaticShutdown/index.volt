@@ -145,10 +145,12 @@
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
                     getItem(id);
-                    if (searchedItem != null) {
-                        console.log("Item " + JSON.stringify(searchedItem));
-                        searchedItem = null;
-                    }
+                    setTimeout(function() {
+                        if (searchedItem != null) {
+                            console.log("Item " + JSON.stringify(searchedItem));
+                            searchedItem = null;
+                        }
+                    }, 100);
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id");
