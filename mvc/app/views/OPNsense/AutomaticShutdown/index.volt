@@ -122,43 +122,31 @@
                 elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
             } while (elementsToDelete == null);
         }
-        var searchedItem = null;
+        /*  var searchedItem = null;
 
-        function getItem(id) {
-            $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
-                if (status === "success") {
-                    var json_str = JSON.stringify(data);
-                    var item = JSON.parse(json_str)["hour"];
-                    if (item == null) {
-                        alert("An unexpected error occured, couldn't find element to remove!");
-                    } else {
-                        //  console.log(JSON.stringify(item));
-                        searchedItem = item;
-                    }
-                } else {
-                    console.log("Error while retrieving element to remove, status: " + status);
-                }
-            });
-        }
+         function getItem(id) {
+             $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
+                 if (status === "success") {
+                     var json_str = JSON.stringify(data);
+                     var item = JSON.parse(json_str)["hour"];
+                     if (item == null) {
+                         alert("An unexpected error occured, couldn't find element to remove!");
+                     } else {
+                         //  console.log(JSON.stringify(item));
+                         searchedItem = item;
+                     }
+                 } else {
+                     console.log("Error while retrieving element to remove, status: " + status);
+                 }
+             });
+         } */
 
         function setEventHandlers() {
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
-                    getItem(id);
-                    setTimeout(function() {
-                        if (searchedItem != null) {
-                            console.log("Item " + JSON.stringify(searchedItem));
-                            searchedItem = null;
-                        }
-                    }, 100);
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id");
-                    getItem(id);
-                    if (searchedItem != null) {
-                        console.log("Item " + JSON.stringify(searchedItem));
-                        searchedItem = null;
-                    }
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id");
