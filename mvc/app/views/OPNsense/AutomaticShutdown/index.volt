@@ -122,7 +122,7 @@
                 elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
             } while (elementsToDelete == null);
         }
-        var searchedItem;
+        var searchedItem = null;
 
         function getItem(id) {
             $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
