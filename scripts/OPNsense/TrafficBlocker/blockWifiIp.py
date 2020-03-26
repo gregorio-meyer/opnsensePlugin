@@ -119,6 +119,7 @@ def check():
     if not isConnected():
         global notConnected
         global i
+        global locked
         # print(i)
         notConnected += 1
         print(notConnected)
