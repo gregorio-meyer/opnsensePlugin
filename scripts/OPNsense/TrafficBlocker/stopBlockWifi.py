@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 #from subprocess import check_call
 #import sys
 print("HI")
