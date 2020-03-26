@@ -49,8 +49,7 @@ def isConnected(ip):
 def ping(ip):
     # ping host
     result = os.system('ping -t2 -c 4 ' + ip)
-    print("Ping result %s " % result)
-    True if result == 0  else False
+    return True if result == 0  else False
 
 
 def addAlias():
@@ -113,27 +112,17 @@ def blockTraffic(lock):
         setAlias(uuid, data)
 
 
-pings = 0
-
-
 def checkPing(ip):
     if not ping(ip):
-        global pings
         global locked
-        pings += 1
-        print("Pings %s" % pings)
-        # number of pings (x4) checks before disabling connection
-        if pings > 10:
-            pings = 0
             # if not locked lock
-            if not locked:
+        if not locked:
                 print("Not locked, lock")
                 blockTraffic(True)
                 locked = True
             # if the connection is already locked continue
-            print("Already locked")
+        print("Already locked")
     else:
-        pings = 0
         # if locked unlock
         if locked:
             print("Locked, unlock")
