@@ -124,20 +124,23 @@
         }
 
         function getItem(id) {
+            var item = null;
             $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
                 if (status === "success") {
                     var json_str = JSON.stringify(data);
-                    var item = JSON.parse(json_str)["hour"];
-                    if (item == null) {
+                    var itm = JSON.parse(json_str)["hour"];
+                    if (itm == null) {
                         alert("An unexpected error occured, couldn't find element to remove!");
                     } else {
-                        console.log(JSON.stringify(item));
-                        return item;
+                        console.log(JSON.stringify(itm));
+                        item = itm;
                     }
                 } else {
                     console.log("Error while retrieving element to remove, status: " + status);
                 }
             });
+            do {} while (item == null);
+            return item;
         }
 
         function setEventHandlers() {
