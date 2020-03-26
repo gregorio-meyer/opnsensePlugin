@@ -163,6 +163,7 @@ def check(ip, pid):
 
 if __name__ == '__main__':
     if len(sys.argv > 1):
+        print("Taking ip from command line")
         ip = sys.argv[1]
     else:
         # take ip from conf
