@@ -1,7 +1,7 @@
 from subprocess import check_call
 import sys
+print("HI")
+""" script = "blockWifiIp.py"
 
-script = "blockWifiIp.py"
 
-
-check_call(["pkill", "-9", "-f", script])
+check_call(["pkill", "-9", "-f", script]) """
