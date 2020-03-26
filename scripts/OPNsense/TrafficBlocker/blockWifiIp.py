@@ -12,7 +12,7 @@ api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
-ip = sys.argv[1]
+ip = 0
 
 monitored_intf = "lan"
 network = "10.0.0.0/24"
@@ -22,7 +22,7 @@ locked = False
 # check connection with arp api
 
 
-def isConnected():
+def isConnected(ip):
     connected = False
     r = requests.post(url+"api/diagnostics/interface/flushArp",
                       auth=(api_key, api_secret), verify=False)
@@ -119,14 +119,17 @@ running = True
 def stop():
     global running
     running = False
+    print("Stopped")
 
+def getPID():
+    return os.getpid()
 
-def check():
+def check(ip):
     if(not running):
         print("Stopping...")
         exit(0)
         
-    if not isConnected():
+    if not isConnected(ip):
         global notConnected
         global i
         global locked
@@ -152,5 +155,6 @@ def check():
         i += 1
     threading.Timer(1, check).start()
 
-
-check()
+if __name__ == '__main__':
+    ip = sys.argv[1]
+    check(ip)
