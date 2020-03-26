@@ -130,6 +130,8 @@
                     var item = JSON.parse(json_str)["hour"];
                     if (item == null) {
                         alert("An unexpected error occured, couldn't find element to remove!");
+                    } else {
+                        return item;
                     }
                 } else {
                     console.log("Error while retrieving element to remove, status: " + status);
