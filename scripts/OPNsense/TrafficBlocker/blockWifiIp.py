@@ -6,10 +6,12 @@ import re
 import sys
 import time
 import subprocess
+import threading
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
+# prenderlo dalla config
 ip = sys.argv[1]
 
 monitored_intf = "lan"
@@ -17,12 +19,15 @@ network = "10.0.0.0/24"
 aliasName = "LAN"
 locked = False
 
+# check connection with arp api
+
+
 def isConnected():
     connected = False
     r = requests.post(url+"api/diagnostics/interface/flushArp",
-                   auth=(api_key, api_secret), verify=False)
+                      auth=(api_key, api_secret), verify=False)
     time.sleep(1)
-    #os.system('ping -t2 -c 4 '+ip)
+    # os.system('ping -t2 -c 4 '+ip)
     r = requests.get(url+"api/diagnostics/interface/getArp",
                      auth=(api_key, api_secret), verify=False)
 
@@ -33,13 +38,19 @@ def isConnected():
         for host in response:
             if host["ip"] == ip:
                 interface = host["intf_description"]
-                #print(host)
+                # print(host)
                 if interface == monitored_intf:
                    # print("Host is connected on %s" % interface)
                     connected = True
     else:
         print("Request failed with error code %s" % r.status_code)
     return connected
+
+
+def isConnected2():
+    # ping host
+    print("Start...")
+    os.system("ping -c 10.0.0.100")
 
 
 def addAlias():
@@ -98,30 +109,36 @@ def blockTraffic(lock):
     # modify existing alias
     else:
         setAlias(uuid, data)
-i=0
-notConnected=0
-while True:
+
+
+i = 0
+notConnected = 0
+
+
+def check():
     if not isConnected():
-       # print(i)
-        notConnected+=1
+        global notConnected
+        global i
+        # print(i)
+        notConnected += 1
         print(notConnected)
-        if notConnected >= 20 :
+        if notConnected >= 20:
             if not locked:
                 print("Not locked, lock")
                 blockTraffic(True)
                 locked = True
             print("Already locked")
-            notConnected=0
-
-      # 
+            notConnected = 0
     else:
-        #if the connection is already unlocked continue
+        # if the connection is already unlocked continue
         if locked:
             print("Locked, unlock")
             blockTraffic(False)
             locked = False
-        print("Already unlocked")
-        notConnected=0
-       # print("Unlocking traffic...")
-      #  exit(-1)
-    i+=1
+            print("Already unlocked")
+            notConnected = 0
+        i += 1
+    threading.Timer(1, check).start()
+
+
+check()
