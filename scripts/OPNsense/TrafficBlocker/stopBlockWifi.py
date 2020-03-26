@@ -1,5 +1,5 @@
-from subprocess import check_call
-import sys
+#from subprocess import check_call
+#import sys
 print("HI")
 """ script = "blockWifiIp.py"
 
