@@ -14,8 +14,6 @@ api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
-ip = 0
-
 monitored_intf = "lan"
 network = "10.0.0.0/24"
 aliasName = "LAN"
@@ -30,13 +28,11 @@ def isConnected(ip):
     r = requests.post(url+"api/diagnostics/interface/flushArp",
                       auth=(api_key, api_secret), verify=False)
     time.sleep(1)
-    # os.system('ping -t2 -c 4 '+ip)
     r = requests.get(url+"api/diagnostics/interface/getArp",
                      auth=(api_key, api_secret), verify=False)
 
     if r.status_code == 200:
         response = json.loads(r.text)
-       # print(response)
         # check if there is a client with that ip on the monitored interface
         for host in response:
             if host["ip"] == ip:
@@ -50,10 +46,11 @@ def isConnected(ip):
     return connected
 
 
-def isConnected2():
+def ping(ip):
     # ping host
-    print("Start...")
-    os.system("ping -c 10.0.0.100")
+    result = os.system('ping -t2 -c 4 ' + ip)
+    print("Ping result %s " % result)
+    return result
 
 
 def addAlias():
@@ -89,11 +86,13 @@ def getUUID():
     r = requests.get(url+"api/firewall/alias/getAliasUUID/" +
                      aliasName, auth=(api_key, api_secret), verify=False)
     resp = json.loads(r.text)
-    # Add alias since it's not present
+    # This will add alias since it's not present
     if len(resp) == 0:
         return None
     else:
         return resp["uuid"]
+
+# locks / unlocks traffic toward network using an alias
 
 
 def blockTraffic(lock):
@@ -114,51 +113,65 @@ def blockTraffic(lock):
         setAlias(uuid, data)
 
 
-i = 0
-notConnected = 0
-running = True
-pid = 0
+pings = 0
 
 
-def stop():
-    global running
-    running = False
-    print("Stopped")
-
-
-def getPID():
-    return pid
-
-
-def check(ip, pid):
-    if(not running):
-        print("Stopping...")
-        exit(0)
-    if not isConnected(ip):
-        global notConnected
-        global i
+def checkPing(ip):
+    if not ping(ip):
+        global pings
         global locked
-        print(i)
-        notConnected += 1
-        print(notConnected)
-        if notConnected >= 20:
+        pings += 1
+        print("Pings " + pings)
+        # number of pings (x4) checks before disabling connection
+        if pings > 10:
+            pings = 0
+            # if not locked lock
             if not locked:
                 print("Not locked, lock")
                 blockTraffic(True)
                 locked = True
+            # if the connection is already locked continue
             print("Already locked")
-            notConnected = 0
     else:
-
-        # if the connection is already unlocked continue
+        pings = 0
+        # if locked unlock
         if locked:
             print("Locked, unlock")
             blockTraffic(False)
             locked = False
         print("Already unlocked")
-        notConnected = 0
-        i += 1
-    threading.Timer(1, check, [ip, pid]).start()
+    threading.Timer(1, checkPing, [ip]).start()
+
+
+attempts = 0
+
+
+def check(ip):
+    # check for
+    if not isConnected(ip):
+        global attempts
+        global locked
+        attempts += 1
+        print("Attempts " + attempts)
+        # number of connection checks before disabling connection
+        if attempts > 10:
+            attempts = 0
+            # if not locked lock
+            if not locked:
+                print("Not locked, lock")
+                blockTraffic(True)
+                locked = True
+            # if the connection is already locked continue
+            print("Already locked")
+    else:
+        attempts = 0
+        # if locked unlock
+        if locked:
+            print("Locked, unlock")
+            blockTraffic(False)
+            locked = False
+        print("Already unlocked")
+    threading.Timer(1, check, [ip]).start()
 
 
 if __name__ == '__main__':
@@ -181,8 +194,8 @@ if __name__ == '__main__':
         else:
             # no config
             print("no configuration file found")
-    pid = os.getpid()
     try:
-        check(ip, pid)
+       # check(ip)
+        checkPing(ip)
     except Exception as e:
         print("Check failed %s" % e)
