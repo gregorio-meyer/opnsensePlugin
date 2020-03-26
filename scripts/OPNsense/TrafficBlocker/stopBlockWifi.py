@@ -6,5 +6,5 @@ script = "blockWifiIp.py"
 try:
     check_call(["pkill", "-9", "-f", script])
 except Exception as e:
-    print("Error %s" % e)
+    print("Failed:%s" % e)
 #print("Result %s " % result)
