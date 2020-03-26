@@ -153,7 +153,7 @@
                     var id = $(this).data("row-id");
                     getItem(id);
                     if (searchedItem != null) {
-                        console.log("Item " + JSON.stringify(item));
+                        console.log("Item " + JSON.stringify(searchedItem));
                     }
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
