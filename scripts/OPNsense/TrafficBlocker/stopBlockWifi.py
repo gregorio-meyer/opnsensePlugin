@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 import sys
 from subprocess import check_call
-print("Start..")
+print("Stopping traffic blocker..")
 script = "blockWifiIp.py"
 
 

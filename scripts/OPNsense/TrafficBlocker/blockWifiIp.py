@@ -7,6 +7,8 @@ import sys
 import time
 import subprocess
 import threading
+from configparser import ConfigParser
+
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
@@ -18,6 +20,7 @@ monitored_intf = "lan"
 network = "10.0.0.0/24"
 aliasName = "LAN"
 locked = False
+traffic_blocker_config = '/usr/local/etc/trafficblocker/trafficblocker.conf'
 
 # check connection with arp api
 
@@ -116,15 +119,18 @@ notConnected = 0
 running = True
 pid = 0
 
+
 def stop():
     global running
     running = False
     print("Stopped")
 
+
 def getPID():
     return pid
 
-def check(ip,pid):
+
+def check(ip, pid):
     if(not running):
         print("Stopping...")
         exit(0)
@@ -143,7 +149,7 @@ def check(ip,pid):
             print("Already locked")
             notConnected = 0
     else:
-        
+
         # if the connection is already unlocked continue
         if locked:
             print("Locked, unlock")
@@ -152,9 +158,25 @@ def check(ip,pid):
         print("Already unlocked")
         notConnected = 0
         i += 1
-    threading.Timer(1, check,[ip,pid]).start()
+    threading.Timer(1, check, [ip, pid]).start()
+
 
 if __name__ == '__main__':
-    ip = sys.argv[1]
+    if len(sys.argv > 1):
+        ip = sys.argv[1]
+    else:
+        # take ip from conf
+        if os.path.exists(traffic_blocker_config):
+            cnf = ConfigParser()
+            cnf.read(traffic_blocker_config)
+            if cnf.has_section('general'):
+                ip = cnf.get('general', 'Ip')
+                print("Found ip in config: %s" % ip)
+            else:
+                # empty config
+                print("empty configuration")
+        else:
+            # no config
+            print("no configuration file found")
     pid = os.getpid()
-    check(ip,pid)
+    check(ip, pid)
