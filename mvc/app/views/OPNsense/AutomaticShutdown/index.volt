@@ -146,7 +146,7 @@
                     var id = $(this).data("row-id")
                     getItem(id);
                     if (searchedItem != null) {
-                        console.log("Item " + JSON.stringify(item));
+                        console.log("Item " + JSON.stringify(searchedItem));
                     }
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
