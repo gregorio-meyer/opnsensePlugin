@@ -145,7 +145,7 @@
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
                     getItem(id);
-                    if (item != null) {
+                    if (searchedItem != null) {
                         console.log("Item " + JSON.stringify(item));
                     }
                     setEdit(id);
