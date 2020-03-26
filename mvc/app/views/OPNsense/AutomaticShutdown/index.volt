@@ -122,32 +122,32 @@
                 elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
             } while (elementsToDelete == null);
         }
+        var searchedItem;
 
         function getItem(id) {
-            var item = null;
             $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
                 if (status === "success") {
                     var json_str = JSON.stringify(data);
-                    var itm = JSON.parse(json_str)["hour"];
-                    if (itm == null) {
+                    var item = JSON.parse(json_str)["hour"];
+                    if (item == null) {
                         alert("An unexpected error occured, couldn't find element to remove!");
                     } else {
-                        console.log(JSON.stringify(itm));
-                        item = itm;
+                        console.log(JSON.stringify(item));
+                        searchedItem = item;
                     }
                 } else {
                     console.log("Error while retrieving element to remove, status: " + status);
                 }
             });
-            do {} while (item == null);
-            return item;
         }
 
         function setEventHandlers() {
             grid.find(".command-edit").on("click", function(e) {
                     var id = $(this).data("row-id")
-                    var item = getItem(id);
-                    console.log("Item " + JSON.stringify(item));
+                    getItem(id);
+                    if (item != null) {
+                        console.log("Item " + JSON.stringify(item));
+                    }
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id");
