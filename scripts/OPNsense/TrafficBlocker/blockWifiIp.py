@@ -153,7 +153,7 @@ def check(ip):
         print("Already unlocked")
         notConnected = 0
         i += 1
-    threading.Timer(1, check).start()
+    threading.Timer(1, check,[ip]).start()
 
 if __name__ == '__main__':
     ip = sys.argv[1]
