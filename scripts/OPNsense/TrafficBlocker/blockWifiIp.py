@@ -180,4 +180,7 @@ if __name__ == '__main__':
             # no config
             print("no configuration file found")
     pid = os.getpid()
-    check(ip, pid)
+    try:
+        check(ip, pid)
+    except Exception as e:
+        print("Check failed %s" % e)
