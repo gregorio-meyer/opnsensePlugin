@@ -124,7 +124,7 @@ def stop():
 def getPID():
     return pid
 
-def check(ip):
+def check(ip,pid):
     if(not running):
         print("Stopping...")
         exit(0)
