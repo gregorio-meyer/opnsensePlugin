@@ -113,10 +113,19 @@ def blockTraffic(lock):
 
 i = 0
 notConnected = 0
+running = True
+
+
+def stop():
+    global running
+    running = False
 
 
 def check():
-    print("Hello")
+    if(not running):
+        print("Stopping...")
+        exit(0)
+        
     if not isConnected():
         global notConnected
         global i
