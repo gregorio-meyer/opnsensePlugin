@@ -1,7 +1,7 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3.7
+print("HI")
 #from subprocess import check_call
 #import sys
-print("HI")
 # script = "blockWifiIp.py"
 
 
