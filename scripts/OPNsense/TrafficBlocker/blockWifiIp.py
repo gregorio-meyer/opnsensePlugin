@@ -128,13 +128,8 @@ def check(ip):
     if(not running):
         print("Stopping...")
         exit(0)
-<<<<<<< HEAD
-    print("Running %s " % running)
-    if not isConnected():
-=======
         
     if not isConnected(ip):
->>>>>>> 8e85a0ae9a5caa5f82a6b104c2e92dbbd4e45dbe
         global notConnected
         global i
         global locked
