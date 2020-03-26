@@ -92,7 +92,7 @@
                                     if (item['EndHour'] == row['hours'] && "Start Firewall" == row['description'] && "Start Firewall" === row['command']) {
                                         endUUID = uuid;
                                     }
-                                    if (startJobUUID != null && endJobUUID != null) {
+                                    if (startUUID != null && endUUID != null) {
                                         break;
                                     }
                                 }
