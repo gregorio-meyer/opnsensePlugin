@@ -151,8 +151,10 @@
                     setEdit(id);
                 }).end().find(".command-delete").on("click", function(e) {
                     var id = $(this).data("row-id");
-                    var item = getItem(id);
-                    console.log("Item " + JSON.stringify(item));
+                    getItem(id);
+                    if (searchedItem != null) {
+                        console.log("Item " + JSON.stringify(item));
+                    }
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id");
