@@ -125,12 +125,12 @@ def check():
     if(not running):
         print("Stopping...")
         exit(0)
-        
+    print("Running %s " % running)
     if not isConnected():
         global notConnected
         global i
         global locked
-        # print(i)
+        print(i)
         notConnected += 1
         print(notConnected)
         if notConnected >= 20:

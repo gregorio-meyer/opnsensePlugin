@@ -1,3 +1,7 @@
-from blockWifiIp import stop
+from subprocess import check_call
+import sys
 
-stop()
+script = "blockWifiIp.py"
+
+
+check_call(["pkill", "-9", "-f", script])
