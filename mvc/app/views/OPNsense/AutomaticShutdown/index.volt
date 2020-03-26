@@ -150,13 +150,11 @@
                     setDelete(id);
                 }).end().find(".command-copy").on("click", function(e) {
                     var id = $(this).data("row-id");
-                    var item = getItem(id);
-                    console.log("Item " + JSON.stringify(item));
                     setCopy(id);
                 }).end().find(".command-toggle").on("click", function(e) {
                     var id = $(this).data("row-id");
-                    var item = getItem(id);
-                    console.log("Item " + JSON.stringify(item));
+                    // var item = getItem(id);
+                    console.log("Item " + id);
                     setToggle(id);
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
