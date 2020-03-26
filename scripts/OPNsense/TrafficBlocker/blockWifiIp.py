@@ -12,7 +12,7 @@ api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
-ip = sys.argv[1]
+ip = 0
 
 monitored_intf = "lan"
 network = "10.0.0.0/24"
@@ -22,7 +22,7 @@ locked = False
 # check connection with arp api
 
 
-def isConnected():
+def isConnected(ip):
     connected = False
     r = requests.post(url+"api/diagnostics/interface/flushArp",
                       auth=(api_key, api_secret), verify=False)
@@ -119,14 +119,22 @@ running = True
 def stop():
     global running
     running = False
+    print("Stopped")
 
+def getPID():
+    return os.getpid()
 
-def check():
+def check(ip):
     if(not running):
         print("Stopping...")
         exit(0)
+<<<<<<< HEAD
     print("Running %s " % running)
     if not isConnected():
+=======
+        
+    if not isConnected(ip):
+>>>>>>> 8e85a0ae9a5caa5f82a6b104c2e92dbbd4e45dbe
         global notConnected
         global i
         global locked
@@ -141,15 +149,17 @@ def check():
             print("Already locked")
             notConnected = 0
     else:
+        
         # if the connection is already unlocked continue
         if locked:
             print("Locked, unlock")
             blockTraffic(False)
             locked = False
-            print("Already unlocked")
-            notConnected = 0
+        print("Already unlocked")
+        notConnected = 0
         i += 1
-    threading.Timer(1, check).start()
+    threading.Timer(1, check,[ip]).start()
 
-
-check()
+if __name__ == '__main__':
+    ip = sys.argv[1]
+    check(ip)
