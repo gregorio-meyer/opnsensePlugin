@@ -124,7 +124,7 @@
         }
 
         function getItem(id) {
-            $.get("/api/automaticshutdown/settings/getItem/" + element, callback = function(data, status) {
+            $.get("/api/automaticshutdown/settings/getItem/" + id, callback = function(data, status) {
                 if (status === "success") {
                     var json_str = JSON.stringify(data);
                     var item = JSON.parse(json_str)["hour"];
