@@ -119,19 +119,19 @@ def checkIftop(ip):
     result = os.system("iftop -i em1 -t -s 10 > log.txt")
     print("result ", result)
     exit(0)
-    connected = False
-    #parse result and returns a report
-    if isinstance(result,int):
-        print(result)
-    else:
-        print("Parsing")
-        r = parse(result)
-        print("Report: ", r)
-        connected = r.isConnected(ip)
-    print("Connected: ", connected)
-    exit(0)
-    #print(result)
-    threading.Timer(1, checkIftop, [ip]).start()
+    # connected = False
+    # #parse result and returns a report
+    # if isinstance(result,int):
+    #     print(result)
+    # else:
+    #     print("Parsing")
+    #     r = parse(result)
+    #     print("Report: ", r)
+    #     connected = r.isConnected(ip)
+    # print("Connected: ", connected)
+    # exit(0)
+    # #print(result)
+    # threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
