@@ -116,7 +116,7 @@ def checkIftop(ip):
     print("Trying to make iftop call")
     result  = ping(ip)
     print("Ping result ",result)
-    result = os.system("iftop -i em1 -t -s 10")
+    result = os.system("iftop -i em1 -t -s 10 > log.txt")
     print("result ", result)
     connected = False
     #parse result and returns a report
@@ -128,6 +128,7 @@ def checkIftop(ip):
         print("Report: ", r)
         connected = r.isConnected(ip)
     print("Connected: ", connected)
+    exit(0)
     #print(result)
     threading.Timer(1, checkIftop, [ip]).start()
 
