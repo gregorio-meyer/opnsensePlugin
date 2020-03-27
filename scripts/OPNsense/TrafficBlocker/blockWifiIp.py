@@ -47,9 +47,8 @@ def isConnected(ip):
 
 
 def ping(ip):
-    # ping host
-    interface = "em1"
-    result = os.system("ping -I " + interface+" -t 2 -c 4 " + ip)
+    # ping host t = timeout  S= source address
+    result = os.system("ping -S " + firewall_ip+" -t 2 -c 3 " + ip)
     return True if result == 0 else False
 
 
