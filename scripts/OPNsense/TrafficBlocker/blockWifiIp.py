@@ -49,7 +49,7 @@ def isConnected(ip):
 def ping(ip):
     # ping host
     result = os.system('ping -t2 -c 4 ' + ip)
-    return True if result == 0  else False
+    return True if result == 0 else False
 
 
 def addAlias():
@@ -112,14 +112,19 @@ def blockTraffic(lock):
         setAlias(uuid, data)
 
 
+def checkIftop(ip):
+    result = os.system("iftop -i em1 -t -s 10")
+    print(result)
+
+
 def checkPing(ip):
     if not ping(ip):
         global locked
-            # if not locked lock
+        # if not locked lock
         if not locked:
-                print("Not locked, lock")
-                blockTraffic(True)
-                locked = True
+            print("Not locked, lock")
+            blockTraffic(True)
+            locked = True
             # if the connection is already locked continue
         print("Already locked")
     else:
@@ -166,7 +171,7 @@ def check(ip):
 if __name__ == '__main__':
     print("Program starts...")
     try:
-        if len(sys.argv) > 1 and sys.argv[1]!="&":
+        if len(sys.argv) > 1 and sys.argv[1] != "&":
             print("Taking ip from command line")
             ip = sys.argv[1]
         else:
@@ -185,9 +190,10 @@ if __name__ == '__main__':
                 # no config
                 print("no configuration file found")
         try:
-            check(ip)
-            #checkPing(ip)
+            checkIftop(ip)
+            #check(ip)
+            # checkPing(ip)
         except Exception as e:
             print("Check failed %s" % e)
     except Exception as e:
-            print("Get ip failed %s" % e)       
+        print("Get ip failed %s" % e)
