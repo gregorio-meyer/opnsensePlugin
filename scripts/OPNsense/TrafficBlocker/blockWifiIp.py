@@ -113,20 +113,36 @@ def blockTraffic(lock):
 
 
 def checkIftop(ip):
-    result = os.system("iftop -i em1 -t -s 10 > log.txt")
-    print(result)
-    connected = False
-    #parse result and returns a report
-    if isinstance(result,int):
-        print(result)
-    else:
-        print("Parsing")
-        r = parse(result)
-        print("Report: ", r)
-        connected = r.isConnected(ip)
-    print("Connected: ", connected)
-    #print(result)
-    threading.Timer(1, checkIftop, [ip]).start()
+    print("Trying to make iftop call")
+    result  = ping(ip)
+    print("Ping result ",result)
+    #result = os.system("iftop -i em1 -t -s 1")
+    try:
+   	 p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
+                                shell=True)
+    except subprocess.CalledProcessError as e:
+        print (e.output)
+        print ('Error running command: ' + '"' + e.cmd + '"' + ' see above shell error')
+        print ('Return code: ' + str(e.returncode))
+    print(p)
+    exit(0)
+    
+    #result = subprocess.check_output(, shell=True)
+    #print("result ", result)
+    #print("out ", sys.stdout)
+    # connected = False
+    # #parse result and returns a report
+    # if isinstance(result,int):
+    #     print(result)
+    # else:
+    #     print("Parsing")
+    #     r = parse(result)
+    #     print("Report: ", r)
+    #     connected = r.isConnected(ip)
+    # print("Connected: ", connected)
+    # exit(0)
+    # #print(result)
+    # threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
