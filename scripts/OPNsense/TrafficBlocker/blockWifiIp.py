@@ -118,6 +118,7 @@ def checkIftop(ip):
     print("Ping result ",result)
     result = os.system("iftop -i em1 -t -s 10 > log.txt")
     print("result ", result)
+    exit(0)
     connected = False
     #parse result and returns a report
     if isinstance(result,int):
