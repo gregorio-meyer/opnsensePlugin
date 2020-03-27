@@ -116,7 +116,7 @@ def checkIftop(ip):
     print("Trying to make iftop call")
     result  = ping(ip)
     print("Ping result ",result)
-    result = os.system("iftop -i em1 -t -s 10 >log.txt;cat log.txt")
+    result = os.system("iftop -i em1 -t -s 10 >log.txt")
     print("result ", result)
     exit(0)
     # connected = False
