@@ -165,26 +165,29 @@ def check(ip):
 
 if __name__ == '__main__':
     print("Program starts...")
-    if len(sys.argv) > 1 and sys.argv[1]!="&":
-        print("Taking ip from command line")
-        ip = sys.argv[1]
-    else:
-        print("Looking for config...")
-        # take ip from conf
-        if os.path.exists(traffic_blocker_config):
-            cnf = ConfigParser()
-            cnf.read(traffic_blocker_config)
-            if cnf.has_section('general'):
-                ip = cnf.get('general', 'Ip')
-                print("Found ip in config: %s" % ip)
-            else:
-                # empty config
-                print("empty configuration")
-        else:
-            # no config
-            print("no configuration file found")
     try:
-        check(ip)
-        #checkPing(ip)
+        if len(sys.argv) > 1 and sys.argv[1]!="&":
+            print("Taking ip from command line")
+            ip = sys.argv[1]
+        else:
+            print("Looking for config...")
+            # take ip from conf
+            if os.path.exists(traffic_blocker_config):
+                cnf = ConfigParser()
+                cnf.read(traffic_blocker_config)
+                if cnf.has_section('general'):
+                    ip = cnf.get('general', 'Ip')
+                    print("Found ip in config: %s" % ip)
+                else:
+                    # empty config
+                    print("empty configuration")
+            else:
+                # no config
+                print("no configuration file found")
+        try:
+            check(ip)
+            #checkPing(ip)
+        except Exception as e:
+            print("Check failed %s" % e)
     except Exception as e:
-        print("Check failed %s" % e)
+            print("Get ip failed %s" % e)       
