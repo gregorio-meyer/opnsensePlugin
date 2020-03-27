@@ -49,8 +49,7 @@ def isConnected(ip):
 def ping(ip):
     # ping host
     result = os.system('ping -t2 -c 4 ' + ip)
-    print("Ping result %s " % result)
-    return result
+    return True if result == 0  else False
 
 
 def addAlias():
@@ -97,11 +96,11 @@ def getUUID():
 
 def blockTraffic(lock):
     if lock:
-        print(ip+" is not connected, blocking traffic towards the network")
+        print(ip + " is not connected, blocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
                           "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
     else:
-        print(ip+" is connected, unlocking traffic towards the network")
+        print(ip + " is connected, unlocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
@@ -113,27 +112,17 @@ def blockTraffic(lock):
         setAlias(uuid, data)
 
 
-pings = 0
-
-
 def checkPing(ip):
     if not ping(ip):
-        global pings
         global locked
-        pings += 1
-        print("Pings " + pings)
-        # number of pings (x4) checks before disabling connection
-        if pings > 10:
-            pings = 0
             # if not locked lock
-            if not locked:
+        if not locked:
                 print("Not locked, lock")
                 blockTraffic(True)
                 locked = True
             # if the connection is already locked continue
-            print("Already locked")
+        print("Already locked")
     else:
-        pings = 0
         # if locked unlock
         if locked:
             print("Locked, unlock")
@@ -152,7 +141,7 @@ def check(ip):
         global attempts
         global locked
         attempts += 1
-        print("Attempts " + attempts)
+        print("Attempts %s" % attempts)
         # number of connection checks before disabling connection
         if attempts > 10:
             attempts = 0
