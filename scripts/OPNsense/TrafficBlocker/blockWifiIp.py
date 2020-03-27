@@ -119,7 +119,7 @@ def checkIftop(ip):
     #result = os.system("iftop -i em1 -t -s 1")
     try:
    	 p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
-                                shell=True, env=env_variables)
+                                shell=True)
     except subprocess.CalledProcessError as e:
         print (e.output)
         print ('Error running command: ' + '"' + e.cmd + '"' + ' see above shell error')
