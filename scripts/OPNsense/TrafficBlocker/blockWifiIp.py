@@ -113,12 +113,21 @@ def blockTraffic(lock):
 
 
 def checkIftop(ip):
+<<<<<<< HEAD
     result = os.system("iftop -i em1 -t -s 10 >>log.txt")
+=======
+    result = os.system("iftop -i em1 -t -s 10")
+    connected = False
+>>>>>>> 60e048a57481bee92aa0d3de5910d98b884f9b57
     #parse result and returns a report
-    r = parse(result)
-    print("Report: ", r)
-    print("Connected: ", r.isConnected(ip))
-    print(result)
+    if str.isdigit(result):
+        print(result)
+    else:
+        r = parse(result)
+        print("Report: ", r)
+        connected = r.isConnected(ip)
+    print("Connected: ", connected)
+    #print(result)
     threading.Timer(1, checkIftop, [ip]).start()
 
 
