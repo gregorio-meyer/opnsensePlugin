@@ -48,7 +48,8 @@ def isConnected(ip):
 
 def ping(ip):
     # ping host
-    result = os.system('ping -t2 -c 4 ' + ip)
+    interface = em1
+    result = os.system("ping -I " + interface+" -t 2 -c 4 " + ip)
     return True if result == 0 else False
 
 
@@ -114,21 +115,22 @@ def blockTraffic(lock):
 
 def checkIftop(ip):
     print("Trying to make iftop call")
-    result  = ping(ip)
-    print("Ping result ",result)
+    result = ping(ip)
+    print("Ping result ", result)
     #result = os.system("iftop -i em1 -t -s 1")
     try:
-   	 p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
-                                shell=True)
+        p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
+                                    shell=True)
     except subprocess.CalledProcessError as e:
-        print (e.output)
-        print ('Error running command: ' + '"' + e.cmd + '"' + ' see above shell error')
-        print ('Return code: ' + str(e.returncode))
-    #a byte object is returned
+        print(e.output)
+        print('Error running command: ' + '"' +
+              e.cmd + '"' + ' see above shell error')
+        print('Return code: ' + str(e.returncode))
+    # a byte object is returned
     print(p.decode("utf-8"))
-    #exit(0)
-    
-    #result = subprocess.check_output(, shell=True)
+    # exit(0)
+
+    # result = subprocess.check_output(, shell=True)
     #print("result ", result)
     #print("out ", sys.stdout)
     # connected = False
