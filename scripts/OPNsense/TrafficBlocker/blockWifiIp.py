@@ -119,6 +119,7 @@ def checkIftop(ip):
     if isinstance(result,int):
         print(result)
     else:
+        print("Parsing")
         r = parse(result)
         print("Report: ", r)
         connected = r.isConnected(ip)
