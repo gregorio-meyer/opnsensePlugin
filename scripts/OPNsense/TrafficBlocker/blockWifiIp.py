@@ -113,7 +113,8 @@ def blockTraffic(lock):
 
 
 def checkIftop(ip):
-    result = os.system("iftop -i em1 -t -s 10")
+    result = os.system("iftop -i em1 -t -s 10 > log.txt")
+    print(result)
     connected = False
     #parse result and returns a report
     if isinstance(result,int):
