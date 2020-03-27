@@ -113,7 +113,7 @@ def blockTraffic(lock):
 
 
 def checkIftop(ip):
-    result = os.system("iftop -i em1 -t -s 10")
+    result = os.system("iftop -i em1 -t -s 10 > log.txt")
     print(result)
     threading.Timer(1, checkIftop, [ip]).start()
 
