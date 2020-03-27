@@ -115,7 +115,7 @@ def blockTraffic(lock):
 def checkIftop(ip):
     print("Trying to make iftop call")
     result  = ping(ip)
-    print("Ping result")
+    print("Ping result ",result)
     result = os.system("iftop -i em1 -t -s 2 <")
     print("result ", result)
     connected = False
