@@ -117,7 +117,7 @@ def checkIftop(ip):
     result  = ping(ip)
     print("Ping result ",result)
     #result = os.system("iftop -i em1 -t -s 1")
-    result = subprocess.check_output("-c iftop -i em1 -t -s 1", shell=True)
+    result = subprocess.check_output("'iftop -i em1 -t -s 1'", shell=True)
     print("result ", result)
     #print("out ", sys.stdout)
     exit(0)
