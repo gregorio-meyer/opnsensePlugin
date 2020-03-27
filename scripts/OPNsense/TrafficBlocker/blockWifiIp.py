@@ -124,7 +124,7 @@ def checkIftop(ip):
         print (e.output)
         print ('Error running command: ' + '"' + e.cmd + '"' + ' see above shell error')
         print ('Return code: ' + str(e.returncode))
-    print(p[2:len(p)-1])
+    print(p[2:len(p)-2])
     exit(0)
     
     #result = subprocess.check_output(, shell=True)
