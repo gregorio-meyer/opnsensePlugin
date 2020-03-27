@@ -48,7 +48,7 @@ def isConnected(ip):
 
 def ping(ip):
     # ping host
-    interface = em1
+    interface = "em1"
     result = os.system("ping -I " + interface+" -t 2 -c 4 " + ip)
     return True if result == 0 else False
 
