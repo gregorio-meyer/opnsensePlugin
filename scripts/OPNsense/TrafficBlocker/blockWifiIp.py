@@ -115,6 +115,7 @@ def blockTraffic(lock):
 def checkIftop(ip):
     result = os.system("iftop -i em1 -t -s 10")
     print(result)
+    threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
@@ -191,7 +192,7 @@ if __name__ == '__main__':
                 print("no configuration file found")
         try:
             checkIftop(ip)
-            #check(ip)
+            # check(ip)
             # checkPing(ip)
         except Exception as e:
             print("Check failed %s" % e)
