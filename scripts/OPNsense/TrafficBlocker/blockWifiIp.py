@@ -8,7 +8,7 @@ import time
 import subprocess
 import threading
 from configparser import ConfigParser
-
+from parse import parse
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
@@ -113,7 +113,11 @@ def blockTraffic(lock):
 
 
 def checkIftop(ip):
-    result = os.system("iftop -i em1 -t -s 10 > log.txt")
+    result = os.system("iftop -i em1 -t -s 10")
+    #parse result and returns a report
+    r = parse(result)
+    print("Report: ", r)
+    print("Connected: ", r.isConnected(ip))
     print(result)
     threading.Timer(1, checkIftop, [ip]).start()
 
