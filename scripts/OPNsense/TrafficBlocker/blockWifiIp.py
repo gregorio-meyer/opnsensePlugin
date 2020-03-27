@@ -125,7 +125,7 @@ def checkIftop(ip):
         print ('Error running command: ' + '"' + e.cmd + '"' + ' see above shell error')
         print ('Return code: ' + str(e.returncode))
     print(p)
-    exit(0)
+    #exit(0)
     
     #result = subprocess.check_output(, shell=True)
     #print("result ", result)
@@ -142,7 +142,7 @@ def checkIftop(ip):
     # print("Connected: ", connected)
     # exit(0)
     # #print(result)
-    # threading.Timer(1, checkIftop, [ip]).start()
+    threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
