@@ -117,7 +117,8 @@ def checkIftop(ip):
     result  = ping(ip)
     print("Ping result ",result)
     result = os.system("iftop -i em1 -t -s 1")
-    #print("result ", result)
+    print("result ", result)
+    print("out ", sys.stdout)
     exit(0)
     # connected = False
     # #parse result and returns a report
