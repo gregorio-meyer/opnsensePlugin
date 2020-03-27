@@ -195,7 +195,7 @@ if __name__ == '__main__':
             # no config
             print("no configuration file found")
     try:
-       # check(ip)
-        checkPing(ip)
+        check(ip)
+        #checkPing(ip)
     except Exception as e:
         print("Check failed %s" % e)
