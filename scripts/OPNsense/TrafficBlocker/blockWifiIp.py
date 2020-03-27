@@ -116,7 +116,7 @@ def checkIftop(ip):
     result = os.system("iftop -i em1 -t -s 10")
     connected = False
     #parse result and returns a report
-    if str.isdigit(result):
+    if isinstance(result,int):
         print(result)
     else:
         r = parse(result)
