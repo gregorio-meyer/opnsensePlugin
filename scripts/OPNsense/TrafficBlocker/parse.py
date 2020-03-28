@@ -107,7 +107,7 @@ def getConnections(lines):
                 # print("Line: %s content: %s" % (i, line))
                 result.append(line)
             i += 1
-    print("Got interesting lines length: "+len(lines))
+    print("Got interesting lines length: ",len(lines))
     connections_out = []
     connections_in = []
     for line in result:
