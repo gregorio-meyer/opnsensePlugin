@@ -121,10 +121,11 @@ def checkIftop(ip):
         p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
                                     shell=True)
     except subprocess.CalledProcessError as e:
-        print(e.output)
-        print('Error running command: ' + '"' +
-              e.cmd + '"' + ' see above shell error')
-        print('Return code: ' + str(e.returncode))
+        print("Error")
+        #print(e.output)
+        # print('Error running command: ' + '"' +
+        #       e.cmd + '"' + ' see above shell error')
+        # print('Return code: ' + str(e.returncode))
     # a byte object is returned
     result = p.decode("utf-8")
     os.system("echo "+str(result) +"> log.txt")
