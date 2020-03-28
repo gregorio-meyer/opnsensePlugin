@@ -126,7 +126,7 @@ def getConnections(lines):
 def getReport(lines):
     for line in lines:
         print(line)
-    exit(0)
+    #exit(0)
     connections_in, connections_out = getConnections(lines)
     print("Got connections ")
     return Report(parseConnections(connections_in, 0),
