@@ -131,9 +131,9 @@ def checkIftop(ip):
     strresult = str(result)
     #rint(strresult)
     split = strresult.split('\n')
-    print("Length ",len(split))
     for s in split:
         print(s)
+    print("Length ",len(split))
     f = open("log.txt","w")
     f.write(strresult)
     #os.system("echo "+str(result) +"> log.txt")
