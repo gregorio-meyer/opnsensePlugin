@@ -127,7 +127,7 @@ def checkIftop(ip):
         #       e.cmd + '"' + ' see above shell error')
         # print('Return code: ' + str(e.returncode))
     # a byte object is returned
-    result = p.decode("utf-8")
+    result = p.decode("ascii")
     strresult = str(result)
     print(strresult)
     f = open("log.txt","w")
