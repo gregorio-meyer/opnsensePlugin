@@ -131,13 +131,6 @@ def checkIftop(ip):
     strresult = str(result)
     #rint(strresult)
     split = strresult.split('\n')
-    i=0
-    for s in split:
-        print(s,i)
-        i+=1
-    print("Length ",len(split))
-    f = open("log.txt","w")
-    f.write(split)
     #os.system("echo "+str(result) +"> log.txt")
     #print("Length: ", len(result))
     #print(result)
@@ -152,9 +145,9 @@ def checkIftop(ip):
     #     print(result)
     # else:
    # print("Parsing"
-    r = parse(strresult)
+    r = parse(split)
  #   print("Report: ", r)
-  #  connected = r.isConnected(ip)
+    connected = r.isConnected(ip)
     print("Connected: ", connected)
     # exit(0)
     # #print(result)
