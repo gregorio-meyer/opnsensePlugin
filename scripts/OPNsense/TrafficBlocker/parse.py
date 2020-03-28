@@ -45,7 +45,7 @@ class Report:
             if(connection.ip == ip):
                 if connection.isActive():
                     active += 1
-                    if active >= 5:
+                    if active >= 2:
                         return True
         print("Active connections: ",active)
         # not useful when looking for an active host
