@@ -127,7 +127,8 @@ def checkIftop(ip):
         print('Return code: ' + str(e.returncode))
     # a byte object is returned
     result = p.decode("utf-8")
-    print(result)
+    print("Length: ", len(result))
+    #print(result)
     # exit(0)
 
     # result = subprocess.check_output(, shell=True)
