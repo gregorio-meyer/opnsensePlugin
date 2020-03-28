@@ -27,6 +27,7 @@ class Connection:
             active += 1
         if self.cumulative > 0:
             active += 1
+        print("Active ",active)
         return active > 3
 
 
