@@ -117,20 +117,20 @@ def checkIftop(ip):
     result = ping(ip)
     print("Ping result ", result)
     #result = os.system("iftop -i em1 -t -s 1")
-    try:
-        p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
-                                    shell=True)
-    except subprocess.CalledProcessError as e:
-        print(e.output)
-        print('Error running command: ' + '"' +
-              e.cmd + '"' + ' see above shell error')
-        print('Return code: ' + str(e.returncode))
-    # a byte object is returned
-    result = p.decode("utf-8")
+    # try:
+    #     p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
+    #                                 shell=True)
+    # except subprocess.CalledProcessError as e:
+    #     print(e.output)
+    #     print('Error running command: ' + '"' +
+    #           e.cmd + '"' + ' see above shell error')
+    #     print('Return code: ' + str(e.returncode))
+    # # a byte object is returned
+    # result = p.decode("utf-8")
     os.system(result +"> log.txt")
     print("Length: ", len(result))
     #print(result)
-    # exit(0)
+    # exit(0)6
 
     # result = subprocess.check_output(, shell=True)
     #print("result ", result)
