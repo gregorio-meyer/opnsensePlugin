@@ -151,11 +151,11 @@ def checkIftop(ip):
     # if isinstance(result,int):
     #     print(result)
     # else:
-   # print("Parsing")
-  #  r = parse(result)
+   # print("Parsing"
+    r = parse(result)
  #   print("Report: ", r)
   #  connected = r.isConnected(ip)
-    #print("Connected: ", connected)
+    print("Connected: ", connected)
     # exit(0)
     # #print(result)
     #threading.Timer(1, checkIftop, [ip]).start()
