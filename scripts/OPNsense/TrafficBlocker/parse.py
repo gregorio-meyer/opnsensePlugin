@@ -112,16 +112,14 @@ def getConnections(lines):
     connections_in = []
     error_connections = []
     for line in result:
+        print(line)
         # if line number is first digit
         if len(line) > 4:
             if line[3].isdigit():
                 connections_out.append(line.split())
             else:
                 connections_in.append(line.split())
-        else:
-            error_connections.append(line.split)
-    for connection in error_connections:
-        print("Error : ", connection)
+  
     return connections_in, connections_out
 
 
