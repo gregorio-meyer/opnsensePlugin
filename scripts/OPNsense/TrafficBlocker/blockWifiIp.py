@@ -129,7 +129,10 @@ def checkIftop(ip):
     # a byte object is returned
     result = p.decode("ascii")
     strresult = str(result)
-    print(strresult)
+    #rint(strresult)
+    split = strresult.split('\n')
+    for s in split:
+        print(s)
     f = open("log.txt","w")
     f.write(strresult)
     #os.system("echo "+str(result) +"> log.txt")
