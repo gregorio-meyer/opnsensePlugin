@@ -122,8 +122,8 @@ def checkNmap(ip):
         print('Error running command: ' + '"' +
               e.cmd + '"' + ' see above shell error')
         print('Return code: ' + str(e.returncode))
-    print(type(p.decode("ascii")))
-    print(str(p.decode("ascii")))
+    p = p.decode("ascii")
+    print(p)
 def checkIftop(ip):
     print("Trying to make iftop call")
     result = ping(ip)
