@@ -130,6 +130,8 @@ def checkIftop(ip):
     result = p.decode("utf-8")
     strresult = str(result)
     print(strresult)
+    f = open("log.txt","w")
+    f.write(strresult)
     #os.system("echo "+str(result) +"> log.txt")
     #print("Length: ", len(result))
     #print(result)
