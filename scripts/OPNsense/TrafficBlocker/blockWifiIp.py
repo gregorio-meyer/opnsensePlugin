@@ -152,7 +152,7 @@ def checkIftop(ip):
     #     print(result)
     # else:
    # print("Parsing"
-    r = parse(result)
+    r = parse(strresult)
  #   print("Report: ", r)
   #  connected = r.isConnected(ip)
     print("Connected: ", connected)
