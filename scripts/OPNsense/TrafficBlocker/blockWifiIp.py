@@ -116,42 +116,21 @@ def checkIftop(ip):
     print("Trying to make iftop call")
     result = ping(ip)
     print("Ping result ", result)
-    #result = os.system("iftop -i em1 -t -s 1")
     try:
         p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
                                     shell=True)
     except subprocess.CalledProcessError as e:
-        print("Error")
-        #print(e.output)
-        # print('Error running command: ' + '"' +
-        #       e.cmd + '"' + ' see above shell error')
-        # print('Return code: ' + str(e.returncode))
+        print(e.output)
+        print('Error running command: ' + '"' +
+              e.cmd + '"' + ' see above shell error')
+        print('Return code: ' + str(e.returncode))
     # a byte object is returned
-    result = p.decode("ascii")
-    strresult = str(result)
-    #rint(strresult)
-    split = strresult.split('\n')
-    #os.system("echo "+str(result) +"> log.txt")
-    #print("Length: ", len(result))
-    #print(result)
-    # exit(0)6
-
-    # result = subprocess.check_output(, shell=True)
-    #print("result ", result)
-    #print("out ", sys.stdout)
-    # connected = False
-    # #parse result and returns a report
-    # if isinstance(result,int):
-    #     print(result)
-    # else:
-   # print("Parsing"
-    r = parse(split)
- #   print("Report: ", r)
+    result = str(p.decode("ascii")).split('\n')
+    r = parse(result)
+    #print("Report: ", r)
     connected = r.isConnected(ip)
     print("Connected: ", connected)
-    # exit(0)
-    # #print(result)
-    #threading.Timer(1, checkIftop, [ip]).start()
+    threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
