@@ -107,9 +107,10 @@ def getConnections(lines):
                 # print("Line: %s content: %s" % (i, line))
                 result.append(line)
             i += 1
-    print("Got interesting lines length: ",len(lines))
+    print("Got interesting lines length: ", len(lines))
     connections_out = []
     connections_in = []
+    error_connections = []
     for line in result:
         # if line number is first digit
         if len(line) > 4:
@@ -117,6 +118,10 @@ def getConnections(lines):
                 connections_out.append(line.split())
             else:
                 connections_in.append(line.split())
+        else:
+            error_connections.append(line.split)
+    for connection in error_connections:
+        print("Error : ", connection)
     return connections_in, connections_out
 
 
