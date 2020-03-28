@@ -112,6 +112,18 @@ def blockTraffic(lock):
         setAlias(uuid, data)
 
 
+def checkNmap(ip):
+    interface = "em1"
+    try:
+        p = subprocess.check_output("nmap -sP -e"+interface+" "+ip, stderr=subprocess.STDOUT,
+                                    shell=True)
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+        print('Error running command: ' + '"' +
+              e.cmd + '"' + ' see above shell error')
+        print('Return code: ' + str(e.returncode))
+    print(type(p))
+    print(str(p))
 def checkIftop(ip):
     print("Trying to make iftop call")
     result = ping(ip)
@@ -127,7 +139,7 @@ def checkIftop(ip):
     # a byte object is returned
     result = str(p.decode("ascii")).split('\n')
     r = parse(result)
-    #print("Report: ", r)
+    # print("Report: ", r)
     connected = r.isConnected(ip)
     print("Connected: ", connected)
     threading.Timer(1, checkIftop, [ip]).start()
@@ -206,7 +218,8 @@ if __name__ == '__main__':
                 # no config
                 print("no configuration file found")
         try:
-            checkIftop(ip)
+            checkNmap(ip)
+            #checkIftop(ip)
             # check(ip)
             # checkPing(ip)
         except Exception as e:
