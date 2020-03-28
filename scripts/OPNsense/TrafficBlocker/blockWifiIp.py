@@ -128,6 +128,8 @@ def checkIftop(ip):
         # print('Return code: ' + str(e.returncode))
     # a byte object is returned
     result = p.decode("utf-8")
+    strresult = str(result)
+    print(strresult)
     #os.system("echo "+str(result) +"> log.txt")
     #print("Length: ", len(result))
     #print(result)
