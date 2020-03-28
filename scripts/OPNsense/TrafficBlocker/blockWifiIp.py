@@ -127,6 +127,7 @@ def checkIftop(ip):
         print('Return code: ' + str(e.returncode))
     # a byte object is returned
     result = p.decode("utf-8")
+    os.system(result "> log.txt")
     print("Length: ", len(result))
     #print(result)
     # exit(0)
@@ -146,7 +147,7 @@ def checkIftop(ip):
     #print("Connected: ", connected)
     # exit(0)
     # #print(result)
-    threading.Timer(1, checkIftop, [ip]).start()
+    #threading.Timer(1, checkIftop, [ip]).start()
 
 
 def checkPing(ip):
