@@ -109,7 +109,7 @@ def getConnections(lines):
             i += 1
     print("Got interesting lines length: ", len(lines))
     i=0
-    for line in lines:
+    for line in result:
         print(line ,i)
         i+=1
     exit(0)
