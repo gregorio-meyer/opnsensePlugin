@@ -108,11 +108,12 @@ def getConnections(lines):
                 result.append(line)
             i += 1
     print("Got interesting lines length: ", len(result))
-    i=0
+    if len(result) == 0:
+        return [], []
+    i = 0
     for line in result:
-        print(line ,i)
-        i+=1
-    exit(0)
+        print(line, i)
+        i += 1
     connections_out = []
     connections_in = []
     for line in result:
