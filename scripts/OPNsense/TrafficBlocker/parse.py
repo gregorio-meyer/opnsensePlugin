@@ -47,6 +47,7 @@ class Report:
                     active += 1
                     if active >= 5:
                         return True
+        print("Active connections: ",active)
         # not useful when looking for an active host
         # for connection in self.connections_out:
         #     if connection.isActive():
