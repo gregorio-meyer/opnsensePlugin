@@ -111,23 +111,24 @@ def getConnections(lines):
     connections_out = []
     connections_in = []
     for line in result:
-        #print(line)
+        # print(line)
         # if line number is first digit
-        #if len(line) > 4:
+        # if len(line) > 4:
         if line[3].isdigit():
             connections_out.append(line.split())
         else:
             connections_in.append(line.split())
-  
+
     return connections_in, connections_out
 
 
 def getReport(lines):
     for line in lines:
         print(line)
-    #exit(0)
+    # exit(0)
     connections_in, connections_out = getConnections(lines)
-    print("Got connections ")
+    print("Got connections in %s out %s " %
+          (len(connections_in), len(connections_out)))
     return Report(parseConnections(connections_in, 0),
                   parseConnections(connections_out, 1))
 
