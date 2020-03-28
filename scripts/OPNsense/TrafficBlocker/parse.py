@@ -112,13 +112,11 @@ def getConnections(lines):
     connections_in = []
     for line in result:
         # if line number is first digit
-        if len(line) < 4:
-            print("Error line too short "+line)
-            exit(0)
-        if line[3].isdigit():
-            connections_out.append(line.split())
-        else:
-            connections_in.append(line.split())
+        if len(line) > 4:
+            if line[3].isdigit():
+                connections_out.append(line.split())
+            else:
+                connections_in.append(line.split())
     return connections_in, connections_out
 
 
