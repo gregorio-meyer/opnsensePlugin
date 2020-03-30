@@ -18,7 +18,7 @@
 
                     console.log(data['status'])
                     if (data['status'] == 200) {
-                        $("#responseMsg").append("<h3> Data: " + data['responseText'] + "</h3>");
+                        $("#responseMsg").append("<h3>" + data['responseText'] + "</h3>");
                         //$("#responseMsg").append("<h3> Status: " + status + "</h3>");
                         $("#responseMsg").removeClass("hidden");
                     }

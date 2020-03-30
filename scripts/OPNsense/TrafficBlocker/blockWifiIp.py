@@ -200,7 +200,7 @@ def check(ip):
 
 
 if __name__ == '__main__':
-    print("Program starts...")
+   # print("Program starts...")
     try:
         if len(sys.argv) > 1 and sys.argv[1] != "&":
           #  print("Taking ip from command line")
