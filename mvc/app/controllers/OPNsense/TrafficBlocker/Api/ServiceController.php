@@ -28,11 +28,11 @@ class ServiceController extends ApiControllerBase
     {
         if ($this->request->isPost()) {
             $backend = new Backend();
-            $mdl = new TrafficBlocker();
-            $result['message'] = $mdl->getNodes();
-            $ip = strval($result['message']['general']['Ip']);
-            $result['message']['general']['Enabled'] = True;
-            $bckresult = trim($backend->configdRun('trafficblocker start ' . $ip));
+            #$mdl = new TrafficBlocker();
+            #$result['message'] = $mdl->getNodes();
+            #$ip = strval($result['message']['general']['Ip']);
+            #$result['message']['general']['Enabled'] = True;
+            $bckresult = trim($backend->configdRun('trafficblocker start'));
             if ($bckresult !== null) {
                 return $bckresult;
             }
