@@ -8,7 +8,6 @@ import time
 import subprocess
 import threading
 from configparser import ConfigParser
-from parse import parse, isConnected
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
@@ -19,37 +18,6 @@ network = "10.0.0.0/24"
 aliasName = "LAN"
 locked = False
 traffic_blocker_config = '/usr/local/etc/trafficblocker/trafficblocker.conf'
-
-# check connection with arp api
-
-
-# def isConnected(ip):
-#     connected = False
-#     r = requests.post(url+"api/diagnostics/interface/flushArp",
-#                       auth=(api_key, api_secret), verify=False)
-#     time.sleep(1)
-#     r = requests.get(url+"api/diagnostics/interface/getArp",
-#                      auth=(api_key, api_secret), verify=False)
-
-#     if r.status_code == 200:
-#         response = json.loads(r.text)
-#         # check if there is a client with that ip on the monitored interface
-#         for host in response:
-#             if host["ip"] == ip:
-#                 interface = host["intf_description"]
-#                 # print(host)
-#                 if interface == monitored_intf:
-#                    # print("Host is connected on %s" % interface)
-#                     connected = True
-#     else:
-#         print("Request failed with error code %s" % r.status_code)
-#     return connected
-
-
-# def ping(ip):
-#     # ping host t = timeout  S= source address
-#     result = os.system("ping -S " + firewall_ip+" -t 2 -c 3 " + ip)
-#     return True if result == 0 else False
 
 
 def addAlias():
@@ -122,82 +90,7 @@ def checkNmap(ip):
         print('Error running command: ' + '"' +
               e.cmd + '"' + ' see above shell error')
         print('Return code: ' + str(e.returncode))
-    p = p.decode("ascii")
-    p = isConnected(p)
-    return p
-    
-
-
-# def checkIftop(ip):
-#     print("Trying to make iftop call")
-#     result = ping(ip)
-#     print("Ping result ", result)
-#     try:
-#         p = subprocess.check_output("iftop -i em1 -t -s 1", stderr=subprocess.STDOUT,
-#                                     shell=True)
-#     except subprocess.CalledProcessError as e:
-#         print(e.output)
-#         print('Error running command: ' + '"' +
-#               e.cmd + '"' + ' see above shell error')
-#         print('Return code: ' + str(e.returncode))
-#     # a byte object is returned
-#     result = str(p.decode("ascii")).split('\n')
-#     r = parse(result)
-#     # print("Report: ", r)
-#     connected = r.isConnected(ip)
-#     print("Connected: ", connected)
-#     threading.Timer(1, checkIftop, [ip]).start()
-
-
-# def checkPing(ip):
-#     if not ping(ip):
-#         global locked
-#         # if not locked lock
-#         if not locked:
-#             print("Not locked, lock")
-#             blockTraffic(True)
-#             locked = True
-#             # if the connection is already locked continue
-#         print("Already locked")
-#     else:
-#         # if locked unlock
-#         if locked:
-#             print("Locked, unlock")
-#             blockTraffic(False)
-#             locked = False
-#         print("Already unlocked")
-#     threading.Timer(1, checkPing, [ip]).start()
-
-
-# attempts = 0
-
-
-# def check(ip):
-#     # check for
-#     if not isConnected(ip):
-#         global attempts
-#         global locked
-#         attempts += 1
-#         print("Attempts %s" % attempts)
-#         # number of connection checks before disabling connection
-#         if attempts > 10:
-#             attempts = 0
-#             # if not locked lock
-#             if not locked:
-#                 print("Not locked, lock")
-#                 blockTraffic(True)
-#                 locked = True
-#             # if the connection is already locked continue
-#             print("Already locked")
-#     else:
-#         attempts = 0
-#         # if locked unlock
-#         if locked:
-#             print("Locked, unlock")
-#             blockTraffic(False)
-#             locked = False
-#         print("Already unlocked")
-#     threading.Timer(1, check, [ip]).start()
+    return isConnected(p.decode("ascii"))
 
 
 def blockNmap(ip):
@@ -219,6 +112,11 @@ def blockNmap(ip):
         print("Already unlocked")
     threading.Timer(1, blockNmap, [ip]).start()
 
+def isConnected(string):
+    if "Host seems down" in string:
+        return False
+    else: 
+        return True
 
 if __name__ == '__main__':
    # print("Program starts...")
@@ -245,9 +143,6 @@ if __name__ == '__main__':
                 print("no configuration file found")
         try:
             blockNmap(ip)
-            # checkIftop(ip)
-            # check(ip)
-            # checkPing(ip)
         except Exception as e:
             print("Check failed %s" % e)
     except Exception as e:
