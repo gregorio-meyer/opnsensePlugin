@@ -143,3 +143,9 @@ def getReport(lines):
 
 def parse(lines):
     return getReport(lines)
+
+def parseNmap(lines):
+    if "Host seems down" in lines:
+        return "Not connected"
+    else: 
+        return "Connected"
