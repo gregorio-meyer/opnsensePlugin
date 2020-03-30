@@ -97,23 +97,22 @@ def checkNmap(ip):
 
 def blockNmap(ip):
     if not checkNmap(ip):
-        global locked
+        #global locked
         # if not locked lock
-        if not locked:
-            print("Not locked, lock")
-            blockTraffic(True)
-            locked = True
+      #  if not locked:
+        print("Not locked, lock")
+        blockTraffic(True)
+        #locked = True
             # if the connection is already locked continue
-        else:
-            print("Already locked")
+        ##   print("Already locked")
     else:
         # if locked unlock
-        if locked:
-            print("Locked, unlock")
-            blockTraffic(False)
-            locked = False
-        else:
-            print("Already unlocked")
+        #if locked:
+         #   print("Locked, unlock")
+        blockTraffic(False)
+          #  locked = False
+        #else:
+         #   print("Already unlocked")
     #threading.Timer(1, blockNmap, [ip]).start()
 
 def isConnected(string):
