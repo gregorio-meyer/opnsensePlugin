@@ -63,7 +63,7 @@ def getUUID():
 # locks / unlocks traffic toward network using an alias
 
 
-def blockTraffic(lock,ip):
+def blockTraffic(lock, ip):
     if lock:
         print(ip + " is not connected, blocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
@@ -80,9 +80,11 @@ def blockTraffic(lock,ip):
     else:
         setAlias(uuid, data)
 
+
 def unlockTraffic():
+    print("Unlocking traffic....")
     data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
-                          "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
+                      "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
     # Add alias since it's not present
     if uuid is None:
@@ -91,6 +93,8 @@ def unlockTraffic():
     else:
         setAlias(uuid, data)
     print("Traffic unlocked")
+
+
 def checkNmap(ip):
     interface = "em1"
     try:
@@ -106,32 +110,34 @@ def checkNmap(ip):
 
 def blockNmap(ip):
     global locked
-    if  checkNmap(ip):
-         # if locked unlock
+    if checkNmap(ip):
+        # if locked unlock
         if locked:
             print("Locked, unlock")
-            blockTraffic(False,ip)
+            blockTraffic(False, ip)
             locked = False
         else:
             print("Already unlocked")
-            
+
     else:
        # if not locked lock
-       #da sostituire con status
+       # da sostituire con status
         if not locked:
             print("Not locked, lock")
-            blockTraffic(True,ip)
+            blockTraffic(True, ip)
             locked = True
         else:
             print("Already locked")
-        
+
     threading.Timer(1, blockNmap, [ip]).start()
+
 
 def isConnected(string):
     if "Host seems down" in string:
         return False
-    else: 
+    else:
         return True
+
 
 def start():
    # print("Program starts...")

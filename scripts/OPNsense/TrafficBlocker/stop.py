@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.7
 from subprocess import check_call
-#from blockWifiIp import unlockTraffic
+from blockWifiIp import unlockTraffic
 
 import sys
 def stop():
@@ -13,7 +13,7 @@ def stop():
 
 try:
     #it should also enable connection
-   # unlockTraffic()
+    unlockTraffic()
     stop()
 except Exception as e:
     print(e)
