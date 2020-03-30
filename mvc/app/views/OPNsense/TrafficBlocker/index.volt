@@ -15,6 +15,7 @@
 
                 });
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
+                    $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
                     $("#responseMsg").append("<h3> Status: " + status + "</h3>");
                     $("#responseMsg").removeClass("hidden");
                 });
