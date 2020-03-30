@@ -123,10 +123,12 @@ def checkNmap(ip):
               e.cmd + '"' + ' see above shell error')
         print('Return code: ' + str(e.returncode))
     p = p.decode("ascii")
-    f = open("log.txt","w")
+    f = open("log.txt", "w")
     f.write(p)
     p = parseNmap(p)
     print(p)
+
+
 def checkIftop(ip):
     print("Trying to make iftop call")
     result = ping(ip)
@@ -199,15 +201,35 @@ def check(ip):
     threading.Timer(1, check, [ip]).start()
 
 
+def blockNmap(ip):
+    if not checkNmap(ip):
+        global locked
+        # if not locked lock
+        if not locked:
+            print("Not locked, lock")
+            blockTraffic(True)
+            locked = True
+            # if the connection is already locked continue
+        print("Already locked")
+    else:
+        # if locked unlock
+        if locked:
+            print("Locked, unlock")
+            blockTraffic(False)
+            locked = False
+        print("Already unlocked")
+    threading.Timer(1, blockNmap, [ip]).start()
+
+
 if __name__ == '__main__':
    # print("Program starts...")
     try:
         if len(sys.argv) > 1 and sys.argv[1] != "&":
           #  print("Taking ip from command line")
             ip = sys.argv[1]
-            print("Ip ",ip)
+            print("Ip ", ip)
         else:
-            #it takes the old one
+            # it takes the old one
             print("Looking for config...")
             # take ip from conf
             if os.path.exists(traffic_blocker_config):
@@ -224,7 +246,7 @@ if __name__ == '__main__':
                 print("no configuration file found")
         try:
             checkNmap(ip)
-            #checkIftop(ip)
+            # checkIftop(ip)
             # check(ip)
             # checkPing(ip)
         except Exception as e:
