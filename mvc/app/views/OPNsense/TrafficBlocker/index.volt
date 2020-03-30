@@ -11,6 +11,9 @@
         $("#saveAct").click(function() {
             saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function() {
                 // action to run after successful save, for example reconfigure service.
+
+            });
+            ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function(data, status) {
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
                     console.log(data['status'])
                     if (data['status'] == 200) {
@@ -18,9 +21,6 @@
                         //$("#responseMsg").append("<h3> Status: " + status + "</h3>");
                         $("#responseMsg").removeClass("hidden");
                     }
-                });
-                ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function(data, status) {
-
                 });
             });
         });
