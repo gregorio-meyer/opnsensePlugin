@@ -15,9 +15,12 @@
 
                 });
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
-                    $("#responseMsg").append("<h3> Data: " + JSON.stringify(data) + "</h3>");
-                    $("#responseMsg").append("<h3> Status: " + status + "</h3>");
-                    $("#responseMsg").removeClass("hidden");
+                    response = JSON.stringify(data)
+                    if (response['status'] == 200) {
+                        $("#responseMsg").append("<h3> Data: " + response['responseText'] + "</h3>");
+                        $("#responseMsg").append("<h3> Status: " + status + "</h3>");
+                        $("#responseMsg").removeClass("hidden");
+                    }
                 });
                 ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function(data, status) {
 
