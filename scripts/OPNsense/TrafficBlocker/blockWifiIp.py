@@ -205,6 +205,7 @@ if __name__ == '__main__':
         if len(sys.argv) > 1 and sys.argv[1] != "&":
             print("Taking ip from command line")
             ip = sys.argv[1]
+            print("Ip ",ip)
         else:
             print("Looking for config...")
             # take ip from conf
