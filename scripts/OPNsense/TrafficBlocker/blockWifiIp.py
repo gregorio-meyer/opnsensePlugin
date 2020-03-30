@@ -63,7 +63,7 @@ def getUUID():
 # locks / unlocks traffic toward network using an alias
 
 
-def blockTraffic(lock):
+def blockTraffic(lock,ip):
     if lock:
         print(ip + " is not connected, blocking traffic towards the network")
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
@@ -80,7 +80,16 @@ def blockTraffic(lock):
     else:
         setAlias(uuid, data)
 
-
+def unlockTraffic():
+        data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
+                          "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
+    uuid = getUUID()
+    # Add alias since it's not present
+    if uuid is None:
+        addAlias()
+    # modify existing alias
+    else:
+        setAlias(uuid, data)
 def checkNmap(ip):
     interface = "em1"
     try:
@@ -100,7 +109,7 @@ def blockNmap(ip):
          # if locked unlock
         if locked:
             print("Locked, unlock")
-            blockTraffic(False)
+            blockTraffic(False,ip)
             locked = False
         else:
             print("Already unlocked")
@@ -110,7 +119,7 @@ def blockNmap(ip):
        #da sostituire con status
         if not locked:
             print("Not locked, lock")
-            blockTraffic(True)
+            blockTraffic(True,ip)
             locked = True
         else:
             print("Already locked")

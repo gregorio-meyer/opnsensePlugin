@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 from subprocess import check_call
-from blockWifiIp import blockTraffic
+from blockWifiIp import unlockTraffic
+
 import sys
 def stop():
     print("Stopping traffic blocker..")
@@ -10,9 +11,9 @@ def stop():
     except Exception as e:
         print("Failed:%s" % e)
 
-#it should also enable connection
 try:
-    blockTraffic(False)
+    #it should also enable connection
+    unlockTraffic()
     stop()
 except Exception as e:
     print(e)

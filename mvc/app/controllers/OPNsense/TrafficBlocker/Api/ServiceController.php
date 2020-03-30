@@ -38,6 +38,7 @@ class ServiceController extends ApiControllerBase
             }
         }
     }
+
     public function reloadAction()
     {
         //     $status = "failed";
