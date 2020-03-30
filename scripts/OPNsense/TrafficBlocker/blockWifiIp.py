@@ -90,6 +90,7 @@ def unlockTraffic():
     # modify existing alias
     else:
         setAlias(uuid, data)
+    print("Traffic unlocked")
 def checkNmap(ip):
     interface = "em1"
     try:
