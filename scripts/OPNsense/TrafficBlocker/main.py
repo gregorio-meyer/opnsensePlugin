@@ -16,6 +16,7 @@ def run():
     p.terminate()
     p.join()
     print("Check ended")
+    
     #run it every 10 seconds
     threading.Timer(10, run).start()
 
