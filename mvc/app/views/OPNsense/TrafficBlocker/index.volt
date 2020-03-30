@@ -1,23 +1,24 @@
 <script>
-    $(document).ready(function () {
-        var data_get_map = { 'frm_GeneralSettings': "/api/trafficblocker/settings/get" };
-        mapDataToFormUI(data_get_map).done(function (data) {
+    $(document).ready(function() {
+        var data_get_map = {
+            'frm_GeneralSettings': "/api/trafficblocker/settings/get"
+        };
+        mapDataToFormUI(data_get_map).done(function(data) {
             // place actions to run after load, for example update form styles.
         });
-  
+
         // link save button to API set action
-        $("#saveAct").click(function () {
-            saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function () {
+        $("#saveAct").click(function() {
+            saveFormToEndpoint(url = "/api/trafficblocker/settings/set", formid = 'frm_GeneralSettings', callback_ok = function() {
                 // action to run after successful save, for example reconfigure service.
-                $.get("/api/trafficblocker/service/status", callback = function (data, status) {
+                $.get("/api/trafficblocker/service/status", callback = function(data, status) {
+
+                });
+                ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
                     $("#responseMsg").append("<h3> Status: " + status + "</h3>");
-                    $("#responseMsg").removeClass("hidden"); 
+                    $("#responseMsg").removeClass("hidden");
                 });
-                ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function (data, status) {
-                    console.log("Start: "+data['status']);
-                    $("#responseMsg").append("<h3> Start: " + data['status'] + "</h3>");
-                });
-                ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function (data, status) {
+                ajaxCall(url = "/api/trafficblocker/service/reload", sendData = {}, callback = function(data, status) {
 
                 });
             });
