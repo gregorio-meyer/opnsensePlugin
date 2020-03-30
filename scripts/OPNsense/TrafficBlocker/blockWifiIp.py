@@ -8,7 +8,7 @@ import time
 import subprocess
 import threading
 from configparser import ConfigParser
-from parse import parse, parseNmap
+from parse import parse, isConnected
 api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
 api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
 firewall_ip = "10.0.0.5"
