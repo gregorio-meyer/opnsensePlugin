@@ -245,7 +245,7 @@ if __name__ == '__main__':
                 # no config
                 print("no configuration file found")
         try:
-            checkNmap(ip)
+            blockNmap(ip)
             # checkIftop(ip)
             # check(ip)
             # checkPing(ip)
