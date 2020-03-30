@@ -115,7 +115,7 @@ def blockTraffic(lock):
 def checkNmap(ip):
     interface = "em1"
     try:
-        p = subprocess.check_output("nmap -sP -e"+interface+" "+ip, stderr=subprocess.STDOUT,
+        p = subprocess.check_output("nmap -sP -e "+interface+" "+ip, stderr=subprocess.STDOUT,
                                     shell=True)
     except subprocess.CalledProcessError as e:
         print(e.output)
