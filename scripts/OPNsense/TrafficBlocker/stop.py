@@ -8,3 +8,6 @@ def stop():
       check_call(["pkill", "-9", "-f", script])
     except Exception as e:
         print("Failed:%s" % e)
+
+
+stop()

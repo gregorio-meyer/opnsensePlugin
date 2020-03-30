@@ -4,7 +4,6 @@ import multiprocessing
 import time
 import threading
 from blockWifiIp import start
-from stopBlockWifi import stop
 
 def run():
     #run it for 10 seconds
