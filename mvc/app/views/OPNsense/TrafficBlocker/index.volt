@@ -16,7 +16,7 @@
                 });
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
                     response = JSON.stringify(data)
-                    if (response['status'] == 200) {
+                    if (response['status'] === "200") {
                         $("#responseMsg").append("<h3> Data: " + response['responseText'] + "</h3>");
                         $("#responseMsg").append("<h3> Status: " + status + "</h3>");
                         $("#responseMsg").removeClass("hidden");
