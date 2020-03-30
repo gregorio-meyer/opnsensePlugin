@@ -123,7 +123,7 @@ def isConnected(string):
     else: 
         return True
 
-if __name__ == '__main__':
+def start():
    # print("Program starts...")
     try:
         if len(sys.argv) > 1 and sys.argv[1] != "&":
