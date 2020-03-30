@@ -10,4 +10,7 @@ def stop():
         print("Failed:%s" % e)
 
 
-stop()
+try:
+    stop()
+except Exception as e:
+    print(e)
