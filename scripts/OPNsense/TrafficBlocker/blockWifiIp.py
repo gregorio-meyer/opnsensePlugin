@@ -123,10 +123,9 @@ def checkNmap(ip):
               e.cmd + '"' + ' see above shell error')
         print('Return code: ' + str(e.returncode))
     p = p.decode("ascii")
-    f = open("log.txt", "w")
-    f.write(p)
-    p = parseNmap(p)
-    print(p)
+    p = isConnected(p)
+    return p
+    
 
 
 def checkIftop(ip):
