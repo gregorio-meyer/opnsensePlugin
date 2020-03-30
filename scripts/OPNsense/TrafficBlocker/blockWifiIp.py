@@ -21,6 +21,7 @@ traffic_blocker_config = '/usr/local/etc/trafficblocker/trafficblocker.conf'
 
 
 def addAlias():
+    print("addomg alias..")
     data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "",
                       "updatefreq": "", "content": network, "counters": "0", "description": "Alias for "+aliasName}}
     r = requests.post(url+"api/firewall/alias/addItem",
@@ -40,6 +41,7 @@ def reconfigureAlias():
 
 
 def setAlias(uuid, data):
+    print("Setting alias...")
     r = requests.post(url+"api/firewall/alias/setItem/"+uuid,
                       auth=(api_key, api_secret), verify=False, json=data)
     # reconfigure alias to use it in firewall rules
@@ -102,14 +104,16 @@ def blockNmap(ip):
             blockTraffic(True)
             locked = True
             # if the connection is already locked continue
-        print("Already locked")
+        else:
+            print("Already locked")
     else:
         # if locked unlock
         if locked:
             print("Locked, unlock")
             blockTraffic(False)
             locked = False
-        print("Already unlocked")
+        else:
+            print("Already unlocked")
     #threading.Timer(1, blockNmap, [ip]).start()
 
 def isConnected(string):
