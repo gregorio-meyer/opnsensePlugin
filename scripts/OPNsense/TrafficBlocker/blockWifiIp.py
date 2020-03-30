@@ -125,7 +125,7 @@ def checkNmap(ip):
     p = p.decode("ascii")
     f = open("log.txt","w")
     f.write(p)
-     p = parseNmap(p)
+    p = parseNmap(p)
     print(p)
 def checkIftop(ip):
     print("Trying to make iftop call")
