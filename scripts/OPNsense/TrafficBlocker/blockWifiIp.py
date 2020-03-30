@@ -81,7 +81,7 @@ def blockTraffic(lock,ip):
         setAlias(uuid, data)
 
 def unlockTraffic():
-        data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
+    data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
     # Add alias since it's not present
