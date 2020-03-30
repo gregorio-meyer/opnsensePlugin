@@ -21,12 +21,15 @@ def run():
 
 #nuova funzione che stoppa main -> trafficblocker stop
 
-if __name__ == "__main__":
-    print("Running...")
-    try:
-        run()
-    except Exception as e:
-        print(e)
-else:
-    print("Not running")
+
+#run()
+# if __name__ == "__main__":
+#     print("Running...")
+#
+try:
+    run()
+except Exception as e:
+    print(e)
+# else:
+#     print("Not running")
 
