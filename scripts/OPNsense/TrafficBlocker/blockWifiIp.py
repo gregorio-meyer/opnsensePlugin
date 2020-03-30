@@ -110,7 +110,7 @@ def blockNmap(ip):
             blockTraffic(False)
             locked = False
         print("Already unlocked")
-    threading.Timer(1, blockNmap, [ip]).start()
+    #threading.Timer(1, blockNmap, [ip]).start()
 
 def isConnected(string):
     if "Host seems down" in string:
