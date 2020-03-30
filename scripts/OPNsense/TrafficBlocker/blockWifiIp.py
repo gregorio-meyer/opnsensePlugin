@@ -203,10 +203,11 @@ if __name__ == '__main__':
     print("Program starts...")
     try:
         if len(sys.argv) > 1 and sys.argv[1] != "&":
-            print("Taking ip from command line")
+          #  print("Taking ip from command line")
             ip = sys.argv[1]
             print("Ip ",ip)
         else:
+            #it takes the old one
             print("Looking for config...")
             # take ip from conf
             if os.path.exists(traffic_blocker_config):
