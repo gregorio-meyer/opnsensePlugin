@@ -16,7 +16,7 @@ url = "http://"+firewall_ip+"/"
 monitored_intf = "lan"
 network = "10.0.0.0/24"
 aliasName = "LAN"
-locked = False
+locked = None
 traffic_blocker_config = '/usr/local/etc/trafficblocker/trafficblocker.conf'
 
 
@@ -40,7 +40,7 @@ def reconfigureAlias():
 
 
 def setAlias(uuid, data):
-    #print("Setting alias...")
+    # print("Setting alias...")
     r = requests.post(url+"api/firewall/alias/setItem/"+uuid,
                       auth=(api_key, api_secret), verify=False, json=data)
     # reconfigure alias to use it in firewall rules
@@ -91,7 +91,7 @@ def unlockTraffic():
     data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                       "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
-    print("UUID is ",uuid)
+    print("UUID is ", uuid)
     # Add alias since it's not present
     if uuid is None:
         addAlias()
@@ -115,26 +115,44 @@ def checkNmap(ip):
 
 
 def blockNmap(ip):
-    print("Checking ip: ",ip)
-    #global locked
-    if checkNmap(ip):
+
+    print("Checking ip: ", ip)
+    global locked
+    connected = checkNmap(ip)
+    # it needs to be unlocked
+    if connected and locked == True:
         # if locked unlock
        # if locked:
         print("Locked, unlock")
         blockTraffic(False, ip)
-         #   locked = False
+        locked = False
      #   else:
        #     print("Already unlocked")
-
+    # it needs to be locked
+    elif not connected and locked == False:
+        print("Not locked, lock")
+        blockTraffic(True, ip)
+        locked = True
     else:
+        if locked == None:
+            if connected:
+                locked = True
+            else:
+                locked = False
+            print("Locked not set")
+        elif locked == True:
+           print("Already locked")
+        elif locked == False:
+           print("Already unlocked")
+        else:
+            print("Error locked is ", locked)
        # if not locked lock
        # da sostituire con status
       #  if not locked:
-        print("Not locked, lock")
-        blockTraffic(True, ip)
+        
         #    locked = True
-        #else:
-         #   print("Already locked")
+        # else:
+        #   print("Already locked")
 
     threading.Timer(1, blockNmap, [ip]).start()
 
