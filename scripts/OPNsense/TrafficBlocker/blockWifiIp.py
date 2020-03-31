@@ -59,10 +59,13 @@ def getUUID():
     # This will add alias since it's not present
     if len(resp) == 0:
         return None
-    elif resp['message'] == "Authentication Failed":
-        raise Exception("API authentication failed")
-    else:
+    elif 'message' in resp:
+        if resp['message'] == "Authentication Failed":
+            raise Exception("API authentication failed")
+    elif 'uuid' in resp:
         return resp["uuid"]
+    else:
+        raise Exception("Get Alias returned wrong response ", resp)
 
 # locks / unlocks traffic toward network using an alias
 
