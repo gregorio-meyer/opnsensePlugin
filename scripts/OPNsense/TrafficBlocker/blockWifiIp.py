@@ -87,6 +87,7 @@ def unlockTraffic():
     data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                       "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
+    print("UUID is ",uuid)
     # Add alias since it's not present
     if uuid is None:
         addAlias()
