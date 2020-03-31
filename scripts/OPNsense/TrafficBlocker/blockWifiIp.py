@@ -8,8 +8,8 @@ import time
 import subprocess
 import threading
 from configparser import ConfigParser
-api_key = "jKJzWidaFFK+UndQnhx+CJlacm8k6o804N9h2GrElQ1hr0ggTC/bVAy4S9xh/M7nJ1gFQmwaWmvTshDe"
-api_secret = "mmjxwxDJHRyo9JDbMSRY8hN4MVyO0xDCy6+6wsC2kGS+fkfIMmL5eFIgFTnMf5Fmeq7+KLVRVPT1KsAg"
+api_key = "wPzuUuXBKg3k4cWwkJHFYbiekVZ8qhbcvXKJwSBUhLjc/UoHyXfWlXprYL3eW8GnqZatQoBcDLhFIACM"
+api_secret = "yfJOr5FPs1oGvUI75NMo3EiKZm6Tfgzzm7HBX6SAEnUAR3FQvBbK48fIsAMmGlf02YebETLj0W0AlCuC"
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
