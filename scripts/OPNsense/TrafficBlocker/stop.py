@@ -13,7 +13,7 @@ def stop():
 
 try:
     #it should also enable connection
-    unlockTraffic()
+    #unlockTraffic()
     stop()
 except Exception as e:
     print(e)
