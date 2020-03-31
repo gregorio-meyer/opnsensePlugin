@@ -40,7 +40,7 @@ def reconfigureAlias():
 
 
 def setAlias(uuid, data):
-    #print("Setting alias...")
+    # print("Setting alias...")
     r = requests.post(url+"api/firewall/alias/setItem/"+uuid,
                       auth=(api_key, api_secret), verify=False, json=data)
     # reconfigure alias to use it in firewall rules
@@ -115,7 +115,7 @@ def checkNmap(ip):
 
 
 def blockNmap(ip):
-    
+
     print("Checking ip: ", ip)
     global locked
     connected = checkNmap(ip)
@@ -135,7 +135,11 @@ def blockNmap(ip):
         locked = True
     else:
         if locked == None:
-           print("Locked not set")
+            if connected:
+                locked = True
+            else:
+                locked = False
+            print("Locked not set")
         elif locked == True:
            print("Already locked")
         elif locked == False:
