@@ -119,32 +119,33 @@ def blockNmap(ip):
     #global locked
     connected = checkNmap(ip)
     # it needs to be unlocked
-    if connected and locked == True:
+    if connected and:
         # if locked unlock
-       # if locked:
+    if locked == None or locked == True:
         print("Locked, unlock")
         blockTraffic(False, ip)
         locked = False
      #   else:
        #     print("Already unlocked")
     # it needs to be locked
-    elif not connected and locked == False:
-        print("Not locked, lock")
-        blockTraffic(True, ip)
-        locked = True
+    elif not connected:
+        if locked == None or locked == False:
+            print("Not locked, lock")
+            blockTraffic(True, ip)
+            locked = True
     else:
         if locked == None:
-           print("Locked not set")
+            print("Locked not set")
         elif locked == True:
-           print("Already locked")
+            print("Already locked")
         elif locked == False:
-           print("Already unlocked")
+            print("Already unlocked")
         else:
             print("Error locked is ", locked)
        # if not locked lock
        # da sostituire con status
       #  if not locked:
-        
+
         #    locked = True
         # else:
         #   print("Already locked")
