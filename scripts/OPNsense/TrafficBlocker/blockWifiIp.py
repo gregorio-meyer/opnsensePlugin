@@ -138,7 +138,7 @@ def blockNmap(ip):
            print("Locked not set")
         elif locked == True:
            print("Already locked")
-        elif locked = False:
+        elif locked == False:
            print("Already unlocked")
         else:
             print("Error locked is ", locked)
