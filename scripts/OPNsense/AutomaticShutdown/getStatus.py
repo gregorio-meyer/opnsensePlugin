@@ -3,8 +3,8 @@ import requests
 import json
 
 # key + secret 
-api_key = 'W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2'
-api_secret = 't7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W'
+api_key = "71ubaqTIXb19HG7B17Yf3kG78FhkQC8lBDEmzSKV9gipNKh3rf1Ab52mfOpJ4j8cob6gPJU/T1EWYpfh"
+api_secret = "OuLdyVHKrpvQ9dMyQ6D3VYEQTRTBDrPO8tNkiuGP8qMD4x1eu4MlEtvdeXhu6iC2sbTsVHCxDj7olNAy"
 url = "http://10.0.0.5/api/automaticshutdown/settings/get"
 
 r = requests.get(url, auth=(api_key, api_secret),
