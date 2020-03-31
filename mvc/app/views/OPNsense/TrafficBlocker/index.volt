@@ -19,6 +19,7 @@
                 //chiama main.py
                 ajaxCall(url = "/api/trafficblocker/service/start", sendData = {}, callback = function(data, status) {
                     console.log(data['status'])
+                    console.log(data['responseText'])
                     if (data['status'] == 200) {
                         $("#responseMsg").append("<h3>" + data['responseText'] + "</h3>");
                         $("#responseMsg").removeClass("hidden");
