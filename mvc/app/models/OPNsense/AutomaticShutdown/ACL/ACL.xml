@@ -1,0 +1,10 @@
+<!--so normal users can access the plugin-->
+<acl>
+    <page-user-automaticshutdown>
+        <name>Lobby: Automatic Shutdown!</name>
+        <patterns>
+            <pattern>ui/automaticshutdown/*</pattern>
+            <pattern>api/automaticshutdown/*</pattern>
+        </patterns>
+    </page-user-automaticshutdown>
+</acl>

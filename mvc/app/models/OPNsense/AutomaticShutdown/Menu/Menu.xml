@@ -1,0 +1,5 @@
+<menu>
+    <Lobby>
+        <AutomaticShutdown VisibleName="Plan Shutdown" cssClass="fa fa-comment-o fa-fw" url="/ui/automaticshutdown"/>
+    </Lobby>
+</menu>
