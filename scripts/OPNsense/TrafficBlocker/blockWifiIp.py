@@ -109,6 +109,7 @@ def checkNmap(ip):
 
 
 def blockNmap(ip):
+    print("Checking ip: ",ip)
     #global locked
     if checkNmap(ip):
         # if locked unlock
