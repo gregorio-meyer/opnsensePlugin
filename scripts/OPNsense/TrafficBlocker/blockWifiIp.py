@@ -128,16 +128,16 @@ def blockNmap(ip):
      #   else:
        #     print("Already unlocked")
     # it needs to be locked
-    elif not connected and locked = False
+    elif not connected and locked == False:
         print("Not locked, lock")
         blockTraffic(True, ip)
         locked = True
     else:
         if locked == None:
            print("Locked not set")
-        elif locked = True:
+        elif locked == True:
            print("Already locked")
-        elif locked = False:
+        elif locked == False:
            print("Already unlocked")
         else:
             print("Error locked is ", locked)
