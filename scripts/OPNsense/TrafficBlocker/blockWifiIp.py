@@ -59,7 +59,7 @@ def getUUID():
     # This will add alias since it's not present
     if len(resp) == 0:
         return None
-    elif "Authentication Failed" in resp:
+    elif resp['message'] == "Authentication Failed":
         raise Exception("API authentication failed")
     else:
         return resp["uuid"]
