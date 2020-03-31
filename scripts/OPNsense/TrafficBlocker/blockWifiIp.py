@@ -8,8 +8,8 @@ import time
 import subprocess
 import threading
 from configparser import ConfigParser
-api_key = "W7meYzZdEndQGBycVONls8cYU8FBGsnMNoirAwAplMtVz8c1g7M7eR89HJcZaGXfT0i+KwcPpfAwBdy2"
-api_secret = "t7BuWrgGciJeMp3hatlofJ4JufoWtDDwHc3XuZGxC28ratSvZzqLmH+yslZB1YbLk0KXJVXdYJGunS0W"
+api_key = "71ubaqTIXb19HG7B17Yf3kG78FhkQC8lBDEmzSKV9gipNKh3rf1Ab52mfOpJ4j8cob6gPJU/T1EWYpfh"
+api_secret = "OuLdyVHKrpvQ9dMyQ6D3VYEQTRTBDrPO8tNkiuGP8qMD4x1eu4MlEtvdeXhu6iC2sbTsVHCxDj7olNAy"
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
@@ -51,18 +51,19 @@ def setAlias(uuid, data):
 
 
 def getUUID():
-    print("Trying to get UUID....")
     r = requests.get(url+"api/firewall/alias/getAliasUUID/" +
                      aliasName, auth=(api_key, api_secret), verify=False)
     resp = json.loads(r.text)
-    print("Response: ", resp)
     # This will add alias since it's not present
     if len(resp) == 0:
         return None
-    elif resp['message'] == "Authentication Failed":
-        raise Exception("API authentication failed")
-    else:
+    elif 'message' in resp:
+        if resp['message'] == "Authentication Failed":
+            raise Exception("API authentication failed")
+    elif 'uuid' in resp:
         return resp["uuid"]
+    else:
+        raise Exception("Get Alias returned wrong response ", resp)
 
 # locks / unlocks traffic toward network using an alias
 
@@ -77,7 +78,6 @@ def blockTraffic(lock, ip):
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
-    print("Got uuid ", uuid)
     # Add alias since it's not present
     if uuid is None:
         addAlias()
