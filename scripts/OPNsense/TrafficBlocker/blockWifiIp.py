@@ -51,11 +51,9 @@ def setAlias(uuid, data):
 
 
 def getUUID():
-    print("Trying to get UUID....")
     r = requests.get(url+"api/firewall/alias/getAliasUUID/" +
                      aliasName, auth=(api_key, api_secret), verify=False)
     resp = json.loads(r.text)
-    print("Response: ", resp)
     # This will add alias since it's not present
     if len(resp) == 0:
         return None
@@ -80,7 +78,6 @@ def blockTraffic(lock, ip):
         data = {"alias": {"enabled": "1", "name": aliasName, "type": "network", "proto": "", "updatefreq": "",
                           "content": "", "counters": "0", "description": "Alias for "+aliasName+"(Disabled)"}}
     uuid = getUUID()
-    print("Got uuid ", uuid)
     # Add alias since it's not present
     if uuid is None:
         addAlias()
