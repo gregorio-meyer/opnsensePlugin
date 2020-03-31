@@ -119,12 +119,12 @@ def blockNmap(ip):
     #global locked
     connected = checkNmap(ip)
     # it needs to be unlocked
-    if connected and:
+    if connected:
         # if locked unlock
-    if locked == None or locked == True:
-        print("Locked, unlock")
-        blockTraffic(False, ip)
-        locked = False
+        if locked == None or locked == True:
+            print("Locked, unlock")
+            blockTraffic(False, ip)
+            locked = False
      #   else:
        #     print("Already unlocked")
     # it needs to be locked
