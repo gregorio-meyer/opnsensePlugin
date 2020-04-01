@@ -68,6 +68,7 @@
                     if (startUUID != null && endUUID != null) {
                         a = [startUUID, endUUID];
                         console.log("Found! " + a);
+                        jobs = a
                         return a;
                     }
                 } else {
@@ -85,8 +86,8 @@
                         //if we found the row to delete save it and set the delete flag
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
-                        jobs = searchJobs(toDelete);
-                        console.log("Jobs " + jobs)
+                        searchJobs(toDelete);
+
                     }
                 } else {
                     console.log("Error status: " + status);
