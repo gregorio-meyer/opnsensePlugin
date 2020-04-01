@@ -1,5 +1,0 @@
-Starting Nmap 7.80 ( https://nmap.org ) at 2020-03-30 14:46 CEST
-Nmap scan report for 10.0.0.101
-Host is up (0.00014s latency).
-MAC Address: 08:00:27:C1:8D:82 (Oracle VirtualBox virtual NIC)
-Nmap done: 1 IP address (1 host up) scanned in 0.02 seconds

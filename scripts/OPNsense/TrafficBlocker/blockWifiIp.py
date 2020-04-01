@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.7
+#TODO vedere quali import uso
 import requests
 import json
 import os
@@ -13,7 +14,7 @@ api_secret = "0YP7eXdwh6UlDYdHxotMemghbxh96Xtia6QuF+9HnrntKJ+xDG37+WEcb9QSKcNGJp
 firewall_ip = "10.0.0.5"
 url = "http://"+firewall_ip+"/"
 # prenderlo dalla config
-monitored_intf = "lan"
+interface = "em1"
 network = "10.0.0.0/24"
 aliasName = "LAN"
 locked = None
@@ -64,7 +65,6 @@ def getUUID():
         return resp["uuid"]
     else:
         raise Exception("Get Alias returned wrong response ", resp)
-
 # locks / unlocks traffic toward network using an alias
 
 
@@ -102,7 +102,6 @@ def unlockTraffic():
 
 
 def checkNmap(ip):
-    interface = "em1"
     try:
         p = subprocess.check_output("nmap -sP -e "+interface+" "+ip, stderr=subprocess.STDOUT,
                                     shell=True)
@@ -113,22 +112,16 @@ def checkNmap(ip):
         print('Return code: ' + str(e.returncode))
     return isConnected(p.decode("ascii"))
 
-
+#TODO simplify
 def blockNmap(ip):
-
     print("Checking ip: ", ip)
     global locked
     connected = checkNmap(ip)
     # it needs to be unlocked
     if connected and locked == True:
-        # if locked unlock
-       # if locked:
         print("Locked, unlock")
         blockTraffic(False, ip)
         locked = False
-     #   else:
-       #     print("Already unlocked")
-    # it needs to be locked
     elif not connected and locked == False:
         print("Not locked, lock")
         blockTraffic(True, ip)
@@ -146,33 +139,21 @@ def blockNmap(ip):
            print("Already unlocked")
         else:
             print("Error locked is ", locked)
-       # if not locked lock
-       # da sostituire con status
-      #  if not locked:
-        
-        #    locked = True
-        # else:
-        #   print("Already locked")
-
     threading.Timer(1, blockNmap, [ip]).start()
 
-
+#modificato IF
 def isConnected(string):
-    if "Host seems down" in string:
-        return False
-    else:
-        return True
-
+    return not "Host seems down" in string
+    
 
 def start():
-   # print("Program starts...")
     try:
         if len(sys.argv) > 1 and sys.argv[1] != "&":
-          #  print("Taking ip from command line")
             ip = sys.argv[1]
             print("Ip ", ip)
         else:
             # it takes the old one
+            #TODO try to update config in index.volt
             print("Looking for config...")
             # take ip from conf
             if os.path.exists(traffic_blocker_config):

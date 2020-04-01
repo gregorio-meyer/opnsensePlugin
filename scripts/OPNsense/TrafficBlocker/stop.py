@@ -5,6 +5,7 @@ from blockWifiIp import unlockTraffic
 import sys
 def stop():
     print("Stopping traffic blocker..")
+    #TODO this is dangerous give it a weirder name
     script = "main.py"
     try:
       check_call(["pkill", "-9", "-f", script])
@@ -12,7 +13,7 @@ def stop():
         print("Failed:%s" % e)
 
 try:
-    #it should also enable connection
+    #TODO check if it should also enable connection
     #unlockTraffic()
     stop()
 except Exception as e:

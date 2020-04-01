@@ -1,36 +1,26 @@
 import blockWifiIp
-import stopBlockWifi
 import multiprocessing
 import time
 import threading
 from blockWifiIp import start
 
+#TODO aggiungere costanti per quanto deve girare e ogni quanto deve girare
 def run():
-    #run it for 10 seconds
-    #start blockWifi.start() as a process 
-    print("Checking host connections") 
-    p = multiprocessing.Process(target=start,name="Start")
+    # start blockWifi.start() as a process
+    print("Checking host connections")
+    p = multiprocessing.Process(target=start, name="Start")
     p.start()
+    # run it for 10 seconds
     time.sleep(10)
-#stop and update the view
+    # stop and update the view
     p.terminate()
     p.join()
     print("Check ended")
-
-    #run it every 10 seconds
+    # run it every 10 seconds
     threading.Timer(10, run).start()
 
-#nuova funzione che stoppa main -> trafficblocker stop
 
-
-#run()
-# if __name__ == "__main__":
-#     print("Running...")
-#
 try:
     run()
 except Exception as e:
     print(e)
-# else:
-#     print("Not running")
-
