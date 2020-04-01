@@ -85,6 +85,7 @@
                         toDelete = item;
                         do {
                             jobs = searchJobs(toDelete);
+                            console.log("Jobs " + jobs)
                         } while (jobs != null && jobs != undefined);
                         if (jobs != null)
                             console.log("Jobs " + jobs)
