@@ -83,10 +83,11 @@
                         //if we found the row to delete save it and set the delete flag
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
+                        jobs = null
                         do {
                             jobs = searchJobs(toDelete);
-                            console.log("Jobs " + jobs)
-                        } while (jobs != null && jobs != undefined);
+                            console.log("Jobs " + jobs);
+                        } while (jobs == null);
                         if (jobs != null)
                             console.log("Jobs " + jobs)
                     } else {
