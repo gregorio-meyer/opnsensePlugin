@@ -63,11 +63,13 @@
                         } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command'] && !selectedJobs.includes(row['uuid'])) {
                             endUUID = row['uuid'];
                         }
+                        if (startUUID != null && endUUID != null) {
+                            selectedJobs.push([startUUID, endUUID])
+                            console.log("Found! " + JSON.stringify(selectedJobs));
+                            break;
+                        }
                     }
-                    if (startUUID != null && endUUID != null) {
-                        selectedJobs.push([startUUID, endUUID])
-                            //console.log("Found! " + jobs);
-                    }
+
                 } else {
                     alert("An unexpected error occured, couldn't find element to delete!");
                 }
