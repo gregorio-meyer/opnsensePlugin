@@ -65,6 +65,7 @@
                         }
                     }
                     if (startUUID != null && endUUID != null) {
+                        console.log("Found!")
                         return [startUUID, endUUID]
                     }
                 } else {
