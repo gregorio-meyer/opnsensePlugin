@@ -258,7 +258,7 @@
             editJobs(startHour, endHour);
             selectedJobs = [];
             edit = false;
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
+            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
         }
     });
 
