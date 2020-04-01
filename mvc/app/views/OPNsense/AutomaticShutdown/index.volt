@@ -83,16 +83,15 @@
                         //if we found the row to delete save it and set the delete flag
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
-                        jobs = null
-                        do {
-                            jobs = searchJobs(toDelete);
-                            console.log("Jobs " + jobs);
-                        } while (jobs == null);
-                        if (jobs != null)
-                            console.log("Jobs " + jobs)
-                    } else {
-                        console.log("Error status: " + status);
+                        jobs = searchJobs(toDelete);
+                        setTimeout(function() {
+                            if (jobs != null)
+                                console.log("Jobs " + jobs)
+
+                        }, 100);
                     }
+                } else {
+                    console.log("Error status: " + status);
                 }
             });
         }
