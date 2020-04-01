@@ -255,7 +255,7 @@
             endUUID = jobs[1];
             if (startUUID != null && endUUID != null) {
                 //setTimeout(function() {
-                ajaxCall(url = "/api/cron/settings/setJob/" + startUUID, sendData = getData(newStartHour, startCommandDescr, startDescr), callback = function(data, status) {
+                ajaxCall(url = "/api/cron/settings/setJob/" + startUUID, sendData = getData(newStartHour, startCommand, startDescr), callback = function(data, status) {
                     if (status === "success") {
                         console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + newStartHour + " result: " + JSON.stringify(data));
                         //           setTimeout(function() {
