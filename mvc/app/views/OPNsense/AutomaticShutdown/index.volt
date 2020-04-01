@@ -11,7 +11,7 @@
     var endCommand = "automaticshutdown stop";
     var endCommandDescr = "Start firewall";
     var endDescr = "Start Firewall"
-    var jobs = null;
+        // var jobs = null;
     var selectedJobs = [];
     $(document).ready(function() {
         var data_get_map = {
@@ -67,8 +67,7 @@
                         }
                     }
                     if (startUUID != null && endUUID != null) {
-                        jobs = [startUUID, endUUID];
-                        selectedJobs.push(jobs)
+                        selectedJobs.push([startUUID, endUUID])
                             //console.log("Found! " + jobs);
                     }
                 } else {
@@ -167,8 +166,8 @@
                         if (item !== null) {
                             //if we found the row to delete save it and set the delete flag
                             //the element will be removed if the user press "Yes"
-                            toDelete = item;
-                            searchJobs(toDelete);
+                            //toDelete = item;
+                            searchJobs(item);
                         }
                     } else {
                         console.log("Error status: " + status);
@@ -233,16 +232,16 @@
 
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        if (toDelete !== null) {
-            console.log("Jobs " + jobs)
-            removeJobs(toDelete['enabled'], toDelete['StartHour'], toDelete['EndHour']);
+        if (selectedJobs.length == 1) {
+            //console.log("Jobs " + jobs)
+            removeJobs(jobs[0], jobs[1]);
             alert("Deleted!");
             toDelete = null;
-        } else if (elementsToDelete != null && JSON.stringify(elementsToDelete) !== "[]") {
+        } else if (selectedJobs.length > 1) {
             //all jobs uuids should be loaded by now
             removeAll();
             alert("All deleted!");
-            elementsToDelete = null;
+            selectedJobs = null;
         } else {
             alert("Error no element set to delete")
         }
