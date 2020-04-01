@@ -85,9 +85,8 @@
                         toDelete = item;
                         do {
                             jobs = searchJobs(toDelete);
-                        }
-                        while (jobs != null && jobs !== "undefined");
-                        console.log("Jobs " + JSON.stringify(jobs))
+                        } while (jobs != null && jobs != 'undefined');
+                        console.log("Jobs " + jobs)
                     } else {
                         console.log("Error status: " + status);
                     }
