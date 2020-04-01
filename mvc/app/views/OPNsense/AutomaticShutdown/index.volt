@@ -68,7 +68,7 @@
                     }
                     if (startUUID != null && endUUID != null) {
                         jobs = [startUUID, endUUID];
-                        selectedJobs.append(jobs)
+                        selectedJobs.push(jobs)
                             //console.log("Found! " + jobs);
                     }
                 } else {
