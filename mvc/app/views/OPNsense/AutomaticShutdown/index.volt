@@ -342,7 +342,8 @@
                         if (status === "success") {
                             var item = data["hour"];
                             if (item != null) { */
-        if (selectedJobs.length > 1) {
+
+        if (selectedJobs != null && selectedJobs.length > 1) {
             //TODO fix
             for (jobs of selectedJobs) {
                 startUUID = jobs[0];
