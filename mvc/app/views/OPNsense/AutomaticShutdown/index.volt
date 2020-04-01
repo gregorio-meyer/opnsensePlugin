@@ -82,7 +82,7 @@
                     }
 
                 } else {
-                    alert("An unexpected error occured, couldn't find element to delete!");
+                    alert("An unexpected error occured, couldn't find the searched element!");
                 }
             });
         }
