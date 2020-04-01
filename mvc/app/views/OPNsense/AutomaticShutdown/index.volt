@@ -84,13 +84,11 @@
         function setToggle(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    var item = data['hour'];
                     if (item !== null) {
                         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
                             if (status === "success") {
-                                var json_str = JSON.stringify(data);
-                                var rows = JSON.parse(json_str)["rows"];
+                                var rows = data['rows'];
                                 var startUUID = null;
                                 var endUUID = null;
                                 for (row of rows) {
@@ -205,8 +203,7 @@
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
-                var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
+                var rows = data['rows'];
                 var startJobUUID = null;
                 var endJobUUID = null;
                 for (row of rows) {
@@ -308,8 +305,7 @@
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
-                var json_str = JSON.stringify(data);
-                var rows = JSON.parse(json_str)["rows"];
+                var rows = data['rows'];
                 var startUUID = null;
                 var endUUID = null;
                 for (row of rows) {
@@ -356,7 +352,6 @@
         for (element of elementsToDelete) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    //var json_str = JSON.stringify(data);
                     var item = data["hour"];
                     if (item != null) {
                         remove(item);
