@@ -272,7 +272,7 @@
     }
     //ok
     function removeAll() {
-        if (selectedJobs != null && selectedJobs.length > 1) {
+        if (selectedJobs != null && selectedJobs.length > 0) {
             for (jobs of selectedJobs) {
                 removeJobs(jobs[0], jobs[1]);
             }
