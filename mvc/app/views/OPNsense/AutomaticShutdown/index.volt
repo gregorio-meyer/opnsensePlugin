@@ -1,8 +1,8 @@
 <script>
     var edit = false;
-    var toDelete = null;
+    //var toDelete = null;
     var copyMessage = null;
-    var elementsToDelete = null;
+    //var elementsToDelete = null;
     var oldStartHour = null;
     var oldEndHour = null;
     var startCommand = "automaticshutdown start";
@@ -75,7 +75,7 @@
                         }
                         if (startUUID != null && endUUID != null) {
                             selectedJobs.push([startUUID, endUUID])
-                            console.log("Found! " + JSON.stringify(selectedJobs));
+                                //console.log("Found! " + JSON.stringify(selectedJobs));
                             break;
                         }
                     }
@@ -85,28 +85,25 @@
                 }
             });
         }
-        //load CronJobs too
-        function setDelete(id) {
-            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+        //ok
+        function setDelete(uuid) {
+            //get item since we only have uuid
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    //vedere se data[hour] non funziona
                     var item = data['hour'];
                     if (item !== null) {
-                        //if we found the row to delete save it and set the delete flag
-                        //the element will be removed if the user press "Yes"
-                        toDelete = item;
-                        searchJobs(toDelete);
+                        //if we found the row to delete save the related cron jobs that will be removed if the user press "Yes"
+                        searchJobs(item);
                     }
                 } else {
                     console.log("Error status: " + status);
                 }
             });
         }
-
+        //ok
         function setCopy(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    //TODO vedi sopra
                     var item = data['hour'];
                     if (item !== null) {
                         copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
@@ -161,31 +158,29 @@
                 }
             });
         }
-        //check if necessary
-        //load CronJobs too
+
         function setDeleteSelected() {
+            //check if necessary
+            var selectedRows = null;
             do {
-                elementsToDelete = $("#grid-addresses").bootgrid("getSelectedRows");
-            } while (elementsToDelete == null);
+                selectedRows = $("#grid-addresses").bootgrid("getSelectedRows");
+            } while (selectedRows == null);
             //loop through rows get elements
-            for (id of elementsToDelete) {
-                ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
-                    if (status === "success") {
-                        //vedere se data[hour] non funziona
-                        var item = data['hour'];
-                        if (item !== null) {
-                            //if we found the row to delete save it and set the delete flag
-                            //the element will be removed if the user press "Yes"
-                            //toDelete = item;
-                            searchJobs(item);
+            for (uuid of selectedRows) {
+                setDelete(uuid)
+                    /* ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            var item = data['hour'];
+                            if (item !== null) {
+                                //if we found the row to delete save it and set the delete flag
+                                //the element will be removed if the user press "Yes"
+                                searchJobs(item);
+                            }
+                        } else {
+                            console.log("Error status: " + status);
                         }
-                    } else {
-                        console.log("Error status: " + status);
-                    }
-                });
+                    }); */
             }
-            //for each search jobs with matching start and end hour
-            //collect them in an array selectedJobs
         }
 
         function setEventHandlers() {
@@ -216,50 +211,11 @@
     $(document).on('focusin', "#hour\\.EndHour", function() {
         oldEndHour = $("#hour\\.EndHour").val();
     });
-    //on save get data from modal input fields and add jobs to schedule
-    $(document).on('click', "#btn_DialogAddress_save", function() {
-        var startHour = $("#hour\\.StartHour").val();
-        var endHour = $("#hour\\.EndHour").val();
-        if (!edit) {
-            //copy or add new job
-            if (copyMessage == null)
-                alert("Planned shutdown between " + startHour + " and " + endHour);
-            else
-                alert(copyMessage);
-            //TODO add cron job if enabled
-            addJobs(startHour, endHour);
-        } else {
-            //if none was selected take val from textbox
-            if (oldStartHour == null) oldStartHour = startHour;
-            if (oldEndHour == null) oldEndHour = endHour;
-            setTimeout(function() {
-                editJobs(oldStartHour, startHour, oldEndHour, endHour);
-            }, 100);
-            edit = false;
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
-        }
-    });
 
-    //event handler for remove confirmation dialog button TODO simplify
-    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
-        if (selectedJobs.length == 1) {
-            jobs = selectedJobs[0]
-                //console.log("Jobs " + jobs)
-            removeJobs(jobs[0], jobs[1]);
-            alert("Deleted!");
-            toDelete = null;
-        } else if (selectedJobs.length > 1) {
-            //all jobs uuids should be loaded by now
-            console.log("Delete all selected")
-            removeAll();
-            alert("All deleted!");
-            selectedJobs = null;
-        } else {
-            alert("Error no element set to delete")
-        }
-    });
     //add enabled
     //edit an existing cron job
+    //get previous settings jobs
+    //set jobs with new data
     function editJobs(oldStartHour, newStartHour, oldEndHour, newEndHour) {
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
@@ -303,6 +259,79 @@
         });
     }
 
+    //on save get data from modal input fields and add jobs to schedule
+    $(document).on('click', "#btn_DialogAddress_save", function() {
+        var startHour = $("#hour\\.StartHour").val();
+        var endHour = $("#hour\\.EndHour").val();
+        if (!edit) {
+            //copy or add new job
+            if (copyMessage == null)
+                alert("Planned shutdown between " + startHour + " and " + endHour);
+            else
+                alert(copyMessage);
+            //TODO add cron job if enabled
+            addJobs(startHour, endHour);
+        } else {
+            //if none was selected take val from textbox
+            if (oldStartHour == null) oldStartHour = startHour;
+            if (oldEndHour == null) oldEndHour = endHour;
+            setTimeout(function() {
+                editJobs(oldStartHour, startHour, oldEndHour, endHour);
+            }, 100);
+            edit = false;
+            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
+        }
+    });
+
+    //remove job
+    function removeJobs(startUUID, endUUID) {
+        if (startUUID !== null && endUUID !== null) {
+            ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
+                //check if not found 
+                if (status === "success") {
+                    console.log("Removed " + startDescr + " job" + JSON.stringify(data) + " uuid " + startUUID);
+                    ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            console.log("Removed " + endDescr + " job" + JSON.stringify(data) + " uuid " + endUUID);
+                            return true;
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function removeAll() {
+        if (selectedJobs != null && selectedJobs.length > 1) {
+            for (jobs of selectedJobs) {
+                startUUID = jobs[0];
+                endUUID = jobs[1];
+                removeJobs(startUUID, endUUID);
+            }
+        } else {
+            alert("An unexpected error occured, couldn't find element to remove!");
+        }
+    }
+
+    //event handler for remove confirmation dialog button TODO simplify
+    $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
+        //TODO one delete function
+        if (selectedJobs.length == 1) {
+            jobs = selectedJobs[0]
+                //console.log("Jobs " + jobs)
+            removeJobs(jobs[0], jobs[1]);
+            alert("Deleted!");
+            toDelete = null;
+        } else if (selectedJobs.length > 1) {
+            console.log("Delete all selected")
+            removeAll();
+            alert("All deleted!");
+            selectedJobs = null;
+        } else {
+            alert("Error no element set to delete")
+        }
+    });
+
     function getData(hour, command, description) {
         return {
             "job": {
@@ -327,53 +356,6 @@
             });
         });
     }
-    //
-    //remove job
-    function removeJobs(startUUID, endUUID) {
-        if (startUUID !== null && endUUID !== null) {
-            ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
-                //check if not found 
-                if (status === "success") {
-                    console.log("Removed " + startDescr + " job" + JSON.stringify(data) + " uuid " + startUUID);
-                    ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            console.log("Removed " + endDescr + " job" + JSON.stringify(data) + " uuid " + endUUID);
-                            return true;
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-    function removeAll() {
-        /*         for (element of elementsToDelete) {
-                    ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + element, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var item = data["hour"];
-                            if (item != null) { */
-
-        if (selectedJobs != null && selectedJobs.length > 1) {
-            //TODO fix
-            for (jobs of selectedJobs) {
-                startUUID = jobs[0];
-                endUUID = jobs[1];
-                //item['enabled'], item['StartHour'], item['EndHour']
-                console.log("Deleting " + startUUID + " " + endUUID)
-                removeJobs(startUUID, endUUID);
-                //potrei fare search jobs
-                //e poi remove}
-            }
-        } else {
-            alert("An unexpected error occured, couldn't find element to remove!");
-        }
-    }
-    /* else {
-        console.log("Error while retrieving element to remove, status: " + status);
-    }
-    });
-    } */
-    // }
 </script>
 
 <table id="grid-addresses" class="table table-condensed table-hover table-striped" data-editDialog="DialogAddress">
