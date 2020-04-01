@@ -66,8 +66,9 @@
                         }
                     }
                     if (startUUID != null && endUUID != null) {
-                        console.log("Found!")
-                        return [startUUID, endUUID]
+                        a = [startUUID, endUUID];
+                        console.log("Found! " + a);
+                        return a;
                     }
                 } else {
                     alert("An unexpected error occured, couldn't find element to delete!");
