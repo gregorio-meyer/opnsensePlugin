@@ -66,10 +66,8 @@
                         }
                     }
                     if (startUUID != null && endUUID != null) {
-                        a = [startUUID, endUUID];
-                        console.log("Found! " + a);
-                        jobs = a
-                        return a;
+                        jobs = [startUUID, endUUID];
+                        //console.log("Found! " + jobs);
                     }
                 } else {
                     alert("An unexpected error occured, couldn't find element to delete!");
@@ -87,7 +85,6 @@
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
                         searchJobs(toDelete);
-
                     }
                 } else {
                     console.log("Error status: " + status);
@@ -302,7 +299,7 @@
     //search and remove job
     function removeJobs(enabled, startHour, endHour) {
         //get all cron jobs 
-        ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
+        /* ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
                 var rows = data['rows'];
                 var startUUID = null;
@@ -316,26 +313,28 @@
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         endUUID = row['uuid'];
                     }
+                } */
+        startUUID = jobs[0];
+        endUUID = jobs[1];
+        if (startUUID !== null && endUUID !== null) {
+            //   setTimeout(function() {
+            ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
+                //check if not found 
+                if (status === "success") {
+                    console.log("Removed " + startDescr + " job" + JSON.stringify(data) + " uuid " + startUUID);
+                    ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
+                        if (status === "success") {
+                            console.log("Removed " + endDescr + " job" + JSON.stringify(data) + " uuid " + endUUID);
+                            return true;
+                        }
+                    });
                 }
-                if (startUUID !== null && endUUID !== null) {
-                    setTimeout(function() {
-                        ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
-                            //check if not found 
-                            if (status === "success") {
-                                console.log("Removed " + startDescr + " job" + JSON.stringify(data) + " uuid " + startUUID);
-                                ajaxCall(url = "/api/cron/settings/delJob/" + endUUID, sendData = {}, callback = function(data, status) {
-                                    if (status === "success") {
-                                        console.log("Removed " + endDescr + " job" + JSON.stringify(data) + " uuid " + endUUID);
-                                        return true;
-                                    }
-                                });
-                            }
-                        });
-                    }, 100);
-                }
-            } else
-                console.log("Error while searching jobs");
-        });
+            });
+            // }, 100);
+        }
+        /*          } else
+                     console.log("Error while searching jobs");
+             }); */
     }
 
     function removeAll() {
