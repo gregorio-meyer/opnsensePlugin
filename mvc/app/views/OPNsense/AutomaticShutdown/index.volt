@@ -34,13 +34,22 @@
         }).on("loaded.rs.jquery.bootgrid", function(e) {
             setEventHandlers();
         });
-        //load CronJobs too
+
         function setEdit(id) {
             //get item since we can only retrieve row-id from click event
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
-                    edit = true;
-                    console.log("Item to edit " + JSON.stringify(data))
+                    item = data['hour'];
+                    //TODO delete
+                    if (selectedJobs != null) {
+                        console.log("Setting selected jobs to null")
+                        selectedJobs = null;
+                    }
+                    if (item != null) {
+                        searchJobs(item);
+                        edit = true;
+                        console.log("Item to edit " + JSON.stringify(data))
+                    }
                 } else {
                     console.log("Error while retrieving element to edit, status: " + status);
                 }
@@ -160,26 +169,13 @@
         }
 
         function setDeleteSelected() {
-            //check if necessary
+            //Tcheck if necessary
             var selectedRows = null;
             do {
                 selectedRows = $("#grid-addresses").bootgrid("getSelectedRows");
             } while (selectedRows == null);
-            //loop through rows get elements
             for (uuid of selectedRows) {
                 setDelete(uuid)
-                    /* ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
-                        if (status === "success") {
-                            var item = data['hour'];
-                            if (item !== null) {
-                                //if we found the row to delete save it and set the delete flag
-                                //the element will be removed if the user press "Yes"
-                                searchJobs(item);
-                            }
-                        } else {
-                            console.log("Error status: " + status);
-                        }
-                    }); */
             }
         }
 
@@ -212,12 +208,19 @@
         oldEndHour = $("#hour\\.EndHour").val();
     });
 
-    //add enabled
+    //TODO add enabled
+    //get previous settings jobs when clicking, save also the value of textfields
+    //set jobs with new data on save click
+
     //edit an existing cron job
-    //get previous settings jobs
-    //set jobs with new data
     function editJobs(oldStartHour, newStartHour, oldEndHour, newEndHour) {
-        ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
+        //this will save the job under selected jobs and should be done when clicking the pencil
+        /*  if (selectedJobs != null) {
+             console.log("Setting selected jobs to null")
+             selectedJobs = null;
+         }
+         searchJobs(item); */
+        /* ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             //get all cron jobs 
             if (status === "success") {
                 //loop and find the ones that match
@@ -238,26 +241,39 @@
                         break;
                     }
                 }
-                //magari controllare non siano null e al massimo non farlo
-                if (startJobUUID != null && endJobUUID != null) {
-                    setTimeout(function() {
-                        ajaxCall(url = "/api/cron/settings/setJob/" + startJobUUID, sendData = getData(newStartHour, startCommandDescr, startDescr), callback = function(data, status) {
+         */
+
+        //at this point selected jobs should contain the old job to edit
+        jobs = null;
+        if (selectedJobs == 1) {
+            jobs = selectedJobs[0];
+        } else {
+            console.log("Too many jobs selected");
+        }
+        if (jobs != null) {
+            startUUID = jobs[0];
+            endUUID = jobs[1];
+            if (startUUID != null && endUUID != null) {
+                //setTimeout(function() {
+                ajaxCall(url = "/api/cron/settings/setJob/" + startUUID, sendData = getData(newStartHour, startCommandDescr, startDescr), callback = function(data, status) {
+                    if (status === "success") {
+                        console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + newStartHour + " result: " + JSON.stringify(data));
+                        //           setTimeout(function() {
+                        ajaxCall(url = "/api/cron/settings/setJob/" + endUUID, sendData = getData(newEndHour, endCommand, endDescr), callback = function(data, status) {
                             if (status === "success") {
-                                console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + newStartHour + " result: " + JSON.stringify(data));
-                                setTimeout(function() {
-                                    ajaxCall(url = "/api/cron/settings/setJob/" + endJobUUID, sendData = getData(newEndHour, endCommand, endDescr), callback = function(data, status) {
-                                        if (status === "success") {
-                                            console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + newEndHour + " result: " + JSON.stringify(data));
-                                        }
-                                    });
-                                }, 100);
+                                console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + newEndHour + " result: " + JSON.stringify(data));
                             }
                         });
-                    }, 100);
-                }
+
+                    }
+                    //, 100);
+                });
             }
-        });
+            //);
+            //}, 100);
+        }
     }
+
 
     //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function() {
@@ -275,15 +291,15 @@
             //if none was selected take val from textbox
             if (oldStartHour == null) oldStartHour = startHour;
             if (oldEndHour == null) oldEndHour = endHour;
-            setTimeout(function() {
-                editJobs(oldStartHour, startHour, oldEndHour, endHour);
-            }, 100);
+            //setTimeout(function() {
+            editJobs(oldStartHour, startHour, oldEndHour, endHour);
+            //}, 100);
             edit = false;
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
         }
     });
 
-    //remove job
+    //ok
     function removeJobs(startUUID, endUUID) {
         if (startUUID !== null && endUUID !== null) {
             ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
@@ -300,19 +316,17 @@
             });
         }
     }
-
+    //ok
     function removeAll() {
         if (selectedJobs != null && selectedJobs.length > 1) {
             for (jobs of selectedJobs) {
-                startUUID = jobs[0];
-                endUUID = jobs[1];
-                removeJobs(startUUID, endUUID);
+                removeJobs(jobs[0], jobs[1]);
             }
         } else {
             alert("An unexpected error occured, couldn't find element to remove!");
         }
     }
-
+    //fix
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         //TODO one delete function
@@ -331,7 +345,7 @@
             alert("Error no element set to delete")
         }
     });
-
+    //ok
     function getData(hour, command, description) {
         return {
             "job": {
@@ -347,6 +361,7 @@
             }
         }
     }
+    //ok
     //add cron jobs to stop and restart the firewall
     function addJobs(startHour, endHour) {
         ajaxCall(url = "/api/cron/settings/addJob", sendData = getData(startHour, startCommand, startDescr), callback = function(data, status) {
