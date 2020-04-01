@@ -1,8 +1,6 @@
 <script>
     var edit = false;
-    //var toDelete = null;
     var copyMessage = null;
-    //var elementsToDelete = null;
     var oldStartHour = null;
     var oldEndHour = null;
     var startCommand = "automaticshutdown start";
@@ -11,7 +9,6 @@
     var endCommand = "automaticshutdown stop";
     var endCommandDescr = "Start firewall";
     var endDescr = "Start Firewall"
-        // var jobs = null;
     var selectedJobs = [];
     $(document).ready(function() {
         var data_get_map = {
@@ -40,11 +37,6 @@
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     item = data['hour'];
-                    //TODO delete
-                    if (selectedJobs.length != 0) {
-                        console.log("Setting selected jobs to null")
-                        selectedJobs = [];
-                    }
                     if (item != null) {
                         searchJobs(item);
                         edit = true;
@@ -209,41 +201,10 @@
     });
 
     //TODO add enabled
-    //get previous settings jobs when clicking, save also the value of textfields
-    //set jobs with new data on save click
+    //TODO save also the value of textfields
 
     //edit an existing cron job
     function editJobs(oldStartHour, newStartHour, oldEndHour, newEndHour) {
-        //this will save the job under selected jobs and should be done when clicking the pencil
-        /*  if (selectedJobs != null) {
-             console.log("Setting selected jobs to null")
-             selectedJobs = null;
-         }
-         searchJobs(item); */
-        /* ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
-            //get all cron jobs 
-            if (status === "success") {
-                //loop and find the ones that match
-                var rows = data['rows'];
-                var startJobUUID = null;
-                var endJobUUID = null;
-                for (row of rows) {
-                    var enabled = row['enabled'];
-                    var uuid = row['uuid'];
-                    if (oldStartHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
-                        startJobUUID = uuid;
-                    }
-                    if (oldEndHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
-                        endJobUUID = uuid;
-                    }
-                    //edit first occurence (it doesn't matter which job we delete since they're equals        
-                    if (startJobUUID !== null && endJobUUID !== null) {
-                        break;
-                    }
-                }
-         */
-
-        //at this point selected jobs should contain the old job to edit
         jobs = null;
         if (selectedJobs.length == 1) {
             jobs = selectedJobs[0];
@@ -254,11 +215,9 @@
             startUUID = jobs[0];
             endUUID = jobs[1];
             if (startUUID != null && endUUID != null) {
-                //setTimeout(function() {
                 ajaxCall(url = "/api/cron/settings/setJob/" + startUUID, sendData = getData(newStartHour, startCommand, startDescr), callback = function(data, status) {
                     if (status === "success") {
                         console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + newStartHour + " result: " + JSON.stringify(data));
-                        //           setTimeout(function() {
                         ajaxCall(url = "/api/cron/settings/setJob/" + endUUID, sendData = getData(newEndHour, endCommand, endDescr), callback = function(data, status) {
                             if (status === "success") {
                                 console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + newEndHour + " result: " + JSON.stringify(data));
@@ -266,11 +225,8 @@
                         });
 
                     }
-                    //, 100);
                 });
             }
-            //);
-            //}, 100);
         }
     }
 
@@ -291,9 +247,7 @@
             //if none was selected take val from textbox
             if (oldStartHour == null) oldStartHour = startHour;
             if (oldEndHour == null) oldEndHour = endHour;
-            //setTimeout(function() {
             editJobs(oldStartHour, startHour, oldEndHour, endHour);
-            //}, 100);
             edit = false;
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + oldStartHour + " and " + oldEndHour);
         }
@@ -331,13 +285,13 @@
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         //TODO one delete function
         if (selectedJobs.length == 1) {
-            jobs = selectedJobs[0]
-                //console.log("Jobs " + jobs)
-            removeJobs(jobs[0], jobs[1]);
+            //        jobs = selectedJobs[0]
+            //          removeJobs(jobs[0], jobs[1]);
+            removeAll();
+
             alert("Deleted!");
-            toDelete = null;
+            //            toDelete = null;
         } else if (selectedJobs.length > 1) {
-            console.log("Delete all selected")
             removeAll();
             alert("All deleted!");
             selectedJobs = [];
