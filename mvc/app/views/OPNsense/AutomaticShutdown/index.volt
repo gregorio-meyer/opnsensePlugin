@@ -248,7 +248,7 @@
         if (selectedJobs == 1) {
             jobs = selectedJobs[0];
         } else {
-            console.log("Too many jobs selected");
+            console.log("Too many jobs selected " + JSON.stringify(jobs));
         }
         if (jobs != null) {
             startUUID = jobs[0];
