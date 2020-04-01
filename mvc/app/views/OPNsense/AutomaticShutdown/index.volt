@@ -11,6 +11,7 @@
     var endCommand = "automaticshutdown stop";
     var endCommandDescr = "Start firewall";
     var endDescr = "Start Firewall"
+    var jobs = null;
     $(document).ready(function() {
         var data_get_map = {
             'DialogAddress': "/api/automaticshutdown/settings/get"
@@ -84,11 +85,7 @@
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
                         jobs = searchJobs(toDelete);
-                        setTimeout(function() {
-                            if (jobs != null)
-                                console.log("Jobs " + jobs)
-
-                        }, 100);
+                        console.log("Jobs " + jobs)
                     }
                 } else {
                     console.log("Error status: " + status);
@@ -216,6 +213,7 @@
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         if (toDelete !== null) {
+            console.log("Jobs " + jobs)
             removeJobs(toDelete['enabled'], toDelete['StartHour'], toDelete['EndHour']);
             alert("Deleted!");
             toDelete = null;
