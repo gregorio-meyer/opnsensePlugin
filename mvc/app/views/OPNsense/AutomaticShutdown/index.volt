@@ -222,6 +222,7 @@
                 });
             }
         }
+        selectedJobs = []
     }
 
     //on save get data from modal input fields and add jobs to schedule
@@ -229,10 +230,9 @@
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
         //edit
-        if (edit) {
+        if (itemToEdit != null) {
             editJobs(startHour, endHour);
-            selectedJobs = [];
-            edit = false;
+            // edit = false;
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
         } else {
             //copy
