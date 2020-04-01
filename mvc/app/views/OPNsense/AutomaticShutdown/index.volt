@@ -44,32 +44,60 @@
                 }
             });
         }
+
+        function searchJobs(item) {
+            enabled = item['enabled']
+            startHour = item['StartHour']
+            endHour = item['EndHour']
+            ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
+                if (status === "success") {
+                    var rows = data['rows'];
+                    var startUUID = null;
+                    var endUUID = null;
+                    for (row of rows) {
+                        //if cron job searched
+                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
+                            //delete first occurence (it doesn't matter which job we delete since they're equals)
+                            startUUID = row['uuid'];
+                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
+                            //delete first occurence (it doesn't matter which job we delete since they're equals)
+                            endUUID = row['uuid'];
+                        }
+                    }
+                    if (startUUID != null && endUUID != null) {
+                        return [startUUID, endUUID]
+                    }
+                } else {
+                    alert("An unexpected error occured, couldn't find element to delete!");
+                }
+            });
+        }
         //load CronJobs too
         function setDelete(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     //vedere se data[hour] non funziona
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    var item = data['hour'];
                     if (item !== null) {
                         //if we found the row to delete save it and set the delete flag
                         //the element will be removed if the user press "Yes"
                         toDelete = item;
+                        jobs = searchJobs(toDelete)
+                        if (jobs != null) {
+                            console.log("Jobs " + JSON.stringify(jobs))
+                        }
                     } else {
-                        alert("An unexpected error occured, couldn't find element to delete!");
+                        console.log("Error status: " + status);
                     }
-                } else {
-                    console.log("Error status: " + status);
                 }
-            })
+            });
         }
 
         function setCopy(id) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     //TODO vedi sopra
-                    var str = JSON.stringify(data);
-                    var item = JSON.parse(str)["hour"];
+                    var item = data['hour'];
                     if (item !== null) {
                         copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
                     } else {
@@ -185,7 +213,7 @@
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         if (toDelete !== null) {
-            remove(toDelete);
+            removeJobs(toDelete['enabled'], toDelete['StartHour'], toDelete['EndHour']);
             alert("Deleted!");
             toDelete = null;
         } else if (elementsToDelete != null && JSON.stringify(elementsToDelete) !== "[]") {
@@ -223,35 +251,11 @@
                 //magari controllare non siano null e al massimo non farlo
                 if (startJobUUID != null && endJobUUID != null) {
                     setTimeout(function() {
-                        ajaxCall(url = "/api/cron/settings/setJob/" + startJobUUID, sendData = {
-                            "job": {
-                                "enabled": "1",
-                                "minutes": "0",
-                                "hours": newStartHour,
-                                "days": "*",
-                                "months": "*",
-                                "weekdays": "*",
-                                "command": startCommandDescr,
-                                "parameters": "",
-                                "description": startDescr
-                            }
-                        }, callback = function(data, status) {
+                        ajaxCall(url = "/api/cron/settings/setJob/" + startJobUUID, sendData = getData(newStartHour, startCommandDescr, startDescr), callback = function(data, status) {
                             if (status === "success") {
                                 console.log("Edited " + startDescr + " oldHour " + oldStartHour + " new hour " + newStartHour + " result: " + JSON.stringify(data));
                                 setTimeout(function() {
-                                    ajaxCall(url = "/api/cron/settings/setJob/" + endJobUUID, sendData = {
-                                        "job": {
-                                            "enabled": "1",
-                                            "minutes": "0",
-                                            "hours": newEndHour,
-                                            "days": "*",
-                                            "months": "*",
-                                            "weekdays": "*",
-                                            "command": endCommand,
-                                            "parameters": "",
-                                            "description": endDescr
-                                        }
-                                    }, callback = function(data, status) {
+                                    ajaxCall(url = "/api/cron/settings/setJob/" + endJobUUID, sendData = getData(newEndHour, endCommand, endDescr), callback = function(data, status) {
                                         if (status === "success") {
                                             console.log("Edited " + endDescr + " oldHour " + oldEndHour + " new hour " + newEndHour + " result: " + JSON.stringify(data));
                                         }
@@ -265,43 +269,35 @@
         });
     }
 
-    //add cron jobs to stop and restart the firewall
-    function addJobs(startHour, endHour) {
-        ajaxCall(url = "/api/cron/settings/addJob", sendData = {
+    function getData(hour, command, description) {
+        return {
             "job": {
                 "enabled": "1",
                 "minutes": "0",
-                "hours": startHour,
+                "hours": hour,
                 "days": "*",
                 "months": "*",
                 "weekdays": "*",
-                "command": startCommand,
+                "command": command,
                 "parameters": "",
-                "description": startDescr
+                "description": description
             }
-        }, callback = function(data, status) {
+        }
+    }
+
+    //add cron jobs to stop and restart the firewall
+    function addJobs(startHour, endHour) {
+        ajaxCall(url = "/api/cron/settings/addJob", sendData = getData(startHour, startCommand, startDescr), callback = function(data, status) {
             console.log("Add start hour " + startHour);
             //sadd cron job if enabled
-            ajaxCall(url = "/api/cron/settings/addJob", sendData = {
-                "job": {
-                    "enabled": "1",
-                    "minutes": "0",
-                    "hours": endHour,
-                    "days": "*",
-                    "months": "*",
-                    "weekdays": "*",
-                    "command": endCommand,
-                    "parameters": "",
-                    "description": endDescr
-                }
-            }, callback = function(data, status) {
+            ajaxCall(url = "/api/cron/settings/addJob", sendData = getData(endHour, endCommand, endDescr), callback = function(data, status) {
                 console.log("Add end hour " + endHour);
             });
         });
     }
     // TODO split function
     //search and remove job
-    function removeJobs(enabled, hour, endHour) {
+    function removeJobs(enabled, startHour, endHour) {
         //get all cron jobs 
         ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
             if (status === "success") {
@@ -310,7 +306,7 @@
                 var endUUID = null;
                 for (row of rows) {
                     //if cron job searched
-                    if (enabled == row['enabled'] && hour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
+                    if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
                         //delete first occurence (it doesn't matter which job we delete since they're equals)
                         startUUID = row['uuid'];
                     } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
@@ -338,15 +334,6 @@
                 console.log("Error while searching jobs");
         });
     }
-    //delete start and stop cron jobs for item
-    function remove(item) {
-        //TODO create fields for stop start description and remove this method
-        if (item != null) {
-            removeJobs(item['enabled'], item['StartHour'], item['EndHour']);
-        } else {
-            alert("No element to remove " + JSON.stringify(item))
-        }
-    }
 
     function removeAll() {
         for (element of elementsToDelete) {
@@ -354,7 +341,9 @@
                 if (status === "success") {
                     var item = data["hour"];
                     if (item != null) {
-                        remove(item);
+                        removeJobs(item['enabled'], item['StartHour'], item['EndHour']);
+                        //potrei fare search jobs
+                        //e poi remove
                     } else {
                         alert("An unexpected error occured, couldn't find element to remove!");
                     }
