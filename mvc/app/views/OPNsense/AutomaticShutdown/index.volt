@@ -57,10 +57,16 @@
                     var startUUID = null;
                     var endUUID = null;
                     for (row of rows) {
+                        for (job of selectedJobs) {
+                            if (job.includes(row['uuid'])) {
+                                console.log("skipping..")
+                                continue;
+                            }
+                        }
                         //if cron job searched matches and is not in already saved jobs
-                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'] && !selectedJobs.includes(row['uuid'])) {
+                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
                             startUUID = row['uuid'];
-                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command'] && !selectedJobs.includes(row['uuid'])) {
+                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
                             endUUID = row['uuid'];
                         }
                         if (startUUID != null && endUUID != null) {
