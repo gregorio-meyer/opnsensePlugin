@@ -245,7 +245,7 @@
 
         //at this point selected jobs should contain the old job to edit
         jobs = null;
-        if (selectedJobs == 1) {
+        if (selectedJobs.length == 1) {
             jobs = selectedJobs[0];
         } else {
             console.log("Too many jobs selected " + JSON.stringify(selectedJobs));
