@@ -1,8 +1,7 @@
 <script>
-    var edit = false;
+    //var edit = false;
     var copyMessage = null;
-    /*  var oldStartHour = null;
-     var oldEndHour = null; */
+
     var startCommand = "automaticshutdown start";
     var startCommandDescr = "Shutdown firewall";
     var startDescr = "Stop Firewall";
@@ -33,14 +32,14 @@
             setEventHandlers();
         });
 
-        function setEdit(id) {
+        function setEdit(uuid) {
             //get item since we can only retrieve row-id from click event
-            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     item = data['hour'];
                     if (item != null) {
                         searchJobs(item);
-                        edit = true;
+                        //  edit = true;
                         console.log("Item to edit " + JSON.stringify(data))
                             //save item to edit
                         itemToEdit = item;
@@ -83,7 +82,6 @@
                             break;
                         }
                     }
-
                 } else {
                     alert("An unexpected error occured, couldn't find the searched element!");
                 }
@@ -105,8 +103,8 @@
             });
         }
         //ok
-        function setCopy(id) {
-            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + id, sendData = {}, callback = function(data, status) {
+        function setCopy(uuid) {
+            ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     var item = data['hour'];
                     if (item !== null) {
@@ -186,8 +184,6 @@
                     setCopy(id);
                 }).end().find(".command-toggle").on("click", function(e) {
                     var id = $(this).data("row-id");
-                    // var item = getItem(id);
-                    console.log("Item " + id);
                     setToggle(id);
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
@@ -195,16 +191,8 @@
                 });
         }
     });
-    /*     //save values before editing 
-        $(document).on('focusin', "#hour\\.StartHour", function() {
-            oldStartHour = $("#hour\\.StartHour").val();
-        });
-        $(document).on('focusin', "#hour\\.EndHour", function() {
-            oldEndHour = $("#hour\\.EndHour").val();
-        }); */
 
     //TODO add enabled
-    //TODO save also the value of textfields
 
     //edit an existing cron job
     function editJobs(newStartHour, newEndHour) {
@@ -240,25 +228,20 @@
     $(document).on('click', "#btn_DialogAddress_save", function() {
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
-        //TODO invert
         //edit
-        //copy
-        //add
-        if (!edit) {
-            //copy or add new job
-            if (copyMessage != null)
-                alert(copyMessage);
-            else
-                alert("Planned shutdown between " + startHour + " and " + endHour);
-            addJobs(startHour, endHour);
-        } else {
-            //if none was selected take val from textbox
-            //if (oldStartHour == null) oldStartHour = startHour;
-            //if (oldEndHour == null) oldEndHour = endHour;
+        if (edit) {
             editJobs(startHour, endHour);
             selectedJobs = [];
             edit = false;
             alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
+        } else {
+            //copy
+            if (copyMessage != null)
+                alert(copyMessage);
+            //add
+            else
+                alert("Planned shutdown between " + startHour + " and " + endHour);
+            addJobs(startHour, endHour);
         }
     });
 
