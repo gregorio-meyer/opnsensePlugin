@@ -41,9 +41,9 @@
                 if (status === "success") {
                     item = data['hour'];
                     //TODO delete
-                    if (selectedJobs != null) {
+                    if (selectedJobs.length != 0) {
                         console.log("Setting selected jobs to null")
-                        selectedJobs = null;
+                        selectedJobs = [];
                     }
                     if (item != null) {
                         searchJobs(item);
@@ -340,7 +340,7 @@
             console.log("Delete all selected")
             removeAll();
             alert("All deleted!");
-            selectedJobs = null;
+            selectedJobs = [];
         } else {
             alert("Error no element set to delete")
         }
