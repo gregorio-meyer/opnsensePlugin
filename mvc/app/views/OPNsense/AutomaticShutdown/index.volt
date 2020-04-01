@@ -57,11 +57,15 @@
                     var startUUID = null;
                     var endUUID = null;
                     for (row of rows) {
+                        var skip = false;
                         for (job of selectedJobs) {
                             if (job.includes(row['uuid'])) {
-                                console.log("skipping..")
-                                continue;
+                                skip = true;
                             }
+                        }
+                        if (skip) {
+                            console.log("skipping..")
+                            continue;
                         }
                         //if cron job searched matches and is not in already saved jobs
                         if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
