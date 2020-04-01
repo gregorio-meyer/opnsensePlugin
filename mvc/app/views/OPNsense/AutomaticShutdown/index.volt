@@ -57,12 +57,10 @@
                     var startUUID = null;
                     var endUUID = null;
                     for (row of rows) {
-                        //if cron job searched
-                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
-                            //delete first occurence (it doesn't matter which job we delete since they're equals)
+                        //if cron job searched matches and is not in already saved jobs
+                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'] && !selectedJobs.includes(row['uuid'])) {
                             startUUID = row['uuid'];
-                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
-                            //delete first occurence (it doesn't matter which job we delete since they're equals)
+                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command'] && !selectedJobs.includes(row['uuid'])) {
                             endUUID = row['uuid'];
                         }
                     }
