@@ -318,7 +318,6 @@
     //
     //remove job
     function removeJobs(startUUID, endUUID) {
-
         if (startUUID !== null && endUUID !== null) {
             ajaxCall(url = "/api/cron/settings/delJob/" + startUUID, sendData = {}, callback = function(data, status) {
                 //check if not found 
@@ -348,6 +347,7 @@
                 startUUID = jobs[0];
                 endUUID = jobs[1];
                 //item['enabled'], item['StartHour'], item['EndHour']
+                console.log("Deleting " + startUUID + " " + endUUID)
                 removeJobs(startUUID, endUUID);
                 //potrei fare search jobs
                 //e poi remove}
