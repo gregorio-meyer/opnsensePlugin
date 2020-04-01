@@ -233,12 +233,14 @@
     //event handler for remove confirmation dialog button TODO simplify
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         if (selectedJobs.length == 1) {
-            //console.log("Jobs " + jobs)
+            jobs = selectedJobs[0]
+                //console.log("Jobs " + jobs)
             removeJobs(jobs[0], jobs[1]);
             alert("Deleted!");
             toDelete = null;
         } else if (selectedJobs.length > 1) {
             //all jobs uuids should be loaded by now
+            console.log("Delete all selected")
             removeAll();
             alert("All deleted!");
             selectedJobs = null;
