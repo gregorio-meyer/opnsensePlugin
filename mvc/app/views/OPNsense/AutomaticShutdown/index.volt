@@ -348,7 +348,8 @@
             for (jobs of selectedJobs) {
                 startUUID = jobs[0];
                 endUUID = jobs[1];
-                removeJobs(item['enabled'], item['StartHour'], item['EndHour']);
+                //item['enabled'], item['StartHour'], item['EndHour']
+                removeJobs(startUUID, endUUID);
                 //potrei fare search jobs
                 //e poi remove}
             }
