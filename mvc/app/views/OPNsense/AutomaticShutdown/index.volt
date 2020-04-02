@@ -243,6 +243,11 @@
     //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function() {
         var enabled = $('#hour\\.enabled').val()
+        if (enabled === "on") {
+            enabled = 1;
+        } else {
+            enabled = 0;
+        }
         console.log("Enabled " + enabled)
         var startHour = $("#hour\\.StartHour").val();
         var endHour = $("#hour\\.EndHour").val();
