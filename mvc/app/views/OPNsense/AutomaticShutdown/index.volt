@@ -134,9 +134,9 @@
                                         continue;
                                     }
                                     //if related cron jobs for searched item matches 
-                                    if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
+                                    if (item['enabled'] == row['enabled'] && item['StartHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
                                         startUUID = row['uuid'];
-                                    } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
+                                    } else if (item['enabled'] == row['enabled'] && item['EndHour'] == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
                                         endUUID = row['uuid'];
                                     }
                                     if (startUUID != null && endUUID != null) {
@@ -194,7 +194,7 @@
         }
     });
 
-    function toggleJobs() {
+    function toggleJobs(startUUID, endUUID) {
         if (startUUID != null && endUUID != null) {
             ajaxCall(url = "/api/cron/settings/toggleJob/" + startUUID, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
