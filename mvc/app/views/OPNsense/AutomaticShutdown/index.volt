@@ -66,9 +66,9 @@
                             continue;
                         }
                         //if related cron jobs for searched item matches 
-                        if (enabled == row['enabled'] && startHour == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
+                        if (isEqual(item, row, "start")) {
                             startUUID = row['uuid'];
-                        } else if (enabled == row['enabled'] && endHour == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
+                        } else if (isEqual(item, row, "end")) {
                             endUUID = row['uuid'];
                         }
                         if (startUUID != null && endUUID != null) {
@@ -111,7 +111,25 @@
                 }
             });
         }
-        //TODO complete
+
+        function isToSkip(row) {
+            for (job of selectedJobs) {
+                if (job.includes(row['uuid']))
+                    return true;
+            }
+            return false;
+        }
+
+        function isEqual(item, row, part) {
+            if (part == "start") {
+                return item['enabled'] == row['enabled'] && item['StartHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'];
+            } else if (part == "end") {
+                return row['enabled'] == item['enabled'] && row['hours'] == item['EndHour'] && row['description'] === endDescr && row['command'] === endCommandDescr;
+            } else {
+                console.log("Error while looking for equal jobs")
+            }
+        }
+        //ok
         function setToggle(uuid) {
             ajaxCall(url = "/api/automaticshutdown/settings/getItem/" + uuid, sendData = {}, callback = function(data, status) {
                 if (status === "success") {
@@ -123,20 +141,13 @@
                                 var startUUID = null;
                                 var endUUID = null;
                                 for (row of rows) {
-                                    //skip if already selected
-                                    var skip = false;
-                                    for (job of selectedJobs) {
-                                        if (job.includes(row['uuid'])) {
-                                            skip = true;
-                                        }
-                                    }
-                                    if (skip) {
+                                    if (isToSkip(row)) {
                                         continue;
                                     }
                                     //if related cron jobs for searched item matches 
-                                    if (item['enabled'] == row['enabled'] && item['StartHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command']) {
+                                    if (isEqual(item, row, "start")) {
                                         startUUID = row['uuid'];
-                                    } else if (item['enabled'] == row['enabled'] && item['EndHour'] == row['hours'] && endDescr == row['description'] && endCommandDescr === row['command']) {
+                                    } else if (isEqual(item, row, "end")) {
                                         endUUID = row['uuid'];
                                     }
                                     if (startUUID != null && endUUID != null) {
@@ -162,38 +173,37 @@
             });
         }
 
-        //split
-        function setDeleteSelected() {
+        function getRowIds() {
             //check if necessary
-            var selectedRows = null;
+            var rowIds = null;
             do {
-                selectedRows = $("#grid-addresses").bootgrid("getSelectedRows");
-            } while (selectedRows == null);
-            for (uuid of selectedRows) {
+                rowIds = $("#grid-addresses").bootgrid("getSelectedRows");
+            } while (rowIds == null);
+            return rowIds;
+        }
+        //ok
+        function setDeleteSelected(uuids) {
+            for (uuid of uuids) {
                 setDelete(uuid)
             }
         }
-
+        //ok
         function setEventHandlers() {
             grid.find(".command-edit").on("click", function(e) {
-                    var id = $(this).data("row-id")
-                    setEdit(id);
+                    setEdit($(this).data("row-id"));
                 }).end().find(".command-delete").on("click", function(e) {
-                    var id = $(this).data("row-id");
-                    setDelete(id);
+                    setDelete($(this).data("row-id"));
                 }).end().find(".command-copy").on("click", function(e) {
-                    var id = $(this).data("row-id");
-                    setCopy(id);
+                    setCopy($(this).data("row-id"));
                 }).end().find(".command-toggle").on("click", function(e) {
-                    var id = $(this).data("row-id");
-                    setToggle(id);
+                    setToggle($(this).data("row-id"));
                 })
                 .end().find(".command-delete-selected").on("click", function(e) {
-                    setDeleteSelected();
+                    setDeleteSelected(getRowIds());
                 });
         }
     });
-
+    //ok
     function toggleJobs(startUUID, endUUID) {
         if (startUUID != null && endUUID != null) {
             ajaxCall(url = "/api/cron/settings/toggleJob/" + startUUID, sendData = {}, callback = function(data, status) {
@@ -207,8 +217,6 @@
             });
         }
     }
-
-    //TODO add enabled
 
     //edit an existing cron job
     function editJobs(enabled, newStartHour, newEndHour) {
@@ -238,8 +246,9 @@
             }
         }
         selectedJobs = []
+        alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
     }
-
+    //ok
     //on save get data from modal input fields and add jobs to schedule
     $(document).on('click', "#btn_DialogAddress_save", function() {
         var enabled = $('#hour\\.enabled').val()
@@ -254,7 +263,6 @@
         //edit
         if (itemToEdit != null) {
             editJobs(enabled, startHour, endHour);
-            alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
         } else {
             //copy
             if (copyMessage != null)
@@ -283,7 +291,7 @@
         }
     }
     //ok
-    function removeAll() {
+    function remove() {
         for (jobs of selectedJobs) {
             removeJobs(jobs[0], jobs[1]);
         }
@@ -294,7 +302,7 @@
     //event handler for remove confirmation dialog button 
     $(document).on('click', ".bootstrap-dialog-footer .bootstrap-dialog-footer-buttons .btn.btn-warning", function() {
         if (selectedJobs.length > 0) {
-            removeAll();
+            remove();
         } else {
             alert("Error no element set to delete")
         }
