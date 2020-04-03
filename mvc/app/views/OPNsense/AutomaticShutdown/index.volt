@@ -342,6 +342,7 @@
             </th>
             <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">
                 {{ lang._('Enabled') }}</th>
+            <!-- lang._('name') is the name that will appear in the view -->
             <th data-column-id="startHour" data-type="int">{{ lang._('Start hour') }}</th>
             <th data-column-id="endHour" data-type="int">{{ lang._('End hour') }}</th>
             <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">
