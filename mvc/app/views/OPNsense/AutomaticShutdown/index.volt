@@ -122,9 +122,9 @@
 
         function isEqual(item, row, part) {
             if (part == "start") {
-                return item['enabled'] == row['enabled'] && item['startHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'];
+                return item['enabled'] == row['enabled'] && item['startHour'] == row['hours'] && startDescr === row['description'] && startCommandDescr === row['command'];
             } else if (part == "end") {
-                return row['enabled'] == item['enabled'] && row['hours'] == item['endHour'] && row['description'] === endDescr && row['command'] === endCommandDescr;
+                return item['enabled'] == row['enabled'] && item['endHour'] == row['hours'] && endDescr === row['description'] && endCommandDescr === row['command'];
             } else {
                 console.log("Error while looking for equal jobs")
             }
@@ -342,8 +342,8 @@
             </th>
             <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">
                 {{ lang._('Enabled') }}</th>
-            <th data-column-id="startHour" data-type="int">{{ lang._('startHour') }}</th>
-            <th data-column-id="endHour" data-type="int">{{ lang._('endHour') }}</th>
+            <th data-column-id="startHour" data-type="int">{{ lang._('Start hour') }}</th>
+            <th data-column-id="endHour" data-type="int">{{ lang._('End hour') }}</th>
             <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">
                 {{ lang._('Commands') }}</th>
         </tr>
@@ -360,5 +360,7 @@
             </td>
         </tr>
     </tfoot>
+
 </table>
+<!-- TODO rename dialog -->
 {{ partial("layout_partials/base_dialog",['fields':formDialogAddress,'id':'DialogAddress','label':lang._('Edit hour')])}}
