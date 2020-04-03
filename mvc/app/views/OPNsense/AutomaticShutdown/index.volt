@@ -210,7 +210,7 @@
                 if (status === "success") {
                     ajaxCall(url = "/api/cron/settings/toggleJob/" + endUUID, sendData = {}, callback = function(data, status) {
                         if (status === "success") {
-                            alert("Toggled " + startUUID + ", " + endUUID);
+                            alert("Toggled");
                         }
                     });
                 }
