@@ -13,7 +13,7 @@ if r.status_code == 200:
     response = json.loads(r.text)
     hour = response['automaticshutdown']['hours']['hour']
     if len(hour) > 0:
-        print("Shutdown planned between %s and %s" % (hour['StartHour'], hour['EndHour']))
+        print("Shutdown planned between %s and %s" % (hour['startHour'], hour['endHour']))
     else:
         print("No shutdown planned")
 else:

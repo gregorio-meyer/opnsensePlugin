@@ -7,14 +7,14 @@
         <help>Enable this feature</help>
     </field>
     <field>
-        <id>hour.StartHour</id>
+        <id>hour.startHour</id>
         <label>Start hour</label>
         <type>text</type>
         <help>Hour in which the shutdown should start</help>
         <hint>choose a valid hour</hint>
     </field>
     <field>
-        <id>hour.EndHour</id>
+        <id>hour.endHour</id>
         <label>End hour</label>
         <type>text</type>
         <help>Hour in which the shutdown should end</help>

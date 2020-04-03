@@ -47,8 +47,8 @@
 
         function searchJobs(item) {
             enabled = item['enabled']
-            startHour = item['StartHour']
-            endHour = item['EndHour']
+            startHour = item['startHour']
+            endHour = item['endHour']
             ajaxCall(url = "/api/cron/settings/searchJobs/*", sendData = {}, callback = function(data, status) {
                 if (status === "success") {
                     var rows = data['rows'];
@@ -102,7 +102,7 @@
                 if (status === "success") {
                     var item = data['hour'];
                     if (item !== null) {
-                        copyMessage = "Copied schedule with start hour: " + item['StartHour'] + " and end hour: " + item['EndHour'];
+                        copyMessage = "Copied schedule with start hour: " + item['startHour'] + " and end hour: " + item['endHour'];
                     } else {
                         alert("An unexpected error occured, couldn't find element to copy!");
                     }
@@ -122,9 +122,9 @@
 
         function isEqual(item, row, part) {
             if (part == "start") {
-                return item['enabled'] == row['enabled'] && item['StartHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'];
+                return item['enabled'] == row['enabled'] && item['startHour'] == row['hours'] && startDescr == row['description'] && startCommandDescr === row['command'];
             } else if (part == "end") {
-                return row['enabled'] == item['enabled'] && row['hours'] == item['EndHour'] && row['description'] === endDescr && row['command'] === endCommandDescr;
+                return row['enabled'] == item['enabled'] && row['hours'] == item['endHour'] && row['description'] === endDescr && row['command'] === endCommandDescr;
             } else {
                 console.log("Error while looking for equal jobs")
             }
@@ -235,10 +235,10 @@
             if (startUUID != null && endUUID != null) {
                 ajaxCall(url = "/api/cron/settings/setJob/" + startUUID, sendData = getData(enabled, newStartHour, startCommand, startDescr), callback = function(data, status) {
                     if (status === "success") {
-                        console.log("Edited " + startDescr + " oldHour " + itemToEdit['StartHour'] + " new hour " + newStartHour + " result: " + JSON.stringify(data));
+                        console.log("Edited " + startDescr + " oldHour " + itemToEdit['startHour'] + " new hour " + newStartHour + " result: " + JSON.stringify(data));
                         ajaxCall(url = "/api/cron/settings/setJob/" + endUUID, sendData = getData(enabled, newEndHour, endCommand, endDescr), callback = function(data, status) {
                             if (status === "success") {
-                                console.log("Edited " + endDescr + " oldHour " + itemToEdit['EndHour'] + " new hour " + newEndHour + " result: " + JSON.stringify(data));
+                                console.log("Edited " + endDescr + " oldHour " + itemToEdit['endHour'] + " new hour " + newEndHour + " result: " + JSON.stringify(data));
                             }
                         });
                     }
@@ -246,7 +246,7 @@
             }
         }
         selectedJobs = []
-        alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['StartHour'] + " and " + itemToEdit['EndHour']);
+        alert("Modified planned shutdown to run between " + startHour + " and " + endHour + " instead of " + itemToEdit['startHour'] + " and " + itemToEdit['endHour']);
     }
     //ok
     //on save get data from modal input fields and add jobs to schedule
@@ -258,8 +258,8 @@
             enabled = 0;
         }
         console.log("Enabled " + enabled)
-        var startHour = $("#hour\\.StartHour").val();
-        var endHour = $("#hour\\.EndHour").val();
+        var startHour = $("#hour\\.startHour").val();
+        var endHour = $("#hour\\.endHour").val();
         //edit
         if (itemToEdit != null) {
             editJobs(enabled, startHour, endHour);
@@ -342,8 +342,8 @@
             </th>
             <th data-column-id="enabled" data-width="6em" data-type="string" data-formatter="rowtoggle">
                 {{ lang._('Enabled') }}</th>
-            <th data-column-id="StartHour" data-type="int">{{ lang._('StartHour') }}</th>
-            <th data-column-id="EndHour" data-type="int">{{ lang._('EndHour') }}</th>
+            <th data-column-id="startHour" data-type="int">{{ lang._('startHour') }}</th>
+            <th data-column-id="endHour" data-type="int">{{ lang._('endHour') }}</th>
             <th data-column-id="commands" data-width="7em" data-formatter="commands" data-sortable="false">
                 {{ lang._('Commands') }}</th>
         </tr>
